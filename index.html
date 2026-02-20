@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animasapient</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --navy-dark: #0f1a30;
+    --navy-mid: #243558;
+    --cool-grey: #8a96a8;
+    --cool-grey-light: #c8cfd8;
+    --cool-grey-pale: #eef0f4;
+    --white: #fafbfc;
+    --text: #2a3349;
+    --text-light: #5a6378;
+    --accent: #4a6fa5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--white);
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--navy-dark);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
+
+  .logo-group { display: flex; flex-direction: column; gap: 1px; }
+
+  .logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.04em;
+  }
+
+  .logo-slogan {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cool-grey);
+    letter-spacing: 0.08em;
+  }
+
+  nav { display: flex; align-items: center; gap: 2.5rem; }
+
+  nav a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cool-grey-light);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+  nav a:hover { color: var(--white); }
+
+  .nav-admin-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--cool-grey);
+    padding: 6px 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .nav-admin-btn:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+  .nav-admin-btn.logged-in { border-color: var(--accent); color: #80a8d8; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HOME PAGE */
+  #home-page { animation: fadeIn 0.4s ease; }
+
+  /* HEADLINE POST */
+  .headline-post {
+    position: relative;
+    background: var(--navy-dark);
+    min-height: 520px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .headline-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+  }
+
+  .headline-img-placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-mid) 50%, #2c4a7a 100%);
+    opacity: 0.8;
+  }
+
+  .headline-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,16,35,0.95) 0%, rgba(10,16,35,0.4) 50%, transparent 100%);
+  }
+
+  .headline-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem;
+    width: 100%;
+  }
+
+  .headline-category {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #80a8d8;
+    margin-bottom: 1rem;
+  }
+
+  .headline-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    max-width: 800px;
+    margin-bottom: 1.2rem;
+  }
+
+  .headline-excerpt {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--cool-grey-light);
+    max-width: 600px;
+    margin-bottom: 1.5rem;
+    line-height: 1.65;
+  }
+
+  .headline-meta {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: var(--cool-grey);
+    text-transform: uppercase;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    max-width: 1280px;
+    margin: 3.5rem auto 2.5rem;
+    padding: 0 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .section-divider span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+    white-space: nowrap;
+  }
+
+  .divider-line { flex: 1; height: 1px; background: var(--cool-grey-light); }
+
+  /* POST GRID */
+  .post-grid {
+    max-width: 1280px;
+    margin: 0 auto 5rem;
+    padding: 0 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem 2rem;
+  }
+
+  .post-card {
+    cursor: pointer;
+    border-bottom: 1px solid var(--cool-grey-light);
+    padding-bottom: 1.5rem;
+    transition: transform 0.2s;
+  }
+  .post-card:hover { transform: translateY(-3px); }
+  .post-card:hover .card-title { color: var(--accent); }
+
+  .card-img-wrap {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background: var(--cool-grey-pale);
+  }
+
+  .card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .post-card:hover .card-img-wrap img { transform: scale(1.04); }
+
+  .card-img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--navy-dark), var(--navy-mid));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-category {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 0.6rem;
+    transition: color 0.2s;
+  }
+
+  .card-excerpt {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.55;
+    margin-bottom: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-meta {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    max-width: 1280px;
+    margin: 6rem auto;
+    padding: 0 2.5rem;
+    text-align: center;
+  }
+
+  .empty-state h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--navy);
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .empty-state p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--cool-grey);
+  }
+
+  /* ABOUT PAGE */
+  #about-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 5rem 2.5rem;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .about-header {
+    border-bottom: 1px solid var(--cool-grey-light);
+    padding-bottom: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .about-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+    margin-bottom: 1rem;
+  }
+
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.15;
+    font-style: italic;
+  }
+
+  .about-body {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--text);
+  }
+
+  .about-body p { margin-bottom: 1.5rem; }
+
+  .about-body strong {
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  /* SINGLE POST VIEW */
+  #post-page { animation: fadeIn 0.4s ease; }
+
+  .post-hero {
+    background: var(--navy-dark);
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .post-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+  }
+
+  .post-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,16,35,0.95) 0%, rgba(10,16,35,0.3) 100%);
+  }
+
+  .post-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2.5rem;
+    width: 100%;
+  }
+
+  .post-hero-cat {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #80a8d8;
+    margin-bottom: 1rem;
+  }
+
+  .post-hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    margin-bottom: 1.2rem;
+  }
+
+  .post-hero-meta {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+  }
+
+  .post-body-wrap {
+    max-width: 760px;
+    margin: 4rem auto;
+    padding: 0 2.5rem;
+  }
+
+  .post-content {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: var(--text);
+  }
+
+  .post-content p { margin-bottom: 1.5rem; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+    cursor: pointer;
+    margin-bottom: 3rem;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: color 0.2s;
+  }
+  .back-btn:hover { color: var(--navy); }
+
+  /* ADMIN MODAL */
+  .modal-bg {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,16,35,0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    backdrop-filter: blur(4px);
+  }
+  .modal-bg.open { display: flex; }
+
+  .modal {
+    background: var(--white);
+    width: 100%;
+    max-width: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+
+  .modal-header {
+    background: var(--navy-dark);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--cool-grey);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--white); }
+
+  .modal-body { padding: 2rem; }
+
+  .form-group { margin-bottom: 1.5rem; }
+
+  .form-group label {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+    margin-bottom: 0.4rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    border: 1px solid var(--cool-grey-light);
+    background: var(--white);
+    padding: 10px 14px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: var(--text);
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 180px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .btn-primary {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 12px 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s;
+    width: 100%;
+  }
+  .btn-primary:hover { background: var(--navy-mid); }
+
+  .btn-danger {
+    background: #8b2635;
+    color: var(--white);
+    border: none;
+    padding: 8px 18px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .btn-danger:hover { background: #a52d3f; }
+
+  /* LOGIN MODAL */
+  #login-modal .modal { max-width: 400px; }
+
+  .login-error {
+    color: #8b2635;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  /* ADMIN CONTROLS */
+  .admin-bar {
+    display: none;
+    background: var(--navy);
+    padding: 0.8rem 2.5rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .admin-bar.visible { display: flex; }
+
+  .admin-bar span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+  }
+
+  .admin-controls { display: flex; gap: 1rem; align-items: center; }
+
+  .btn-new-post {
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    padding: 8px 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .btn-new-post:hover { background: #3d5d8f; }
+
+  .btn-logout {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--cool-grey);
+    padding: 6px 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .btn-logout:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+
+  /* POST DELETE BUTTON (for admin on cards) */
+  .card-admin {
+    display: none;
+    margin-top: 0.8rem;
+    gap: 0.5rem;
+  }
+  .admin-mode .card-admin { display: flex; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy-dark);
+    padding: 2.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+
+  .footer-slogan {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    font-style: italic;
+    color: var(--cool-grey);
+    letter-spacing: 0.08em;
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-cats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-cats span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(138,150,168,0.6);
+  }
+
+  /* IMAGE UPLOAD PREVIEW */
+  .img-preview {
+    margin-top: 0.6rem;
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+    display: none;
+    border-radius: 2px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .post-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .post-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .headline-title { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-group" onclick="showPage('home')" style="cursor:pointer;">
+      <div class="logo-name">Animasapient</div>
+      <div class="logo-slogan">Omnia cum anima sapientia sunt.</div>
+    </div>
+    <nav>
+      <a onclick="showPage('home')">Home</a>
+      <a onclick="filterCategory('Philosophy')">Philosophy</a>
+      <a onclick="filterCategory('Religion & Spirituality')">Religion</a>
+      <a onclick="filterCategory('Geography')">Geography</a>
+      <a onclick="filterCategory('Culture')">Culture</a>
+      <a onclick="showPage('about')">About</a>
+      <button class="nav-admin-btn" id="admin-nav-btn" onclick="handleAdminNav()">Admin</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ADMIN BAR -->
+<div class="admin-bar" id="admin-bar">
+  <span>Administrator Mode</span>
+  <div class="admin-controls">
+    <button class="btn-new-post" onclick="openNewPost()">+ New Post</button>
+    <button class="btn-logout" onclick="logout()">Log Out</button>
+  </div>
+</div>
+
+<!-- HOME PAGE -->
+<div id="home-page" class="page active">
+  <div id="headline-wrap"></div>
+  <div class="section-divider">
+    <div class="divider-line"></div>
+    <span id="section-label">Recent Articles</span>
+    <div class="divider-line"></div>
+  </div>
+  <div class="post-grid" id="post-grid"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <h2>A space for wisdom, awaiting its voice.</h2>
+    <p>No posts yet. The journey begins with a single thought.</p>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div id="about-page" class="page">
+  <div class="about-header">
+    <div class="about-eyebrow">About This Space</div>
+    <h1 class="about-title">Omnia cum anima<br>sapientia sunt.</h1>
+  </div>
+  <div class="about-body" id="about-content">
+    <p>Welcome to <strong>Animasapient</strong> — a space dedicated to the pursuit of knowledge that nourishes not just the mind, but the soul. The name itself is a synthesis: <em>anima</em> (soul), <em>sapient</em> (wise) — a reminder that true wisdom is never merely intellectual.</p>
+    <p>Here you will find meditations on <strong>philosophy</strong> — ancient and contemporary — explorations of <strong>religion and spirituality</strong> across traditions, studies of the world's <strong>geography</strong> and the ways landscape shapes civilization, and reflections on <strong>culture</strong> in all its extraordinary diversity.</p>
+    <p>This is a personal project, written and curated by one voice, with the conviction that thoughtful writing still matters — that slowness, depth, and sincerity are themselves a form of resistance in an age of noise.</p>
+    <p>I hope you find something here that gives you pause, that opens a door, that makes the world feel a little more astonishing than it did before.</p>
+  </div>
+</div>
+
+<!-- SINGLE POST PAGE -->
+<div id="post-page" class="page">
+  <div class="post-hero" id="post-hero">
+    <img class="post-hero-img" id="post-hero-img" src="" alt="" style="display:none;">
+    <div class="headline-img-placeholder" id="post-hero-placeholder"></div>
+    <div class="post-hero-overlay"></div>
+    <div class="post-hero-content">
+      <div class="post-hero-cat" id="post-hero-cat"></div>
+      <h1 class="post-hero-title" id="post-hero-title"></h1>
+      <div class="post-hero-meta" id="post-hero-meta"></div>
+    </div>
+  </div>
+  <div class="post-body-wrap">
+    <button class="back-btn" onclick="showPage('home')">← Return to All Articles</button>
+    <div class="post-content" id="post-body"></div>
+    <div style="margin-top:2rem;" id="post-admin-controls"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Animasapient</div>
+  <div class="footer-slogan">Omnia cum anima sapientia sunt.</div>
+  <div class="footer-cats">
+    <span>Philosophy</span>
+    <span>Religion & Spirituality</span>
+    <span>Geography</span>
+    <span>Culture</span>
+  </div>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="modal-bg" id="login-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Administrator Login</h2>
+      <button class="modal-close" onclick="closeModal('login-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="login-error" id="login-error">Incorrect credentials. Please try again.</div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="login-user" placeholder="Enter username" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-pass" placeholder="Enter password" autocomplete="current-password">
+      </div>
+      <div style="margin-bottom:1rem; font-family:'Cormorant Garamond',serif; font-size:0.85rem; color:var(--cool-grey);">
+        Default credentials — <strong>Username:</strong> admin &nbsp;|&nbsp; <strong>Password:</strong> wisdom2024<br>
+        <em style="font-size:0.8rem;">(Change these in the script to personalize your login)</em>
+      </div>
+      <button class="btn-primary" onclick="attemptLogin()">Sign In</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW POST MODAL -->
+<div class="modal-bg" id="post-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="post-modal-title">New Article</h2>
+      <button class="modal-close" onclick="closeModal('post-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Article Title</label>
+        <input type="text" id="p-title" placeholder="Enter a compelling title…">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="p-category">
+            <option>Philosophy</option>
+            <option>Religion & Spirituality</option>
+            <option>Geography</option>
+            <option>Culture</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="p-date">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Excerpt (brief summary)</label>
+        <input type="text" id="p-excerpt" placeholder="A one-line summary of the article…">
+      </div>
+      <div class="form-group">
+        <label>Article Body</label>
+        <textarea id="p-body" placeholder="Write your article here. Separate paragraphs with a blank line."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Cover Image</label>
+        <input type="file" id="p-image" accept="image/*" onchange="previewImage(this)">
+        <img class="img-preview" id="img-preview-el">
+        <p style="font-size:0.8rem; color:var(--cool-grey); margin-top:0.4rem; font-family:'Cormorant Garamond',serif;">
+          Upload an image from your device. It will be stored in your browser.
+        </p>
+      </div>
+      <input type="hidden" id="p-edit-id" value="">
+      <button class="btn-primary" onclick="submitPost()">Publish Article</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  //  CONFIG — Change credentials here
+  // ============================================================
+  const ADMIN_USER = 'admin';
+  const ADMIN_PASS = 'wisdom2024';
+
+  // ============================================================
+  //  STATE
+  // ============================================================
+  let isLoggedIn = false;
+  let currentPage = 'home';
+  let activeFilter = null;
+  let currentPostId = null;
+  let editingId = null;
+
+  // ============================================================
+  //  STORAGE
+  // ============================================================
+  function getPosts() {
+    try { return JSON.parse(localStorage.getItem('animasapient_posts') || '[]'); } catch(e) { return []; }
+  }
+  function savePosts(posts) {
+    localStorage.setItem('animasapient_posts', JSON.stringify(posts));
+  }
+  function getSessionLogin() {
+    return sessionStorage.getItem('animasapient_admin') === 'true';
+  }
+  function setSessionLogin(v) {
+    sessionStorage.setItem('animasapient_admin', v ? 'true' : 'false');
+  }
+
+  // ============================================================
+  //  AUTH
+  // ============================================================
+  function handleAdminNav() {
+    if (isLoggedIn) { openModal('post-modal'); openNewPost(); }
+    else { openModal('login-modal'); }
+  }
+
+  function attemptLogin() {
+    const u = document.getElementById('login-user').value.trim();
+    const p = document.getElementById('login-pass').value;
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      isLoggedIn = true;
+      setSessionLogin(true);
+      closeModal('login-modal');
+      document.getElementById('login-error').style.display = 'none';
+      document.getElementById('login-user').value = '';
+      document.getElementById('login-pass').value = '';
+      updateAdminUI();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+
+  function logout() {
+    isLoggedIn = false;
+    setSessionLogin(false);
+    updateAdminUI();
+    renderHome();
+  }
+
+  function updateAdminUI() {
+    const bar = document.getElementById('admin-bar');
+    const btn = document.getElementById('admin-nav-btn');
+    if (isLoggedIn) {
+      bar.classList.add('visible');
+      btn.textContent = '+ New Post';
+      btn.classList.add('logged-in');
+      document.body.classList.add('admin-mode');
+    } else {
+      bar.classList.remove('visible');
+      btn.textContent = 'Admin';
+      btn.classList.remove('logged-in');
+      document.body.classList.remove('admin-mode');
+    }
+  }
+
+  // ============================================================
+  //  MODALS
+  // ============================================================
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+  }
+
+  // Close on bg click
+  document.querySelectorAll('.modal-bg').forEach(bg => {
+    bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open'); });
+  });
+
+  // Enter key on login
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('login-modal').classList.contains('open')) {
+      attemptLogin();
+    }
+  });
+
+  // ============================================================
+  //  POST FORM
+  // ============================================================
+  function openNewPost() {
+    editingId = null;
+    document.getElementById('post-modal-title').textContent = 'New Article';
+    document.getElementById('p-title').value = '';
+    document.getElementById('p-category').value = 'Philosophy';
+    document.getElementById('p-date').value = new Date().toISOString().split('T')[0];
+    document.getElementById('p-excerpt').value = '';
+    document.getElementById('p-body').value = '';
+    document.getElementById('p-image').value = '';
+    document.getElementById('p-edit-id').value = '';
+    document.getElementById('img-preview-el').style.display = 'none';
+    openModal('post-modal');
+  }
+
+  function openEditPost(id) {
+    const posts = getPosts();
+    const post = posts.find(p => p.id === id);
+    if (!post) return;
+    editingId = id;
+    document.getElementById('post-modal-title').textContent = 'Edit Article';
+    document.getElementById('p-title').value = post.title;
+    document.getElementById('p-category').value = post.category;
+    document.getElementById('p-date').value = post.date;
+    document.getElementById('p-excerpt').value = post.excerpt;
+    document.getElementById('p-body').value = post.body;
+    document.getElementById('p-edit-id').value = id;
+    if (post.image) {
+      document.getElementById('img-preview-el').src = post.image;
+      document.getElementById('img-preview-el').style.display = 'block';
+    } else {
+      document.getElementById('img-preview-el').style.display = 'none';
+    }
+    openModal('post-modal');
+  }
+
+  function previewImage(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const el = document.getElementById('img-preview-el');
+      el.src = e.target.result;
+      el.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function submitPost() {
+    const title = document.getElementById('p-title').value.trim();
+    const category = document.getElementById('p-category').value;
+    const date = document.getElementById('p-date').value;
+    const excerpt = document.getElementById('p-excerpt').value.trim();
+    const body = document.getElementById('p-body').value.trim();
+    const imageFile = document.getElementById('p-image').files[0];
+
+    if (!title || !date || !body) {
+      alert('Please fill in the title, date, and body fields.');
+      return;
+    }
+
+    const finalize = (imageData) => {
+      const posts = getPosts();
+      if (editingId) {
+        const idx = posts.findIndex(p => p.id === editingId);
+        if (idx > -1) {
+          posts[idx] = { ...posts[idx], title, category, date, excerpt, body, ...(imageData !== undefined ? { image: imageData } : {}) };
+        }
+      } else {
+        const newPost = {
+          id: Date.now().toString(),
+          title, category, date, excerpt, body,
+          image: imageData || null,
+          created: Date.now()
+        };
+        posts.push(newPost);
+      }
+      savePosts(posts);
+      closeModal('post-modal');
+      renderHome();
+      if (editingId && currentPage === 'post') { openPost(editingId); }
+    };
+
+    if (imageFile) {
+      const reader = new FileReader();
+      reader.onload = e => finalize(e.target.result);
+      reader.readAsDataURL(imageFile);
+    } else {
+      finalize(undefined);
+    }
+  }
+
+  function deletePost(id) {
+    if (!confirm('Are you sure you want to delete this article?')) return;
+    let posts = getPosts();
+    posts = posts.filter(p => p.id !== id);
+    savePosts(posts);
+    if (currentPage === 'post') showPage('home');
+    else renderHome();
+  }
+
+  // ============================================================
+  //  RENDER
+  // ============================================================
+  function getSortedPosts(filter) {
+    let posts = getPosts();
+    if (filter) posts = posts.filter(p => p.category === filter);
+    return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
+  function formatDate(dateStr) {
+    const d = new Date(dateStr + 'T12:00:00');
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function renderHome() {
+    const posts = getSortedPosts(activeFilter);
+    const headlineWrap = document.getElementById('headline-wrap');
+    const grid = document.getElementById('post-grid');
+    const emptyState = document.getElementById('empty-state');
+    const label = document.getElementById('section-label');
+
+    label.textContent = activeFilter ? activeFilter : 'Recent Articles';
+
+    if (posts.length === 0) {
+      headlineWrap.innerHTML = '';
+      grid.innerHTML = '';
+      emptyState.style.display = 'block';
+      return;
+    }
+
+    emptyState.style.display = 'none';
+
+    // Headline (most recent)
+    const hero = posts[0];
+    headlineWrap.innerHTML = `
+      <div class="headline-post" onclick="openPost('${hero.id}')">
+        ${hero.image
+          ? `<img class="headline-img" src="${hero.image}" alt="${hero.title}">`
+          : `<div class="headline-img-placeholder"></div>`}
+        <div class="headline-overlay"></div>
+        <div class="headline-content">
+          <div class="headline-category">${hero.category}</div>
+          <h2 class="headline-title">${hero.title}</h2>
+          ${hero.excerpt ? `<p class="headline-excerpt">${hero.excerpt}</p>` : ''}
+          <div class="headline-meta">${formatDate(hero.date)}</div>
+          ${isLoggedIn ? `<div class="card-admin" style="display:flex; margin-top:1rem;">
+            <button class="btn-danger" onclick="event.stopPropagation(); openEditPost('${hero.id}')">Edit</button>
+            <button class="btn-danger" onclick="event.stopPropagation(); deletePost('${hero.id}')">Delete</button>
+          </div>` : ''}
+        </div>
+      </div>
+    `;
+
+    // Grid (rest)
+    const rest = posts.slice(1);
+    if (rest.length === 0) {
+      grid.innerHTML = '';
+      return;
+    }
+
+    grid.innerHTML = rest.map(post => `
+      <div class="post-card" onclick="openPost('${post.id}')">
+        <div class="card-img-wrap">
+          ${post.image
+            ? `<img src="${post.image}" alt="${post.title}" loading="lazy">`
+            : `<div class="card-img-placeholder"></div>`}
+        </div>
+        <div class="card-category">${post.category}</div>
+        <div class="card-title">${post.title}</div>
+        ${post.excerpt ? `<div class="card-excerpt">${post.excerpt}</div>` : ''}
+        <div class="card-meta">${formatDate(post.date)}</div>
+        ${isLoggedIn ? `<div class="card-admin">
+          <button class="btn-danger" onclick="event.stopPropagation(); openEditPost('${post.id}')">Edit</button>
+          <button class="btn-danger" onclick="event.stopPropagation(); deletePost('${post.id}')">Delete</button>
+        </div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  // ============================================================
+  //  NAVIGATION
+  // ============================================================
+  function showPage(name) {
+    activeFilter = null;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(name + '-page').classList.add('active');
+    currentPage = name;
+    if (name === 'home') renderHome();
+    window.scrollTo(0, 0);
+  }
+
+  function filterCategory(cat) {
+    activeFilter = cat;
+    showPage('home');
+  }
+
+  function openPost(id) {
+    const posts = getPosts();
+    const post = posts.find(p => p.id === id);
+    if (!post) return;
+    currentPostId = id;
+
+    document.getElementById('post-hero-cat').textContent = post.category;
+    document.getElementById('post-hero-title').textContent = post.title;
+    document.getElementById('post-hero-meta').textContent = formatDate(post.date);
+
+    const img = document.getElementById('post-hero-img');
+    const placeholder = document.getElementById('post-hero-placeholder');
+    if (post.image) {
+      img.src = post.image;
+      img.style.display = 'block';
+      placeholder.style.display = 'none';
+    } else {
+      img.style.display = 'none';
+      placeholder.style.display = 'block';
+    }
+
+    // Render body paragraphs
+    const paragraphs = post.body.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+    document.getElementById('post-body').innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+
+    // Admin controls
+    const adminCtrl = document.getElementById('post-admin-controls');
+    if (isLoggedIn) {
+      adminCtrl.innerHTML = `
+        <div style="display:flex; gap:1rem; padding-top:1rem; border-top:1px solid var(--cool-grey-light);">
+          <button class="btn-danger" onclick="openEditPost('${id}')">Edit This Article</button>
+          <button class="btn-danger" onclick="deletePost('${id}')">Delete Article</button>
+        </div>
+      `;
+    } else {
+      adminCtrl.innerHTML = '';
+    }
+
+    showPage('post');
+  }
+
+  // ============================================================
+  //  INIT
+  // ============================================================
+  function init() {
+    isLoggedIn = getSessionLogin();
+    updateAdminUI();
+
+    // Set today as default date
+    document.getElementById('p-date').value = new Date().toISOString().split('T')[0];
+
+    renderHome();
+  }
+
+  init();
+</script>
+</body>
+</html>
