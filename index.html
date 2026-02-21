@@ -21,6 +21,7 @@
   .logo-group { display: flex; flex-direction: column; gap: 1px; cursor: pointer; }
   .logo-name { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
   .logo-slogan { font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; font-weight: 300; font-style: italic; color: var(--cool-grey); letter-spacing: 0.08em; }
+  .logo-group img { height: 1.5rem; object-fit: contain; }
   nav { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
   nav a { font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey-light); text-decoration: none; transition: color 0.2s; cursor: pointer; }
   nav a:hover { color: var(--white); }
@@ -411,7 +412,7 @@
 <header>
   <div class="header-inner">
     <div class="logo-group" onclick="goHome()">
-      <div class="logo-name">Animasapient</div>
+      <img src="image.png" alt="Animasapient">
       <div class="logo-slogan">Omnia cum anima sapientia sunt.</div>
     </div>
     <nav>
