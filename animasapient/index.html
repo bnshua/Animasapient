@@ -401,6 +401,275 @@
   .footer-cats { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
   .footer-cats span { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(138,150,168,0.6); }
 
+
+  /* USER AUTH in nav */
+  .nav-user-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--cool-grey); padding: 6px 16px; font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; border-radius: 2px; margin-left: 0.5rem; }
+  .nav-user-btn:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+  .nav-user-btn.signed-in { border-color: #4a7a5a; color: #80c8a0; }
+
+  /* STAR RATINGS on cards */
+  .card-stars { display: flex; align-items: center; gap: 5px; margin-top: 0.4rem; }
+  .stars-display { display: flex; gap: 2px; }
+  .star-icon { font-size: 0.85rem; color: var(--cool-grey-light); line-height: 1; }
+  .star-icon.filled { color: #c9a84c; }
+  .star-count { font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; color: var(--cool-grey); letter-spacing: 0.05em; }
+
+  /* HEADLINE star rating */
+  .headline-stars { display: flex; align-items: center; gap: 6px; margin-top: 0.6rem; }
+  .headline-stars .stars-display .star-icon { font-size: 1rem; }
+  .headline-stars .star-count { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; color: var(--cool-grey-light); }
+
+  /* STAR RATING WIDGET on post page */
+  .rating-section {
+    margin-top: 3rem;
+    border-top: 1px solid var(--cool-grey-light);
+    padding-top: 2rem;
+  }
+  .rating-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+    margin-bottom: 1rem;
+  }
+  .rating-current {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.2rem;
+  }
+  .rating-current .stars-display .star-icon { font-size: 1.1rem; }
+  .rating-summary {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  .rating-input-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .rating-input-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    color: var(--text-light);
+    font-style: italic;
+  }
+  .star-picker { display: flex; gap: 4px; cursor: pointer; }
+  .star-picker .sp-star {
+    font-size: 1.4rem;
+    color: var(--cool-grey-light);
+    transition: color 0.15s, transform 0.1s;
+    line-height: 1;
+  }
+  .star-picker .sp-star:hover,
+  .star-picker .sp-star.hovered,
+  .star-picker .sp-star.selected { color: #c9a84c; transform: scale(1.15); }
+  .rating-signin-prompt {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    color: var(--text-light);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+  .btn-inline-signin {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 5px 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .btn-inline-signin:hover { background: var(--navy-mid); }
+  .btn-inline-nothanks {
+    background: transparent;
+    color: var(--cool-grey);
+    border: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+  .btn-inline-nothanks:hover { color: var(--text); }
+  .rating-thanks {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    color: #1a5c2e;
+    font-style: italic;
+    display: none;
+  }
+  .user-existing-rating {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-style: italic;
+    margin-top: 0.4rem;
+  }
+
+  /* COMMENTS SECTION */
+  .comments-section {
+    margin-top: 3rem;
+    border-top: 1px solid var(--cool-grey-light);
+    padding-top: 2rem;
+  }
+  .comments-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+    margin-bottom: 1.5rem;
+  }
+  .comment-form-wrap { margin-bottom: 2rem; }
+  .comment-textarea {
+    width: 100%;
+    border: 1px solid var(--cool-grey-light);
+    background: var(--white);
+    padding: 10px 14px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: var(--text);
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+    min-height: 90px;
+  }
+  .comment-textarea:focus { border-color: var(--accent); }
+  .comment-submit-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.6rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .comment-as {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    color: var(--cool-grey);
+    font-style: italic;
+  }
+  .btn-comment-submit {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    padding: 8px 22px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .btn-comment-submit:hover { background: var(--navy-mid); }
+  .btn-comment-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .comment-signin-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.88rem;
+    color: var(--text-light);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .comment-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .comment-item {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cool-grey-pale);
+  }
+  .comment-item:last-child { border-bottom: none; }
+  .comment-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 0.4rem;
+  }
+  .comment-author {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--navy);
+    letter-spacing: 0.04em;
+  }
+  .comment-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    color: var(--cool-grey);
+    letter-spacing: 0.05em;
+  }
+  .comment-body {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.65;
+  }
+  .comment-delete-btn {
+    background: none;
+    border: none;
+    color: var(--cool-grey);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    padding: 0;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    margin-left: auto;
+  }
+  .comment-delete-btn:hover { color: #8b2635; }
+  .no-comments {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--cool-grey);
+    font-style: italic;
+  }
+
+  /* POSTER EMAIL (admin only) */
+  .post-poster-info {
+    margin-top: 3rem;
+    border-top: 1px solid var(--cool-grey-light);
+    padding-top: 1.5rem;
+    display: none;
+  }
+  .admin-mode .post-poster-info { display: block; }
+  .poster-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cool-grey);
+    margin-bottom: 0.4rem;
+  }
+  .poster-email {
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    color: var(--text-light);
+  }
+
+  /* USER LOGIN MODAL specifics */
+  .auth-tabs { display: flex; border-bottom: 1px solid var(--cool-grey-light); margin-bottom: 1.5rem; }
+  .auth-tab { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey); padding: 8px 22px; cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; }
+  .auth-tab.active { color: var(--navy); border-bottom-color: var(--navy); }
+  .auth-panel { display: none; }
+  .auth-panel.active { display: block; }
+
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
   @media (max-width: 900px) { .post-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -421,7 +690,8 @@
       <a onclick="filterCat('Religion &amp; Spirituality')">Religion</a>
       <a onclick="filterCat('Geography')">Geography</a>
       <a onclick="filterCat('Culture')">Culture</a>
-      <a onclick="showPage('about')">About</a>
+      <a onclick="showPage('about', true, '/about')">About</a>
+      <button class="nav-user-btn" id="user-nav-btn" onclick="handleUserClick()">Sign In</button>
       <button class="nav-admin-btn" id="admin-nav-btn" onclick="handleAdminClick()">Admin</button>
     </nav>
   </div>
@@ -499,6 +769,34 @@
       </div>
     </div>
 
+    <!-- RATINGS -->
+    <div class="rating-section" id="rating-section">
+      <div class="rating-label">Reader Rating</div>
+      <div class="rating-current">
+        <div class="stars-display" id="post-stars-display"></div>
+        <div class="rating-summary" id="post-rating-summary"></div>
+      </div>
+      <div id="rating-input-area">
+        <!-- filled by JS based on auth state -->
+      </div>
+      <div class="rating-thanks" id="rating-thanks">Thank you for your rating!</div>
+    </div>
+
+    <!-- COMMENTS -->
+    <div class="comments-section">
+      <div class="comments-label" id="comments-label">Comments</div>
+      <div id="comment-form-area">
+        <!-- filled by JS based on auth state -->
+      </div>
+      <div class="comment-list" id="comment-list"></div>
+    </div>
+
+    <!-- POSTER INFO (admin only) -->
+    <div class="post-poster-info" id="post-poster-info">
+      <div class="poster-label">Posted By</div>
+      <div class="poster-email" id="poster-email-display"></div>
+    </div>
+
     <div id="ph-admin" style="margin-top:2rem;"></div>
   </div>
 </div>
@@ -510,6 +808,54 @@
     <span>Philosophy</span><span>Religion &amp; Spirituality</span><span>Geography</span><span>Culture</span>
   </div>
 </footer>
+
+
+<!-- USER AUTH MODAL -->
+<div class="modal-bg" id="user-modal">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <h2 id="user-modal-title">Sign In / Create Account</h2>
+      <button class="modal-close" onclick="closeModal('user-modal')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="switchAuthTab('signin', this)">Sign In</button>
+        <button class="auth-tab" onclick="switchAuthTab('signup', this)">Create Account</button>
+      </div>
+      <!-- SIGN IN -->
+      <div class="auth-panel active" id="auth-signin">
+        <div class="form-msg form-error" id="user-signin-error"></div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="user-signin-email" placeholder="your@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="user-signin-pass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button class="btn-primary" id="user-signin-btn" onclick="doUserSignin()">Sign In</button>
+      </div>
+      <!-- SIGN UP -->
+      <div class="auth-panel" id="auth-signup">
+        <div class="form-msg form-error" id="user-signup-error"></div>
+        <div class="form-msg form-success" id="user-signup-success"></div>
+        <div class="form-group">
+          <label>Display Name</label>
+          <input type="text" id="user-signup-name" placeholder="How you'll appear in comments">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="user-signup-email" placeholder="your@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="user-signup-pass" placeholder="At least 6 characters" autocomplete="new-password">
+        </div>
+        <button class="btn-primary" id="user-signup-btn" onclick="doUserSignup()">Create Account</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- LOGIN MODAL -->
 <div class="modal-bg" id="login-modal">
@@ -644,28 +990,71 @@
 // ── SUPABASE ─────────────────────────────────────────────────
 const SUPA_URL = 'https://clfpzfualnormrgjmujb.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsZnB6ZnVhbG5vcm1yZ2ptdWpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODk5MjcsImV4cCI6MjA4NzE2NTkyN30.eq66TP4GNT5kbOfanARkW9rLoGZQWnvhTC-xx-_vuKw';
+const ADMIN_EMAIL = 'admin'; // partial match — any user whose email contains this is admin
 const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 
 // ── GLOBAL STATE ─────────────────────────────────────────────
-let currentUser = null, currentFilter = null, currentPostId = null, cachedPosts = [];
+let currentUser = null;       // admin user (via admin login)
+let currentPublicUser = null; // regular signed-in user
+let currentFilter = null, currentPostId = null, cachedPosts = [];
+let ratingsCache = {};        // postId -> { avg, count }
+let ratingPromptDismissed = false;
 
 // ── CROPPER STATE ────────────────────────────────────────────
-const CROP_ASPECT = 16 / 9;        // locked ratio
+const CROP_ASPECT = 16 / 9;
 let cropSourceNaturalW = 0, cropSourceNaturalH = 0;
-let cropDisplayW = 0, cropDisplayH = 0;   // rendered size of img in stage
-let cropDisplayOffsetX = 0, cropDisplayOffsetY = 0; // img offset within stage
-let cropBox = { x: 0, y: 0, w: 0, h: 0 }; // in display px
-let croppedBlob = null;               // final cropped blob ready to upload
-let dragState = null;                 // { type:'move'|'resize', handle, startX, startY, startBox }
+let cropDisplayW = 0, cropDisplayH = 0;
+let cropDisplayOffsetX = 0, cropDisplayOffsetY = 0;
+let cropBox = { x: 0, y: 0, w: 0, h: 0 };
+let croppedBlob = null;
+let dragState = null;
 
-// ── AUTH ─────────────────────────────────────────────────────
+// ── ADMIN AUTH ────────────────────────────────────────────────
 async function initAuth() {
+  // We use ONE Supabase auth for both admin and public users.
+  // Admin is determined by email matching the admin email set in Supabase.
+  // For simplicity: the admin account is whatever email you invited in Supabase Auth.
+  // We store admin email in the posts table as poster_email on insert.
   const { data: { session } } = await sb.auth.getSession();
-  if (session) applyUser(session.user);
-  sb.auth.onAuthStateChange((_, s) => applyUser(s?.user || null));
+  if (session) handleSessionUser(session.user);
+  sb.auth.onAuthStateChange((_, s) => handleSessionUser(s?.user || null));
 }
-function applyUser(user) {
-  currentUser = user;
+
+function isAdminUser(user) {
+  if (!user) return false;
+  // Admin detection: user has app_metadata.role = 'admin' OR we check against known admin email
+  // Simple approach: store admin email in a const and compare
+  return user.email === 'YOUR_ADMIN_EMAIL@example.com' // ← replace with your admin email || (user.app_metadata && user.app_metadata.role === 'admin');
+}
+
+function handleSessionUser(user) {
+  if (!user) {
+    currentUser = null;
+    currentPublicUser = null;
+    applyAdminUI(null);
+    applyUserUI(null);
+    return;
+  }
+  if (isAdminUser(user)) {
+    currentUser = user;
+    currentPublicUser = user; // admin is also a public user
+    applyAdminUI(user);
+    applyUserUI(user);
+  } else {
+    currentUser = null;
+    currentPublicUser = user;
+    applyAdminUI(null);
+    applyUserUI(user);
+  }
+  if (document.getElementById('home-page').classList.contains('active')) renderHome();
+  if (currentPostId) {
+    renderPostAdmin(currentPostId);
+    renderRatingSection(currentPostId);
+    renderCommentForm();
+  }
+}
+
+function applyAdminUI(user) {
   const bar = document.getElementById('admin-bar');
   const btn = document.getElementById('admin-nav-btn');
   if (user) {
@@ -676,10 +1065,30 @@ function applyUser(user) {
     bar.classList.remove('visible'); btn.textContent = 'Admin'; btn.classList.remove('logged-in');
     document.body.classList.remove('admin-mode');
   }
-  if (document.getElementById('home-page').classList.contains('active')) renderHome();
-  if (currentPostId) renderPostAdmin(currentPostId);
 }
+
+function applyUserUI(user) {
+  const btn = document.getElementById('user-nav-btn');
+  if (user) {
+    const displayName = user.user_metadata?.display_name || user.email.split('@')[0];
+    btn.textContent = displayName;
+    btn.classList.add('signed-in');
+  } else {
+    btn.textContent = 'Sign In';
+    btn.classList.remove('signed-in');
+  }
+}
+
 function handleAdminClick() { currentUser ? openNewPost() : openModal('login-modal'); }
+function handleUserClick() {
+  if (currentPublicUser) {
+    if (confirm('Sign out of your account?')) { sb.auth.signOut(); }
+  } else {
+    openModal('user-modal');
+  }
+}
+
+// Admin login (same modal, same Supabase signIn)
 async function doLogin() {
   const email = document.getElementById('login-email').value.trim();
   const pass = document.getElementById('login-pass').value;
@@ -692,9 +1101,49 @@ async function doLogin() {
   else { closeModal('login-modal'); document.getElementById('login-email').value = ''; document.getElementById('login-pass').value = ''; }
 }
 async function doLogout() { await sb.auth.signOut(); }
+
 document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && document.getElementById('login-modal').classList.contains('open')) doLogin();
 });
+
+// Public user auth
+function switchAuthTab(tab, btnEl) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+  btnEl.classList.add('active');
+  document.getElementById('auth-' + tab).classList.add('active');
+}
+
+async function doUserSignin() {
+  const email = document.getElementById('user-signin-email').value.trim();
+  const pass = document.getElementById('user-signin-pass').value;
+  const err = document.getElementById('user-signin-error'), btn = document.getElementById('user-signin-btn');
+  err.style.display = 'none'; btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Signing in…';
+  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  btn.disabled = false; btn.textContent = 'Sign In';
+  if (error) { err.textContent = error.message; err.style.display = 'block'; }
+  else { closeModal('user-modal'); }
+}
+
+async function doUserSignup() {
+  const name = document.getElementById('user-signup-name').value.trim();
+  const email = document.getElementById('user-signup-email').value.trim();
+  const pass = document.getElementById('user-signup-pass').value;
+  const err = document.getElementById('user-signup-error');
+  const suc = document.getElementById('user-signup-success');
+  const btn = document.getElementById('user-signup-btn');
+  err.style.display = 'none'; suc.style.display = 'none';
+  if (!name) { err.textContent = 'Please enter a display name.'; err.style.display = 'block'; return; }
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Creating account…';
+  const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { display_name: name } } });
+  btn.disabled = false; btn.textContent = 'Create Account';
+  if (error) { err.textContent = error.message; err.style.display = 'block'; }
+  else {
+    suc.textContent = 'Account created! Check your email to confirm, then sign in.';
+    suc.style.display = 'block';
+  }
+}
 
 // ── DATA ─────────────────────────────────────────────────────
 async function fetchPosts(cat) {
@@ -703,6 +1152,21 @@ async function fetchPosts(cat) {
   const { data, error } = await q;
   if (error) { console.error(error); return []; }
   return data || [];
+}
+
+async function fetchRatingsForPosts(postIds) {
+  if (!postIds.length) return;
+  const { data } = await sb.from('ratings').select('post_id, score');
+  if (!data) return;
+  const map = {};
+  postIds.forEach(id => map[id] = { total: 0, count: 0 });
+  data.forEach(r => {
+    if (map[r.post_id]) { map[r.post_id].total += r.score; map[r.post_id].count++; }
+  });
+  postIds.forEach(id => {
+    const m = map[id];
+    ratingsCache[id] = m.count ? { avg: m.total / m.count, count: m.count } : { avg: 0, count: 0 };
+  });
 }
 
 // ── HOME RENDER ──────────────────────────────────────────────
@@ -716,11 +1180,25 @@ async function renderHome() {
   const posts = await fetchPosts(currentFilter);
   cachedPosts = posts; loader.style.display = 'none';
   if (!posts.length) { empty.style.display = 'block'; return; }
+  // Fetch ratings for all posts
+  await fetchRatingsForPosts(posts.map(p => p.id));
   hwrap.innerHTML = heroHTML(posts[0]);
   const rest = posts.slice(1);
   if (rest.length) { divider.style.display = 'flex'; grid.innerHTML = rest.map(cardHTML).join(''); }
 }
+
+function starsHTML(avg, count, size='small') {
+  const filled = Math.round(avg);
+  let s = '';
+  for (let i = 1; i <= 5; i++) {
+    s += `<span class="star-icon${i <= filled ? ' filled' : ''}">★</span>`;
+  }
+  const label = count ? `${avg.toFixed(1)} (${count})` : 'No ratings yet';
+  return `<div class="stars-display">${s}</div><span class="star-count">${label}</span>`;
+}
+
 function heroHTML(p) {
+  const r = ratingsCache[p.id] || { avg: 0, count: 0 };
   const ab = currentUser ? `<div style="display:flex;gap:.6rem;margin-top:1.2rem;">
     <button class="btn-danger" onclick="event.stopPropagation();openEdit('${p.id}')">Edit</button>
     <button class="btn-danger" onclick="event.stopPropagation();confirmDel('${p.id}')">Delete</button></div>` : '';
@@ -731,10 +1209,14 @@ function heroHTML(p) {
       <div class="headline-category">${x(p.category)}</div>
       <h2 class="headline-title">${x(p.title)}</h2>
       ${p.excerpt ? `<p class="headline-excerpt">${x(p.excerpt)}</p>` : ''}
-      <div class="headline-meta">${fmtDate(p.date)}</div>${ab}
+      <div class="headline-meta">${fmtDate(p.date)}</div>
+      <div class="headline-stars">${starsHTML(r.avg, r.count)}</div>
+      ${ab}
     </div></div>`;
 }
+
 function cardHTML(p) {
+  const r = ratingsCache[p.id] || { avg: 0, count: 0 };
   const ab = currentUser ? `<div class="card-admin">
     <button class="btn-danger" onclick="event.stopPropagation();openEdit('${p.id}')">Edit</button>
     <button class="btn-danger" onclick="event.stopPropagation();confirmDel('${p.id}')">Delete</button></div>` : '';
@@ -743,34 +1225,199 @@ function cardHTML(p) {
     <div class="card-category">${x(p.category)}</div>
     <div class="card-title">${x(p.title)}</div>
     ${p.excerpt ? `<div class="card-excerpt">${x(p.excerpt)}</div>` : ''}
-    <div class="card-meta">${fmtDate(p.date)}</div>${ab}</div>`;
+    <div class="card-meta">${fmtDate(p.date)}</div>
+    <div class="card-stars">${starsHTML(r.avg, r.count)}</div>
+    ${ab}</div>`;
 }
 
-// ── POST PAGE ────────────────────────────────────────────────
+// ── SINGLE POST ──────────────────────────────────────────────
 async function openPost(id) {
   currentPostId = id;
+  ratingPromptDismissed = false;
   let post = cachedPosts.find(p => p.id === id);
   if (!post) { const { data } = await sb.from('posts').select('*').eq('id', id).single(); post = data; }
   if (!post) return;
+
   document.getElementById('ph-cat').textContent   = post.category;
   document.getElementById('ph-title').textContent = post.title;
   document.getElementById('ph-meta').textContent  = fmtDate(post.date);
-  // Byline
   const bylineEl = document.getElementById('ph-byline');
   bylineEl.textContent = post.byline ? 'By ' + post.byline : '';
+
   const img = document.getElementById('ph-img'), bg = document.getElementById('ph-bg');
   if (post.image_url) { img.src = post.image_url; img.style.display = 'block'; bg.style.display = 'none'; }
   else { img.style.display = 'none'; bg.style.display = 'block'; }
-  document.getElementById('ph-body').innerHTML = post.body.split(/\n\n+/).map(t => t.trim()).filter(Boolean).map(t => `<p>${x(t)}</p>`).join('');
-  // Citations
+
+  document.getElementById('ph-body').innerHTML = post.body
+    .split(/\n\n+/).map(t => t.trim()).filter(Boolean).map(t => `<p>${x(t)}</p>`).join('');
+
   renderCitations(post);
-  renderPostAdmin(id); showPage('post');
+
+  // Poster email (admin only)
+  const posterEl = document.getElementById('poster-email-display');
+  posterEl.textContent = post.poster_email || '(no email recorded)';
+
+  renderPostAdmin(id);
+  await renderRatingSection(id);
+  await renderComments(id);
+  renderCommentForm();
+  showPage('post');
 }
+
 function renderPostAdmin(id) {
   const el = document.getElementById('ph-admin'); if (!el) return;
   el.innerHTML = currentUser ? `<div style="display:flex;gap:1rem;padding-top:1rem;border-top:1px solid var(--cool-grey-light);">
     <button class="btn-danger" onclick="openEdit('${id}')">Edit Article</button>
     <button class="btn-danger" onclick="confirmDel('${id}')">Delete Article</button></div>` : '';
+}
+
+// ── RATINGS ──────────────────────────────────────────────────
+async function renderRatingSection(postId) {
+  const section = document.getElementById('rating-section');
+  const starsDisp = document.getElementById('post-stars-display');
+  const summary = document.getElementById('post-rating-summary');
+  const inputArea = document.getElementById('rating-input-area');
+  const thanks = document.getElementById('rating-thanks');
+  thanks.style.display = 'none';
+
+  // Fetch current ratings
+  const { data: ratings } = await sb.from('ratings').select('score, user_id').eq('post_id', postId);
+  const count = ratings ? ratings.length : 0;
+  const avg = count ? ratings.reduce((a, r) => a + r.score, 0) / count : 0;
+
+  // Stars display
+  const filled = Math.round(avg);
+  let starsH = '';
+  for (let i = 1; i <= 5; i++) starsH += `<span class="star-icon${i <= filled ? ' filled' : ''}">★</span>`;
+  starsDisp.innerHTML = starsH;
+  summary.textContent = count ? `${avg.toFixed(1)} out of 5 · ${count} rating${count !== 1 ? 's' : ''}` : 'No ratings yet — be the first!';
+
+  // Check if current user has rated
+  let userRating = null;
+  if (currentPublicUser && ratings) {
+    const mine = ratings.find(r => r.user_id === currentPublicUser.id);
+    if (mine) userRating = mine.score;
+  }
+
+  // Input area
+  if (!currentPublicUser) {
+    if (ratingPromptDismissed) {
+      inputArea.innerHTML = '';
+    } else {
+      inputArea.innerHTML = `<div class="rating-signin-prompt">
+        <span>Sign in to leave a rating</span>
+        <button class="btn-inline-signin" onclick="openModal('user-modal')">Sign In</button>
+        <button class="btn-inline-nothanks" onclick="dismissRatingPrompt()">No thanks</button>
+      </div>`;
+    }
+  } else if (userRating !== null) {
+    const existStars = Array.from({length:5}, (_, i) =>
+      `<span class="star-icon${i+1 <= userRating ? ' filled' : ''}">★</span>`).join('');
+    inputArea.innerHTML = `<div class="user-existing-rating">Your rating: <span style="display:inline-flex;gap:2px">${existStars}</span></div>`;
+  } else {
+    inputArea.innerHTML = `<div class="rating-input-row">
+      <span class="rating-input-label">Your rating:</span>
+      <div class="star-picker" id="star-picker">
+        ${[1,2,3,4,5].map(n => `<span class="sp-star" data-val="${n}" onmouseenter="hoverStar(${n})" onmouseleave="unhoverStar()" onclick="submitRating(${n})">★</span>`).join('')}
+      </div>
+    </div>`;
+  }
+}
+
+function dismissRatingPrompt() {
+  ratingPromptDismissed = true;
+  document.getElementById('rating-input-area').innerHTML = '';
+}
+
+function hoverStar(n) {
+  document.querySelectorAll('#star-picker .sp-star').forEach((s, i) => {
+    s.classList.toggle('hovered', i < n);
+  });
+}
+function unhoverStar() {
+  document.querySelectorAll('#star-picker .sp-star').forEach(s => s.classList.remove('hovered'));
+}
+
+async function submitRating(score) {
+  if (!currentPublicUser || !currentPostId) return;
+  document.getElementById('rating-thanks').style.display = 'block';
+  document.getElementById('rating-input-area').innerHTML = '';
+  const { error } = await sb.from('ratings').upsert({
+    post_id: currentPostId,
+    user_id: currentPublicUser.id,
+    score
+  }, { onConflict: 'post_id,user_id' });
+  if (error) console.error(error);
+  await renderRatingSection(currentPostId);
+}
+
+// ── COMMENTS ─────────────────────────────────────────────────
+function renderCommentForm() {
+  const area = document.getElementById('comment-form-area');
+  if (!currentPublicUser) {
+    area.innerHTML = `<div class="comment-signin-note">
+      <span>Sign in to leave a comment</span>
+      <button class="btn-inline-signin" onclick="openModal('user-modal')">Sign In</button>
+    </div>`;
+  } else {
+    const displayName = currentPublicUser.user_metadata?.display_name || currentPublicUser.email.split('@')[0];
+    area.innerHTML = `<div class="comment-form-wrap">
+      <textarea class="comment-textarea" id="comment-input" placeholder="Share your thoughts…"></textarea>
+      <div class="comment-submit-row">
+        <span class="comment-as">Commenting as <strong>${x(displayName)}</strong></span>
+        <button class="btn-comment-submit" id="comment-submit-btn" onclick="submitComment()">Post Comment</button>
+      </div>
+    </div>`;
+  }
+}
+
+async function renderComments(postId) {
+  const list = document.getElementById('comment-list');
+  const label = document.getElementById('comments-label');
+  list.innerHTML = '<span style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--cool-grey);">Loading comments…</span>';
+  const { data: comments } = await sb.from('comments')
+    .select('*').eq('post_id', postId).order('created_at', { ascending: true });
+  const count = comments ? comments.length : 0;
+  label.textContent = `Comments${count ? ' (' + count + ')' : ''}`;
+  if (!count) { list.innerHTML = '<p class="no-comments">No comments yet. Be the first to share your thoughts.</p>'; return; }
+  list.innerHTML = comments.map(c => {
+    const isOwn = currentPublicUser && currentPublicUser.id === c.user_id;
+    const canDelete = currentUser || isOwn;
+    return `<div class="comment-item" id="comment-${c.id}">
+      <div class="comment-header">
+        <span class="comment-author">${x(c.display_name || 'Anonymous')}</span>
+        <span class="comment-date">${fmtDatetime(c.created_at)}</span>
+        ${canDelete ? `<button class="comment-delete-btn" onclick="deleteComment('${c.id}')">Delete</button>` : ''}
+      </div>
+      <div class="comment-body">${x(c.body)}</div>
+    </div>`;
+  }).join('');
+}
+
+async function submitComment() {
+  if (!currentPublicUser || !currentPostId) return;
+  const input = document.getElementById('comment-input');
+  const body = input.value.trim();
+  if (!body) return;
+  const btn = document.getElementById('comment-submit-btn');
+  btn.disabled = true; btn.textContent = 'Posting…';
+  const displayName = currentPublicUser.user_metadata?.display_name || currentPublicUser.email.split('@')[0];
+  const { error } = await sb.from('comments').insert({
+    post_id: currentPostId,
+    user_id: currentPublicUser.id,
+    display_name: displayName,
+    body
+  });
+  btn.disabled = false; btn.textContent = 'Post Comment';
+  if (error) { alert('Could not post comment: ' + error.message); return; }
+  input.value = '';
+  await renderComments(currentPostId);
+}
+
+async function deleteComment(id) {
+  if (!confirm('Delete this comment?')) return;
+  await sb.from('comments').delete().eq('id', id);
+  await renderComments(currentPostId);
 }
 
 // ── POST FORM ────────────────────────────────────────────────
@@ -832,63 +1479,38 @@ function onFileSelected(input) {
     cropSourceNaturalW = srcImg.naturalWidth;
     cropSourceNaturalH = srcImg.naturalHeight;
     document.getElementById('crop-container').classList.add('visible');
-    // Wait a frame for layout
     requestAnimationFrame(() => { initCropBox(); renderCropBox(); });
   };
   srcImg.src = url;
 }
-
 function initCropBox() {
   const srcImg = document.getElementById('crop-source-img');
   const rect = srcImg.getBoundingClientRect();
   const stageRect = document.getElementById('crop-stage').getBoundingClientRect();
-  cropDisplayW = rect.width;
-  cropDisplayH = rect.height;
+  cropDisplayW = rect.width; cropDisplayH = rect.height;
   cropDisplayOffsetX = rect.left - stageRect.left;
   cropDisplayOffsetY = rect.top - stageRect.top;
-  // Start crop box = largest 16:9 centered in image
   const imgAspect = cropDisplayW / cropDisplayH;
   let w, h;
-  if (imgAspect > CROP_ASPECT) {
-    h = cropDisplayH * 0.9;
-    w = h * CROP_ASPECT;
-  } else {
-    w = cropDisplayW * 0.9;
-    h = w / CROP_ASPECT;
-  }
-  cropBox = {
-    x: cropDisplayOffsetX + (cropDisplayW - w) / 2,
-    y: cropDisplayOffsetY + (cropDisplayH - h) / 2,
-    w, h
-  };
+  if (imgAspect > CROP_ASPECT) { h = cropDisplayH * 0.9; w = h * CROP_ASPECT; }
+  else { w = cropDisplayW * 0.9; h = w / CROP_ASPECT; }
+  cropBox = { x: cropDisplayOffsetX + (cropDisplayW - w) / 2, y: cropDisplayOffsetY + (cropDisplayH - h) / 2, w, h };
 }
-
 function renderCropBox() {
   const box = document.getElementById('crop-box');
-  box.style.left = cropBox.x + 'px';
-  box.style.top  = cropBox.y + 'px';
-  box.style.width  = cropBox.w + 'px';
-  box.style.height = cropBox.h + 'px';
+  box.style.left = cropBox.x + 'px'; box.style.top = cropBox.y + 'px';
+  box.style.width = cropBox.w + 'px'; box.style.height = cropBox.h + 'px';
 }
-
-function resetCrop() {
-  initCropBox(); renderCropBox(); croppedBlob = null;
-}
-
+function resetCrop() { initCropBox(); renderCropBox(); croppedBlob = null; }
 function applyCrop() {
   const srcImg = document.getElementById('crop-source-img');
-  // Convert display coords → natural image coords
-  const scaleX = cropSourceNaturalW / cropDisplayW;
-  const scaleY = cropSourceNaturalH / cropDisplayH;
-  const nx = (cropBox.x - cropDisplayOffsetX) * scaleX;
-  const ny = (cropBox.y - cropDisplayOffsetY) * scaleY;
-  const nw = cropBox.w * scaleX;
-  const nh = cropBox.h * scaleY;
+  const scaleX = cropSourceNaturalW / cropDisplayW, scaleY = cropSourceNaturalH / cropDisplayH;
+  const nx = (cropBox.x - cropDisplayOffsetX) * scaleX, ny = (cropBox.y - cropDisplayOffsetY) * scaleY;
+  const nw = cropBox.w * scaleX, nh = cropBox.h * scaleY;
   const OUTPUT_W = 1600, OUTPUT_H = Math.round(OUTPUT_W / CROP_ASPECT);
   const canvas = document.getElementById('crop-canvas');
   canvas.width = OUTPUT_W; canvas.height = OUTPUT_H;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(srcImg, nx, ny, nw, nh, 0, 0, OUTPUT_W, OUTPUT_H);
+  canvas.getContext('2d').drawImage(srcImg, nx, ny, nw, nh, 0, 0, OUTPUT_W, OUTPUT_H);
   canvas.toBlob(blob => {
     croppedBlob = blob;
     const url = URL.createObjectURL(blob);
@@ -897,22 +1519,24 @@ function applyCrop() {
     document.getElementById('crop-container').classList.remove('visible');
   }, 'image/jpeg', 0.92);
 }
-
 function showCropper() {
   document.getElementById('crop-result-wrap').classList.remove('visible');
   document.getElementById('crop-container').classList.add('visible');
   croppedBlob = null;
   requestAnimationFrame(() => { initCropBox(); renderCropBox(); });
 }
+function previewImg(input) {
+  const file = input.files[0]; if (!file) return;
+  const r = new FileReader();
+  r.onload = e => { const el = document.getElementById('p-img-preview'); el.src = e.target.result; el.style.display = 'block'; };
+  r.readAsDataURL(file);
+}
 
-// ── DRAG & RESIZE ────────────────────────────────────────────
-const stage = document.getElementById('crop-stage');
+// Drag & resize
+const cropStageEl = document.getElementById('crop-stage');
 const cropBoxEl = document.getElementById('crop-box');
-
 function clampBox(box) {
-  // Keep inside image bounds
-  box.w = Math.max(60, box.w);
-  box.h = box.w / CROP_ASPECT;
+  box.w = Math.max(60, box.w); box.h = box.w / CROP_ASPECT;
   const maxW = cropDisplayW, maxH = cropDisplayH;
   if (box.w > maxW) { box.w = maxW; box.h = box.w / CROP_ASPECT; }
   if (box.h > maxH) { box.h = maxH; box.w = box.h * CROP_ASPECT; }
@@ -920,29 +1544,24 @@ function clampBox(box) {
   box.y = Math.max(cropDisplayOffsetY, Math.min(cropDisplayOffsetY + cropDisplayH - box.h, box.y));
   return box;
 }
-
 cropBoxEl.addEventListener('mousedown', e => {
-  if (e.target.classList.contains('crop-handle')) return; // handled separately
+  if (e.target.classList.contains('crop-handle')) return;
   e.preventDefault();
   dragState = { type: 'move', startX: e.clientX, startY: e.clientY, startBox: { ...cropBox } };
 });
-
 document.querySelectorAll('.crop-handle').forEach(h => {
   h.addEventListener('mousedown', e => {
     e.preventDefault(); e.stopPropagation();
     dragState = { type: 'resize', handle: h.dataset.handle, startX: e.clientX, startY: e.clientY, startBox: { ...cropBox } };
   });
 });
-
 document.addEventListener('mousemove', e => {
   if (!dragState) return;
   const dx = e.clientX - dragState.startX, dy = e.clientY - dragState.startY;
   const sb2 = dragState.startBox;
-  if (dragState.type === 'move') {
-    cropBox = clampBox({ ...sb2, x: sb2.x + dx, y: sb2.y + dy });
-  } else {
-    let { x, y, w, h } = sb2;
-    const handle = dragState.handle;
+  if (dragState.type === 'move') { cropBox = clampBox({ ...sb2, x: sb2.x + dx, y: sb2.y + dy }); }
+  else {
+    let { x, y, w, h } = sb2; const handle = dragState.handle;
     if (handle === 'se') { w = Math.max(60, sb2.w + dx); h = w / CROP_ASPECT; }
     else if (handle === 'sw') { w = Math.max(60, sb2.w - dx); h = w / CROP_ASPECT; x = sb2.x + sb2.w - w; }
     else if (handle === 'ne') { w = Math.max(60, sb2.w + dx); h = w / CROP_ASPECT; y = sb2.y + sb2.h - h; }
@@ -952,8 +1571,6 @@ document.addEventListener('mousemove', e => {
   renderCropBox();
 });
 document.addEventListener('mouseup', () => { dragState = null; });
-
-// Touch support
 cropBoxEl.addEventListener('touchstart', e => {
   if (e.target.classList.contains('crop-handle')) return;
   const t = e.touches[0];
@@ -971,11 +1588,9 @@ document.addEventListener('touchmove', e => {
   const t = e.touches[0];
   const dx = t.clientX - dragState.startX, dy = t.clientY - dragState.startY;
   const sb2 = dragState.startBox;
-  if (dragState.type === 'move') {
-    cropBox = clampBox({ ...sb2, x: sb2.x + dx, y: sb2.y + dy });
-  } else {
-    let { x, y, w, h } = sb2;
-    const handle = dragState.handle;
+  if (dragState.type === 'move') { cropBox = clampBox({ ...sb2, x: sb2.x + dx, y: sb2.y + dy }); }
+  else {
+    let { x, y, w, h } = sb2; const handle = dragState.handle;
     if (handle === 'se') { w = Math.max(60, sb2.w + dx); h = w / CROP_ASPECT; }
     else if (handle === 'sw') { w = Math.max(60, sb2.w - dx); h = w / CROP_ASPECT; x = sb2.x + sb2.w - w; }
     else if (handle === 'ne') { w = Math.max(60, sb2.w + dx); h = w / CROP_ASPECT; y = sb2.y + sb2.h - h; }
@@ -985,15 +1600,11 @@ document.addEventListener('touchmove', e => {
   renderCropBox();
 }, { passive: true });
 document.addEventListener('touchend', () => { dragState = null; });
-
-// Recalculate offsets on window resize
 window.addEventListener('resize', () => {
-  if (document.getElementById('crop-container').classList.contains('visible')) {
-    initCropBox(); renderCropBox();
-  }
+  if (document.getElementById('crop-container').classList.contains('visible')) { initCropBox(); renderCropBox(); }
 });
 
-// ── SUBMIT ───────────────────────────────────────────────────
+// ── SUBMIT POST ──────────────────────────────────────────────
 async function submitPost() {
   const title    = document.getElementById('p-title').value.trim();
   const category = document.getElementById('p-cat').value;
@@ -1006,17 +1617,13 @@ async function submitPost() {
   const existImg = document.getElementById('p-existing-img').value;
   const errEl = document.getElementById('post-error'), sucEl = document.getElementById('post-success');
   errEl.style.display = 'none'; sucEl.style.display = 'none';
-
   if (!title || !date || !body) { errEl.textContent = 'Title, date, and body are required.'; errEl.style.display = 'block'; return; }
-
   const fileInput = document.getElementById('p-img');
   if (fileInput.files.length > 0 && !croppedBlob && !document.getElementById('crop-result-wrap').classList.contains('visible')) {
     errEl.textContent = 'Please apply your crop before publishing.'; errEl.style.display = 'block'; return;
   }
-
   const btn = document.getElementById('submit-btn');
   btn.disabled = true; btn.innerHTML = `<span class="spinner"></span>${editId ? 'Saving…' : 'Publishing…'}`;
-
   try {
     let image_url = existImg || null;
     if (croppedBlob) {
@@ -1025,7 +1632,8 @@ async function submitPost() {
       if (upErr) throw new Error('Image upload failed: ' + upErr.message);
       image_url = sb.storage.from('post-images').getPublicUrl(fname).data.publicUrl;
     }
-    const payload = { title, category, date, excerpt, body, image_url, byline, slug };
+    const poster_email = currentUser ? currentUser.email : null;
+    const payload = { title, category, date, excerpt, body, image_url, byline, slug, poster_email };
     if (editId) {
       const { error } = await sb.from('posts').update(payload).eq('id', editId);
       if (error) throw new Error(error.message);
@@ -1051,55 +1659,36 @@ async function submitPost() {
 // ── CITATIONS ────────────────────────────────────────────────
 function renderCitations(post) {
   const pageUrl = post.slug
-    ? `https://animasapient.com/${post.slug}`
-    : `https://animasapient.com`;
+    ? `https://animasapient.xyz/${catToSlug(post.category)}/${post.slug}`
+    : `https://animasapient.xyz/${catToSlug(post.category)}/${titleToSlug(post.title)}`;
   const d = new Date(post.date + 'T12:00:00');
-  const year = d.getFullYear();
-  const monthLong = d.toLocaleDateString('en-US', { month: 'long' });
-  const day = d.getDate();
+  const year = d.getFullYear(), monthLong = d.toLocaleDateString('en-US', { month: 'long' }), day = d.getDate();
   const accessDate = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
-
-  // Last, First name formatting for MLA
-  const authorMLA = formatAuthorMLA(post.byline);
-  const authorAPA = formatAuthorAPA(post.byline);
-
-  // MLA 9th edition:
-  // Last, First. "Title." Animasapient, Day Month Year, URL. Accessed Day Month Year.
+  const authorMLA = formatAuthorMLA(post.byline), authorAPA = formatAuthorAPA(post.byline);
   const mlaText = `${authorMLA ? authorMLA + '. ' : ''}"${post.title}." <em>Animasapient</em>, ${day} ${monthLong} ${year}, ${pageUrl}. Accessed ${accessDate}.`;
-
-  // APA 7th edition:
-  // Last, F. (Year, Month Day). Title. Animasapient. URL
   const apaText = `${authorAPA ? authorAPA + ' ' : ''}(${year}, ${monthLong} ${day}). ${post.title}. <em>Animasapient</em>. ${pageUrl}`;
-
   document.getElementById('cite-mla-text').innerHTML = mlaText;
   document.getElementById('cite-apa-text').innerHTML = apaText;
 }
-
 function formatAuthorMLA(byline) {
   if (!byline) return '';
   const parts = byline.trim().split(/\s+/);
   if (parts.length === 1) return parts[0];
-  const last = parts[parts.length - 1];
-  const first = parts.slice(0, -1).join(' ');
-  return `${last}, ${first}`;
+  return `${parts[parts.length-1]}, ${parts.slice(0,-1).join(' ')}`;
 }
-
 function formatAuthorAPA(byline) {
   if (!byline) return '';
   const parts = byline.trim().split(/\s+/);
   if (parts.length === 1) return parts[0] + ',';
-  const last = parts[parts.length - 1];
-  const initials = parts.slice(0, -1).map(n => n[0].toUpperCase() + '.').join(' ');
-  return `${last}, ${initials}`;
+  const initials = parts.slice(0,-1).map(n => n[0].toUpperCase() + '.').join(' ');
+  return `${parts[parts.length-1]}, ${initials}`;
 }
-
 function switchCite(format, btn) {
   document.querySelectorAll('.citation-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.citation-box').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('cite-' + format).classList.add('active');
 }
-
 function copyCite(boxId) {
   const box = document.getElementById(boxId);
   const text = box.querySelector('span').innerText;
@@ -1110,6 +1699,7 @@ function copyCite(boxId) {
   });
 }
 
+// ── DELETE POST ───────────────────────────────────────────────
 async function confirmDel(id) {
   if (!confirm('Permanently delete this article?')) return;
   const post = cachedPosts.find(p => p.id === id);
@@ -1123,13 +1713,196 @@ async function confirmDel(id) {
 }
 
 // ── NAVIGATION ───────────────────────────────────────────────
-function showPage(name) {
+// ── URL ROUTER ───────────────────────────────────────────────
+// URL scheme:
+//   /                              → home
+//   /about                         → about
+//   /philosophy                    → home filtered by Philosophy
+//   /religion-spirituality         → home filtered by Religion & Spirituality
+//   /geography                     → home filtered by Geography
+//   /culture                       → home filtered by Culture
+//   /philosophy/my-article-slug    → post page
+//   /geography/green-house-carbon-emissions → post page
+
+const CATEGORY_SLUGS = {
+  'philosophy':            'Philosophy',
+  'religion-spirituality': 'Religion & Spirituality',
+  'geography':             'Geography',
+  'culture':               'Culture',
+};
+const CATEGORY_TO_SLUG = Object.fromEntries(
+  Object.entries(CATEGORY_SLUGS).map(([slug, name]) => [name, slug])
+);
+
+function catToSlug(cat) {
+  return CATEGORY_TO_SLUG[cat] || cat.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+}
+
+function titleToSlug(title) {
+  return title.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+function postUrl(post) {
+  const catSlug = catToSlug(post.category);
+  const artSlug = post.slug || titleToSlug(post.title);
+  return `/${catSlug}/${artSlug}`;
+}
+
+function showPage(name, pushState = false, url = null) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(name + '-page').classList.add('active');
   window.scrollTo(0, 0);
+  if (pushState && url !== null) {
+    history.pushState({ page: name }, '', url);
+  }
 }
-function goHome() { currentFilter = null; showPage('home'); renderHome(); }
-function filterCat(cat) { currentFilter = cat; showPage('home'); renderHome(); }
+
+function goHome() {
+  currentFilter = null;
+  showPage('home', true, '/');
+  renderHome();
+}
+
+function filterCat(cat) {
+  currentFilter = cat;
+  const slug = catToSlug(cat);
+  showPage('home', true, '/' + slug);
+  document.getElementById('section-label').textContent = cat;
+  renderHome();
+}
+
+async function openPost(id, replaceState = false) {
+  currentPostId = id;
+  ratingPromptDismissed = false;
+
+  let post = cachedPosts.find(p => p.id === id);
+  if (!post) {
+    const { data } = await sb.from('posts').select('*').eq('id', id).single();
+    post = data;
+    if (post) cachedPosts.push(post);
+  }
+  if (!post) { navigate404(); return; }
+
+  // Push URL
+  const url = postUrl(post);
+  if (replaceState) history.replaceState({ page: 'post', id }, '', url);
+  else history.pushState({ page: 'post', id }, '', url);
+
+  // Update page title
+  document.title = `${post.title} — Animasapient`;
+
+  document.getElementById('ph-cat').textContent   = post.category;
+  document.getElementById('ph-title').textContent = post.title;
+  document.getElementById('ph-meta').textContent  = fmtDate(post.date);
+  const bylineEl = document.getElementById('ph-byline');
+  bylineEl.textContent = post.byline ? 'By ' + post.byline : '';
+
+  const img = document.getElementById('ph-img'), bg = document.getElementById('ph-bg');
+  if (post.image_url) { img.src = post.image_url; img.style.display = 'block'; bg.style.display = 'none'; }
+  else { img.style.display = 'none'; bg.style.display = 'block'; }
+
+  document.getElementById('ph-body').innerHTML = post.body
+    .split(/\n\n+/).map(t => t.trim()).filter(Boolean).map(t => `<p>${x(t)}</p>`).join('');
+
+  renderCitations(post);
+  const posterEl = document.getElementById('poster-email-display');
+  posterEl.textContent = post.poster_email || '(no email recorded)';
+
+  renderPostAdmin(id);
+  await renderRatingSection(id);
+  await renderComments(id);
+  renderCommentForm();
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('post-page').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function navigate404() {
+  history.replaceState({}, '', '/');
+  goHome();
+}
+
+// ── HANDLE BROWSER BACK/FORWARD ──────────────────────────────
+window.addEventListener('popstate', () => {
+  routeFromURL(false);
+});
+
+// ── ROUTE FROM CURRENT URL ───────────────────────────────────
+async function routeFromURL(push = true) {
+  const path = window.location.pathname.replace(/\/$/, '') || '/';
+  const parts = path.split('/').filter(Boolean);
+  document.title = 'Animasapient';
+
+  if (parts.length === 0) {
+    // Home
+    currentFilter = null;
+    showPage('home');
+    renderHome();
+    return;
+  }
+
+  if (parts.length === 1) {
+    if (parts[0] === 'about') {
+      showPage('about');
+      return;
+    }
+    // Category filter
+    const cat = CATEGORY_SLUGS[parts[0]];
+    if (cat) {
+      currentFilter = cat;
+      showPage('home');
+      renderHome();
+      return;
+    }
+    // Unknown single segment → home
+    currentFilter = null;
+    showPage('home');
+    renderHome();
+    return;
+  }
+
+  if (parts.length === 2) {
+    // Category + article slug  e.g. /geography/green-house-carbon-emissions
+    const cat = CATEGORY_SLUGS[parts[0]];
+    const artSlug = parts[1];
+
+    // Try to find post by slug first, then fall back to title-derived slug
+    let { data: posts } = await sb.from('posts').select('*')
+      .or(`slug.eq.${artSlug},title.ilike.${artSlug.replace(/-/g, ' ')}`);
+
+    // Better: fetch by exact slug OR by matching category + computed title slug
+    if (!posts || !posts.length) {
+      const { data: allInCat } = await sb.from('posts').select('*')
+        .eq('category', cat || '');
+      posts = (allInCat || []).filter(p => {
+        const computed = p.slug || titleToSlug(p.title);
+        return computed === artSlug;
+      });
+    }
+
+    if (posts && posts.length) {
+      // Pre-populate cache
+      posts.forEach(p => {
+        if (!cachedPosts.find(c => c.id === p.id)) cachedPosts.push(p);
+      });
+      await openPost(posts[0].id, true);
+      return;
+    }
+
+    // Not found — go home
+    navigate404();
+    return;
+  }
+
+  // Fallback
+  currentFilter = null;
+  showPage('home');
+  renderHome();
+}
 
 // ── MODALS ───────────────────────────────────────────────────
 function openModal(id)  { document.getElementById(id).classList.add('open'); }
@@ -1139,12 +1912,13 @@ document.querySelectorAll('.modal-bg').forEach(bg =>
 
 // ── UTILS ────────────────────────────────────────────────────
 function fmtDate(s) { return new Date(s + 'T12:00:00').toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
+function fmtDatetime(s) { return new Date(s).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }
 function todayStr() { return new Date().toISOString().split('T')[0]; }
 function x(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
 
 // ── INIT ─────────────────────────────────────────────────────
 document.getElementById('p-date').value = todayStr();
-initAuth().then(() => renderHome());
+initAuth().then(() => routeFromURL());
 </script>
 </body>
 </html>
