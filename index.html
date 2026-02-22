@@ -670,6 +670,72 @@
   .auth-panel { display: none; }
   .auth-panel.active { display: block; }
 
+
+  /* SETTINGS NAV BUTTON */
+  .nav-settings-btn { background: transparent; border: none; color: var(--cool-grey-light); font-size: 1.1rem; cursor: pointer; padding: 4px 8px; transition: color 0.2s; line-height: 1; }
+  .nav-settings-btn:hover { color: var(--white); }
+
+  /* SETTINGS PAGE */
+  .settings-wrap { max-width: 760px; margin: 0 auto; padding: 5rem 2.5rem; }
+  .settings-header { border-bottom: 1px solid var(--cool-grey-light); padding-bottom: 2.5rem; margin-bottom: 3rem; }
+  .settings-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--cool-grey-light); }
+  .settings-section:last-child { border-bottom: none; }
+  .settings-section-label { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 1.5rem; }
+
+  /* THEME GRID */
+  .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+  .theme-btn { background: var(--cool-grey-pale); border: 2px solid var(--cool-grey-light); border-radius: 6px; padding: 1rem 0.8rem; cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+  .theme-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .theme-btn.active { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(74,111,165,0.25); }
+  .theme-btn span { font-family: 'Cormorant Garamond', serif; font-size: 0.88rem; font-weight: 500; color: var(--text); }
+  .theme-btn .theme-sub { font-size: 0.7rem; color: var(--cool-grey); font-style: italic; }
+  .theme-preview { width: 80px; height: 44px; border-radius: 4px; overflow: hidden; display: flex; border: 1px solid var(--cool-grey-light); }
+  .tp-main { flex: 2; }
+  .tp-sub { flex: 1.5; }
+  .tp-text { flex: 1; }
+
+  /* ACCOUNT ROWS */
+  .account-row { display: flex; align-items: flex-start; gap: 2rem; padding: 1.2rem 0; border-bottom: 1px solid var(--cool-grey-pale); }
+  .account-row:last-child { border-bottom: none; }
+  .account-row-label { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey); min-width: 130px; padding-top: 4px; }
+  .account-row-content { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+  .account-info-text { font-family: 'Crimson Pro', serif; font-size: 1rem; color: var(--text); }
+  .btn-settings-action { background: var(--navy); color: var(--white); border: none; padding: 8px 20px; font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.2s; display: inline-block; width: fit-content; }
+  .btn-settings-action:hover { background: var(--navy-mid); }
+  .btn-settings-danger { background: #7a2030; color: var(--white); border: none; padding: 8px 20px; font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.2s; width: fit-content; }
+  .btn-settings-danger:hover { background: #9a2840; }
+
+  /* AVATAR */
+  .avatar-wrap { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
+  .settings-avatar-img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--cool-grey-light); }
+  .settings-avatar-ph { width: 64px; height: 64px; border-radius: 50%; background: var(--navy-mid); color: var(--cool-grey-light); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.4rem; border: 2px solid var(--cool-grey-light); }
+  .account-row-content { flex-direction: row; align-items: center; flex-wrap: wrap; }
+
+  /* COMMENT AVATAR */
+  .comment-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--cool-grey-light); flex-shrink: 0; }
+  .comment-avatar-ph { width: 32px; height: 32px; border-radius: 50%; background: var(--navy-mid); color: var(--cool-grey-light); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 0.85rem; border: 1px solid var(--cool-grey-light); flex-shrink: 0; }
+  .comment-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
+
+  /* THEME VARIABLES — applied via JS */
+  body.theme-darkgrey { --navy-dark: #1a1a1a; --navy: #222222; --navy-mid: #2d2d2d; --white: #ffffff; --text: #111111; --text-light: #444444; --cool-grey: #888888; --cool-grey-light: #bbbbbb; --cool-grey-pale: #f0f0f0; --accent: #666666; }
+  body.theme-navygrey { --navy-dark: #0d1b2a; --navy: #1c2b3a; --navy-mid: #243447; --white: #f8f9fa; --text: #1a2332; --text-light: #4a5568; --cool-grey: #7a8fa6; --cool-grey-light: #b0c0d0; --cool-grey-pale: #eef2f7; --accent: #3a6b9e; }
+  body.theme-purple { --navy-dark: #2d1b4e; --navy: #3d2660; --navy-mid: #4a2f72; --white: #faf8ff; --text: #1a0d2e; --text-light: #5a4070; --cool-grey: #9b85b8; --cool-grey-light: #c4b0d8; --cool-grey-pale: #f0ebf8; --accent: #c9a84c; }
+  body.theme-lightpurple { --navy-dark: #ffffff; --navy: #f5f0ff; --navy-mid: #ece4ff; --white: #ffffff; --text: #111111; --text-light: #444444; --cool-grey: #7a6d8a; --cool-grey-light: #c4b8d4; --cool-grey-pale: #f8f5ff; --accent: #2d1b4e; }
+  body.theme-minimal { --navy-dark: #ffffff; --navy: #f5f5f5; --navy-mid: #ebebeb; --white: #ffffff; --text: #111111; --text-light: #555555; --cool-grey: #888888; --cool-grey-light: #cccccc; --cool-grey-pale: #f8f8f8; --accent: #333333; }
+
+  /* Fix text colors for light themes */
+  body.theme-lightpurple header, body.theme-minimal header { border-bottom: 1px solid var(--cool-grey-light); }
+  body.theme-lightpurple nav a, body.theme-minimal nav a { color: var(--text-light); }
+  body.theme-lightpurple nav a:hover, body.theme-minimal nav a:hover { color: var(--text); }
+  body.theme-lightpurple .logo-slogan, body.theme-minimal .logo-slogan { color: var(--cool-grey); }
+  body.theme-lightpurple .nav-admin-btn, body.theme-minimal .nav-admin-btn { color: var(--text-light); border-color: var(--cool-grey-light); }
+  body.theme-lightpurple .nav-settings-btn, body.theme-minimal .nav-settings-btn { color: var(--text-light); }
+  body.theme-lightpurple .nav-user-btn, body.theme-minimal .nav-user-btn { color: var(--text-light); border-color: var(--cool-grey-light); }
+  body.theme-lightpurple .logo-name, body.theme-minimal .logo-name { color: var(--text); }
+  body.theme-lightpurple .headline-title, body.theme-minimal .headline-title { color: var(--text); }
+  body.theme-lightpurple .headline-excerpt, body.theme-minimal .headline-excerpt { color: var(--text-light); }
+  body.theme-lightpurple .headline-meta, body.theme-minimal .headline-meta { color: var(--cool-grey); }
+
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
   @media (max-width: 900px) { .post-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -691,6 +757,7 @@
       <a onclick="filterCat('Geography')">Geography</a>
       <a onclick="filterCat('Culture')">Culture</a>
       <a onclick="showPage('about', true, '/about')">About</a>
+      <button class="nav-settings-btn" id="settings-nav-btn" onclick="openSettings()" title="Settings">⚙</button>
       <button class="nav-user-btn" id="user-nav-btn" onclick="handleUserClick()">Sign In</button>
       <button class="nav-admin-btn" id="admin-nav-btn" onclick="handleAdminClick()">Admin</button>
     </nav>
@@ -732,6 +799,140 @@
     <p>Here you will find explorations of <strong>philosophy</strong>, ancient and contemporary, explorations of <strong>religion and spirituality</strong> across traditions, studies of the world's <strong>geography</strong>, and the ways landscape shapes civilization, and reflections on <strong>culture</strong> in all its extraordinary diversity.</p>
     <p>This is a personal project, and thus may seem small scale.</p>
     <p>Enjoy Animasapient and a path to wisdom in what makes the World tick.</p>
+  </div>
+</div>
+
+
+<!-- SETTINGS -->
+<div id="settings-page" class="page">
+  <div class="settings-wrap">
+    <div class="settings-header">
+      <div class="about-eyebrow">Preferences</div>
+      <h1 class="about-title">Settings</h1>
+    </div>
+
+    <!-- COLOR THEMES -->
+    <div class="settings-section">
+      <div class="settings-section-label">Color Theme</div>
+      <div class="theme-grid" id="theme-grid">
+        <button class="theme-btn" data-theme="default" onclick="applyTheme('default', this)">
+          <div class="theme-preview">
+            <div class="tp-main" style="background:#0f1a30"></div>
+            <div class="tp-sub" style="background:#1a2744"></div>
+            <div class="tp-text" style="background:#fafbfc"></div>
+          </div>
+          <span>Dark Navy</span>
+          <span class="theme-sub">Default</span>
+        </button>
+        <button class="theme-btn" data-theme="darkgrey" onclick="applyTheme('darkgrey', this)">
+          <div class="theme-preview">
+            <div class="tp-main" style="background:#1a1a1a"></div>
+            <div class="tp-sub" style="background:#000000"></div>
+            <div class="tp-text" style="background:#ffffff"></div>
+          </div>
+          <span>Dark Grey</span>
+          <span class="theme-sub">Dark grey / black / white</span>
+        </button>
+        <button class="theme-btn" data-theme="navygrey" onclick="applyTheme('navygrey', this)">
+          <div class="theme-preview">
+            <div class="tp-main" style="background:#0d1b2a"></div>
+            <div class="tp-sub" style="background:#1c2b3a"></div>
+            <div class="tp-text" style="background:#ffffff"></div>
+          </div>
+          <span>Navy &amp; Grey</span>
+          <span class="theme-sub">Dark navy / dark grey / white</span>
+        </button>
+        <button class="theme-btn" data-theme="purple" onclick="applyTheme('purple', this)">
+          <div class="theme-preview">
+            <div class="tp-main" style="background:#2d1b4e"></div>
+            <div class="tp-sub" style="background:#c9a84c"></div>
+            <div class="tp-text" style="background:#ffffff"></div>
+          </div>
+          <span>Royal Purple</span>
+          <span class="theme-sub">Dark purple / dark gold / white</span>
+        </button>
+        <button class="theme-btn" data-theme="lightpurple" onclick="applyTheme('lightpurple', this)">
+          <div class="theme-preview">
+            <div class="tp-main" style="background:#ffffff"></div>
+            <div class="tp-sub" style="background:#2d1b4e"></div>
+            <div class="tp-text" style="background:#111111"></div>
+          </div>
+          <span>Light Purple</span>
+          <span class="theme-sub">White / dark purple / black</span>
+        </button>
+        <button class="theme-btn" data-theme="minimal" onclick="applyTheme('minimal', this)">
+          <div class="theme-preview">
+            <div class="tp-main" style="background:#ffffff"></div>
+            <div class="tp-sub" style="background:#e8e8e8"></div>
+            <div class="tp-text" style="background:#111111"></div>
+          </div>
+          <span>Minimal</span>
+          <span class="theme-sub">White / light grey / black</span>
+        </button>
+        <button class="theme-btn" data-theme="random" onclick="applyTheme('random', this)">
+          <div class="theme-preview" style="background:linear-gradient(135deg,#e74c3c,#3498db,#2ecc71,#f39c12)">
+          </div>
+          <span>Randomize!</span>
+          <span class="theme-sub">Surprise me</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MY ACCOUNT (only shown when logged in) -->
+    <div class="settings-section" id="account-section" style="display:none;">
+      <div class="settings-section-label">My Account</div>
+
+      <!-- Profile Picture -->
+      <div class="account-row">
+        <div class="account-row-label">Profile Picture</div>
+        <div class="account-row-content">
+          <div class="avatar-wrap">
+            <img id="settings-avatar" src="" alt="" class="settings-avatar-img" style="display:none;">
+            <div class="settings-avatar-ph" id="settings-avatar-ph">?</div>
+          </div>
+          <div>
+            <input type="file" id="avatar-file-input" accept="image/*" style="display:none;" onchange="uploadAvatar(this)">
+            <button class="btn-settings-action" onclick="document.getElementById('avatar-file-input').click()">Change Picture</button>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--cool-grey);margin-top:0.3rem;">Shown next to your comments</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Member Since -->
+      <div class="account-row">
+        <div class="account-row-label">Member Since</div>
+        <div class="account-row-content">
+          <span class="account-info-text" id="member-since-text">—</span>
+        </div>
+      </div>
+
+      <!-- Support Ticket -->
+      <div class="account-row">
+        <div class="account-row-label">Support</div>
+        <div class="account-row-content">
+          <button class="btn-settings-action" onclick="openSupportTicket()">Open Support Ticket</button>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:0.78rem;color:var(--cool-grey);margin-top:0.3rem;">Sends an email to our support team</div>
+        </div>
+      </div>
+
+      <!-- Reset Password -->
+      <div class="account-row">
+        <div class="account-row-label">Password</div>
+        <div class="account-row-content">
+          <button class="btn-settings-action" onclick="sendPasswordReset()" id="pw-reset-btn">Reset Password</button>
+          <div class="account-info-text" id="pw-reset-msg" style="display:none;color:#1a5c2e;margin-top:0.4rem;"></div>
+        </div>
+      </div>
+
+      <!-- Log Out -->
+      <div class="account-row">
+        <div class="account-row-label">Session</div>
+        <div class="account-row-content">
+          <button class="btn-settings-danger" onclick="doLogout(); showPage('home'); renderHome();">Log Out</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1079,7 +1280,7 @@ function applyUserUI(user) {
 function handleAdminClick() { currentUser ? openNewPost() : openModal('login-modal'); }
 function handleUserClick() {
   if (currentPublicUser) {
-    if (confirm('Sign out of your account?')) { sb.auth.signOut(); }
+    openSettings();
   } else {
     openModal('user-modal');
   }
@@ -1140,11 +1341,30 @@ async function doUserSignup() {
   const btn = document.getElementById('user-signup-btn');
   err.style.display = 'none'; suc.style.display = 'none';
   if (!name) { err.textContent = 'Please enter a display name.'; err.style.display = 'block'; return; }
+  if (pass.length < 6) { err.textContent = 'Password must be at least 6 characters.'; err.style.display = 'block'; return; }
   btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Creating account…';
+
+  // Check if display name is already taken
+  const { data: existing } = await sb.from('display_names').select('name').eq('name', name.toLowerCase()).maybeSingle();
+  if (existing) {
+    btn.disabled = false; btn.textContent = 'Create Account';
+    err.textContent = 'That display name is already taken. Please choose another.';
+    err.style.display = 'block';
+    return;
+  }
+
   const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { display_name: name } } });
   btn.disabled = false; btn.textContent = 'Create Account';
-  if (error) { err.textContent = error.message; err.style.display = 'block'; }
-  else {
+  if (error) {
+    if (error.message.includes('already registered')) {
+      err.textContent = 'An account with that email already exists.';
+    } else {
+      err.textContent = error.message;
+    }
+    err.style.display = 'block';
+  } else {
+    // Reserve the display name
+    await sb.from('display_names').insert({ name: name.toLowerCase(), display: name });
     suc.textContent = 'Account created! Check your email to confirm, then sign in.';
     suc.style.display = 'block';
   }
@@ -1423,10 +1643,12 @@ async function submitComment() {
   const btn = document.getElementById('comment-submit-btn');
   btn.disabled = true; btn.textContent = 'Posting…';
   const displayName = currentPublicUser.user_metadata?.display_name || currentPublicUser.email.split('@')[0];
+  const avatarUrl = currentPublicUser.user_metadata?.avatar_url || null;
   const { error } = await sb.from('comments').insert({
     post_id: currentPostId,
     user_id: currentPublicUser.id,
     display_name: displayName,
+    avatar_url: avatarUrl,
     body
   });
   btn.disabled = false; btn.textContent = 'Post Comment';
@@ -1454,6 +1676,7 @@ function openNewPost() {
   ['p-title','p-excerpt','p-body','p-byline','p-slug'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('p-cat').value = 'Philosophy';
   document.getElementById('p-date').value = todayStr();
+loadSavedTheme();
   document.getElementById('p-edit-id').value = '';
   document.getElementById('p-existing-img').value = '';
   document.getElementById('post-error').style.display = 'none';
@@ -1923,8 +2146,127 @@ function fmtDatetime(s) { return new Date(s).toLocaleDateString('en-US', { year:
 function todayStr() { return new Date().toISOString().split('T')[0]; }
 function x(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
 
+
+// ── SETTINGS & THEMES ────────────────────────────────────────
+const THEMES = {
+  default:     null,
+  darkgrey:    'theme-darkgrey',
+  navygrey:    'theme-navygrey',
+  purple:      'theme-purple',
+  lightpurple: 'theme-lightpurple',
+  minimal:     'theme-minimal',
+};
+const RANDOM_THEMES = ['darkgrey','navygrey','purple','lightpurple','minimal'];
+
+function openSettings() {
+  showPage('settings', true, '/settings');
+  // Show account section if logged in
+  const sec = document.getElementById('account-section');
+  if (currentPublicUser) {
+    sec.style.display = 'block';
+    populateAccountSection();
+  } else {
+    sec.style.display = 'none';
+  }
+  // Mark active theme button
+  const saved = localStorage.getItem('anima-theme') || 'default';
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === saved);
+  });
+}
+
+function applyTheme(name, btn) {
+  // Remove all theme classes
+  Object.values(THEMES).forEach(cls => { if (cls) document.body.classList.remove(cls); });
+  let applied = name;
+  if (name === 'random') {
+    applied = RANDOM_THEMES[Math.floor(Math.random() * RANDOM_THEMES.length)];
+  }
+  if (THEMES[applied]) document.body.classList.add(THEMES[applied]);
+  localStorage.setItem('anima-theme', applied);
+  // Update active button
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+
+function loadSavedTheme() {
+  const saved = localStorage.getItem('anima-theme');
+  if (saved && THEMES[saved]) {
+    document.body.classList.add(THEMES[saved]);
+  }
+}
+
+function populateAccountSection() {
+  if (!currentPublicUser) return;
+  // Member since
+  const created = new Date(currentPublicUser.created_at);
+  const now = new Date();
+  const months = (now.getFullYear() - created.getFullYear()) * 12 + (now.getMonth() - created.getMonth());
+  let duration = '';
+  if (months < 1) duration = 'Less than a month';
+  else if (months === 1) duration = '1 month';
+  else if (months < 12) duration = months + ' months';
+  else { const yrs = Math.floor(months/12); duration = yrs + ' year' + (yrs>1?'s':'') + (months%12 ? ', ' + (months%12) + ' month' + (months%12>1?'s':'') : ''); }
+  const sinceEl = document.getElementById('member-since-text');
+  if (sinceEl) sinceEl.textContent = created.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}) + ' (' + duration + ')';
+
+  // Avatar
+  const avatarUrl = currentPublicUser.user_metadata?.avatar_url;
+  const avatarImg = document.getElementById('settings-avatar');
+  const avatarPh = document.getElementById('settings-avatar-ph');
+  const displayName = currentPublicUser.user_metadata?.display_name || currentPublicUser.email.split('@')[0];
+  if (avatarUrl) {
+    avatarImg.src = avatarUrl; avatarImg.style.display = 'block'; avatarPh.style.display = 'none';
+  } else {
+    avatarPh.textContent = displayName[0].toUpperCase(); avatarImg.style.display = 'none'; avatarPh.style.display = 'flex';
+  }
+}
+
+async function uploadAvatar(input) {
+  if (!input.files[0] || !currentPublicUser) return;
+  const file = input.files[0];
+  const ext = file.name.split('.').pop();
+  const fname = currentPublicUser.id + '.' + ext;
+  const btn = document.querySelector('[onclick*="avatar-file-input"]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Uploading...'; }
+  try {
+    const { error: upErr } = await sb.storage.from('avatars').upload(fname, file, { upsert: true, contentType: file.type });
+    if (upErr) throw upErr;
+    const { data } = sb.storage.from('avatars').getPublicUrl(fname);
+    await sb.auth.updateUser({ data: { avatar_url: data.publicUrl } });
+    currentPublicUser.user_metadata.avatar_url = data.publicUrl;
+    populateAccountSection();
+    applyUserUI(currentPublicUser);
+  } catch(e) { alert('Upload failed: ' + e.message); }
+  if (btn) { btn.disabled = false; btn.textContent = 'Change Picture'; }
+}
+
+function openSupportTicket() {
+  const ticketNum = Math.floor(100000 + Math.random() * 900000);
+  const email = 'joshuarisbon0819@gmail.com';
+  const subject = encodeURIComponent('Support Ticket #' + ticketNum);
+  const userEmail = currentPublicUser ? currentPublicUser.email : '';
+  const body = encodeURIComponent('Support Ticket #' + ticketNum + '\n\nFrom: ' + userEmail + '\n\nDescribe your issue here:\n');
+  window.location.href = 'mailto:' + email + '?subject=' + subject + '&body=' + body;
+}
+
+async function sendPasswordReset() {
+  if (!currentPublicUser) return;
+  const btn = document.getElementById('pw-reset-btn');
+  const msg = document.getElementById('pw-reset-msg');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  const { error } = await sb.auth.resetPasswordForEmail(currentPublicUser.email, {
+    redirectTo: 'https://animasapient.xyz'
+  });
+  btn.disabled = false; btn.textContent = 'Reset Password';
+  if (error) { msg.textContent = 'Error: ' + error.message; msg.style.color = '#8b2635'; }
+  else { msg.textContent = 'Reset email sent! Check your inbox.'; msg.style.color = '#1a5c2e'; }
+  msg.style.display = 'block';
+}
+
 // ── INIT ─────────────────────────────────────────────────────
 document.getElementById('p-date').value = todayStr();
+loadSavedTheme();
 (async () => {
   await initAuth();
   await routeFromURL();
