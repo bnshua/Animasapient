@@ -1669,8 +1669,13 @@ async function renderComments(postId) {
   list.innerHTML = comments.map(c => {
     const isOwn = currentPublicUser && currentPublicUser.id === c.user_id;
     const canDelete = currentUser || isOwn;
+    const initial = (c.display_name || 'A')[0].toUpperCase();
+    const avatarHtml = c.avatar_url
+      ? `<img class="comment-avatar" src="${x(c.avatar_url)}" alt="">`
+      : `<div class="comment-avatar-ph">${initial}</div>`;
     return `<div class="comment-item" id="comment-${c.id}">
       <div class="comment-header">
+        ${avatarHtml}
         <span class="comment-author">${x(c.display_name || 'Anonymous')}</span>
         <span class="comment-date">${fmtDatetime(c.created_at)}</span>
         ${canDelete ? `<button class="comment-delete-btn" onclick="deleteComment('${c.id}')">Delete</button>` : ''}
@@ -1721,7 +1726,6 @@ function openNewPost() {
   ['p-title','p-excerpt','p-body','p-byline','p-slug'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('p-cat').value = 'Philosophy';
   document.getElementById('p-date').value = todayStr();
-loadSavedTheme();
   document.getElementById('p-edit-id').value = '';
   document.getElementById('p-existing-img').value = '';
   document.getElementById('post-error').style.display = 'none';
