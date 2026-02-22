@@ -1845,75 +1845,61 @@ window.addEventListener('popstate', () => {
 
 // ── ROUTE FROM CURRENT URL ───────────────────────────────────
 async function routeFromURL(push = true) {
-  const path = window.location.pathname.replace(/\/$/, '') || '/';
-  const parts = path.split('/').filter(Boolean);
-  document.title = 'Animasapient';
+  try {
+    const path = window.location.pathname.replace(/\/$/, '') || '/';
+    const parts = path.split('/').filter(Boolean);
+    document.title = 'Animasapient';
 
-  if (parts.length === 0) {
-    // Home
-    currentFilter = null;
-    showPage('home');
-    renderHome();
-    return;
-  }
-
-  if (parts.length === 1) {
-    if (parts[0] === 'about') {
-      showPage('about');
-      return;
-    }
-    // Category filter
-    const cat = CATEGORY_SLUGS[parts[0]];
-    if (cat) {
-      currentFilter = cat;
+    if (parts.length === 0) {
+      currentFilter = null;
       showPage('home');
       renderHome();
       return;
     }
-    // Unknown single segment → home
-    currentFilter = null;
-    showPage('home');
-    renderHome();
-    return;
-  }
 
-  if (parts.length === 2) {
-    // Category + article slug  e.g. /geography/green-house-carbon-emissions
-    const cat = CATEGORY_SLUGS[parts[0]];
-    const artSlug = parts[1];
-
-    // Try to find post by slug first, then fall back to title-derived slug
-    let { data: posts } = await sb.from('posts').select('*')
-      .or(`slug.eq.${artSlug},title.ilike.${artSlug.replace(/-/g, ' ')}`);
-
-    // Better: fetch by exact slug OR by matching category + computed title slug
-    if (!posts || !posts.length) {
-      const { data: allInCat } = await sb.from('posts').select('*')
-        .eq('category', cat || '');
-      posts = (allInCat || []).filter(p => {
-        const computed = p.slug || titleToSlug(p.title);
-        return computed === artSlug;
-      });
-    }
-
-    if (posts && posts.length) {
-      // Pre-populate cache
-      posts.forEach(p => {
-        if (!cachedPosts.find(c => c.id === p.id)) cachedPosts.push(p);
-      });
-      await openPost(posts[0].id, true);
+    if (parts.length === 1) {
+      if (parts[0] === 'about') { showPage('about'); return; }
+      const cat = CATEGORY_SLUGS[parts[0]];
+      currentFilter = cat || null;
+      showPage('home');
+      renderHome();
       return;
     }
 
-    // Not found — go home
-    navigate404();
-    return;
-  }
+    if (parts.length === 2) {
+      const cat = CATEGORY_SLUGS[parts[0]];
+      const artSlug = parts[1];
+      try {
+        // Fetch all posts in category and match by slug
+        const { data: allInCat } = await sb.from('posts').select('*')
+          .eq('category', cat || parts[0]);
+        const posts = (allInCat || []).filter(p => {
+          const computed = p.slug || titleToSlug(p.title);
+          return computed === artSlug;
+        });
+        if (posts.length) {
+          posts.forEach(p => { if (!cachedPosts.find(c => c.id === p.id)) cachedPosts.push(p); });
+          await openPost(posts[0].id, true);
+          return;
+        }
+      } catch(e) { console.warn('Post lookup failed:', e); }
+      // Not found - go home
+      currentFilter = null;
+      showPage('home');
+      renderHome();
+      return;
+    }
 
-  // Fallback
-  currentFilter = null;
-  showPage('home');
-  renderHome();
+    // Fallback
+    currentFilter = null;
+    showPage('home');
+    renderHome();
+  } catch(e) {
+    console.error('routeFromURL error:', e);
+    currentFilter = null;
+    showPage('home');
+    renderHome();
+  }
 }
 
 // ── MODALS ───────────────────────────────────────────────────
@@ -1930,7 +1916,10 @@ function x(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 
 // ── INIT ─────────────────────────────────────────────────────
 document.getElementById('p-date').value = todayStr();
-initAuth().then(() => routeFromURL());
+(async () => {
+  await initAuth();
+  await routeFromURL();
+})();
 </script>
 </body>
 </html>
