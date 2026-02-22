@@ -1015,23 +1015,13 @@ async function initAuth() {
     const { data: { session } } = await sb.auth.getSession();
     if (session) handleSessionUser(session.user);
     sb.auth.onAuthStateChange((_, s) => handleSessionUser(s?.user || null));
-  } catch(e) {
-    console.warn('Auth init failed, continuing as guest:', e);
-    handleSessionUser(null);
-  }
+  } catch(e) { console.warn('Auth failed, continuing as guest'); handleSessionUser(null); }
 }
 
 function isAdminUser(user) {
   if (!user) return false;
-  // Check app_metadata (works server-side) OR hardcoded admin emails
-  const adminEmails = [
-    'joshuarisbon0819@gmail.com'  // ← your admin email
-    'ANIMAADMIN@gmail.com'   // ← another admin email
-    'joshuarecordsrecords@gmail.com' // ← another admin email 
-  ];
-  if (adminEmails.includes(user.email)) return true;
-  if (user.app_metadata && user.app_metadata.role === 'admin') return true;
-  return false;
+  const adminEmails = ['joshuarisbon0819@gmail.com', 'animaadmin@gmail.com', 'ANIMAADMIN@gmail.com'];
+  return adminEmails.includes(user.email);
 }
 
 function handleSessionUser(user) {
@@ -1095,7 +1085,7 @@ function handleUserClick() {
   }
 }
 
-// Admin login — only works if the account has role=admin in Supabase
+// Admin login (same modal, same Supabase signIn)
 async function doLogin() {
   const email = document.getElementById('login-email').value.trim();
   const pass = document.getElementById('login-pass').value;
@@ -1165,11 +1155,10 @@ async function fetchPosts(cat) {
   try {
     let q = sb.from('posts').select('*').order('date', { ascending: false });
     if (cat) q = q.eq('category', cat);
-    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000));
-    const { data, error } = await Promise.race([q, timeout]);
-    if (error) { console.error('fetchPosts error:', error); return []; }
+    const { data, error } = await q;
+    if (error) { console.error(error); return []; }
     return data || [];
-  } catch(e) { console.error('fetchPosts failed:', e); return []; }
+  } catch(e) { console.error(e); return []; }
 }
 
 async function fetchRatingsForPosts(postIds) {
@@ -1179,14 +1168,12 @@ async function fetchRatingsForPosts(postIds) {
     if (error || !data) return;
     const map = {};
     postIds.forEach(id => map[id] = { total: 0, count: 0 });
-    data.forEach(r => {
-      if (map[r.post_id]) { map[r.post_id].total += r.score; map[r.post_id].count++; }
-    });
+    data.forEach(r => { if (map[r.post_id]) { map[r.post_id].total += r.score; map[r.post_id].count++; } });
     postIds.forEach(id => {
       const m = map[id];
       ratingsCache[id] = m.count ? { avg: m.total / m.count, count: m.count } : { avg: 0, count: 0 };
     });
-  } catch(e) { console.warn('ratings table not set up yet:', e); }
+  } catch(e) { console.warn('ratings not ready'); }
 }
 
 // ── HOME RENDER ──────────────────────────────────────────────
@@ -1206,8 +1193,7 @@ async function renderHome() {
     const rest = posts.slice(1);
     if (rest.length) { divider.style.display = 'flex'; grid.innerHTML = rest.map(cardHTML).join(''); }
   } catch(e) {
-    console.error('renderHome error:', e);
-    empty.style.display = 'block';
+    console.error(e); empty.style.display = 'block';
   } finally {
     loader.style.display = 'none';
   }
@@ -1299,33 +1285,33 @@ function renderPostAdmin(id) {
 
 // ── RATINGS ──────────────────────────────────────────────────
 async function renderRatingSection(postId) {
+  const section = document.getElementById('rating-section');
   const starsDisp = document.getElementById('post-stars-display');
   const summary = document.getElementById('post-rating-summary');
   const inputArea = document.getElementById('rating-input-area');
   const thanks = document.getElementById('rating-thanks');
   thanks.style.display = 'none';
 
-  let ratings = [];
-  try {
-    const { data, error } = await sb.from('ratings').select('score, user_id').eq('post_id', postId);
-    if (!error && data) ratings = data;
-  } catch(e) { console.warn('ratings table not ready:', e); }
-
-  const count = ratings.length;
+  // Fetch current ratings
+  const { data: ratings } = await sb.from('ratings').select('score, user_id').eq('post_id', postId);
+  const count = ratings ? ratings.length : 0;
   const avg = count ? ratings.reduce((a, r) => a + r.score, 0) / count : 0;
 
+  // Stars display
   const filled = Math.round(avg);
   let starsH = '';
   for (let i = 1; i <= 5; i++) starsH += `<span class="star-icon${i <= filled ? ' filled' : ''}">★</span>`;
   starsDisp.innerHTML = starsH;
   summary.textContent = count ? `${avg.toFixed(1)} out of 5 · ${count} rating${count !== 1 ? 's' : ''}` : 'No ratings yet — be the first!';
 
+  // Check if current user has rated
   let userRating = null;
-  if (currentPublicUser && ratings.length) {
+  if (currentPublicUser && ratings) {
     const mine = ratings.find(r => r.user_id === currentPublicUser.id);
     if (mine) userRating = mine.score;
   }
 
+  // Input area
   if (!currentPublicUser) {
     if (ratingPromptDismissed) {
       inputArea.innerHTML = '';
@@ -1400,30 +1386,24 @@ function renderCommentForm() {
 async function renderComments(postId) {
   const list = document.getElementById('comment-list');
   const label = document.getElementById('comments-label');
-  list.innerHTML = '';
-  try {
-    const { data: comments, error } = await sb.from('comments')
-      .select('*').eq('post_id', postId).order('created_at', { ascending: true });
-    if (error) { list.innerHTML = '<p class="no-comments">Comments unavailable.</p>'; return; }
-    const count = comments ? comments.length : 0;
-    label.textContent = `Comments${count ? ' (' + count + ')' : ''}`;
-    if (!count) { list.innerHTML = '<p class="no-comments">No comments yet. Be the first to share your thoughts.</p>'; return; }
-    list.innerHTML = comments.map(c => {
-      const isOwn = currentPublicUser && currentPublicUser.id === c.user_id;
-      const canDelete = currentUser || isOwn;
-      return `<div class="comment-item" id="comment-${c.id}">
-        <div class="comment-header">
-          <span class="comment-author">${x(c.display_name || 'Anonymous')}</span>
-          <span class="comment-date">${fmtDatetime(c.created_at)}</span>
-          ${canDelete ? `<button class="comment-delete-btn" onclick="deleteComment('${c.id}')">Delete</button>` : ''}
-        </div>
-        <div class="comment-body">${x(c.body)}</div>
-      </div>`;
-    }).join('');
-  } catch(e) {
-    console.warn('comments table not ready:', e);
-    list.innerHTML = '<p class="no-comments">No comments yet.</p>';
-  }
+  list.innerHTML = '<span style="font-family:'Cormorant Garamond',serif;font-size:0.85rem;color:var(--cool-grey);">Loading comments…</span>';
+  const { data: comments } = await sb.from('comments')
+    .select('*').eq('post_id', postId).order('created_at', { ascending: true });
+  const count = comments ? comments.length : 0;
+  label.textContent = `Comments${count ? ' (' + count + ')' : ''}`;
+  if (!count) { list.innerHTML = '<p class="no-comments">No comments yet. Be the first to share your thoughts.</p>'; return; }
+  list.innerHTML = comments.map(c => {
+    const isOwn = currentPublicUser && currentPublicUser.id === c.user_id;
+    const canDelete = currentUser || isOwn;
+    return `<div class="comment-item" id="comment-${c.id}">
+      <div class="comment-header">
+        <span class="comment-author">${x(c.display_name || 'Anonymous')}</span>
+        <span class="comment-date">${fmtDatetime(c.created_at)}</span>
+        ${canDelete ? `<button class="comment-delete-btn" onclick="deleteComment('${c.id}')">Delete</button>` : ''}
+      </div>
+      <div class="comment-body">${x(c.body)}</div>
+    </div>`;
+  }).join('');
 }
 
 async function submitComment() {
