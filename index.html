@@ -717,24 +717,69 @@
   .comment-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
 
   /* THEME VARIABLES — applied via JS */
-  body.theme-darkgrey { --navy-dark: #1a1a1a; --navy: #222222; --navy-mid: #2d2d2d; --white: #ffffff; --text: #111111; --text-light: #444444; --cool-grey: #888888; --cool-grey-light: #bbbbbb; --cool-grey-pale: #f0f0f0; --accent: #666666; }
-  body.theme-navygrey { --navy-dark: #0d1b2a; --navy: #1c2b3a; --navy-mid: #243447; --white: #f8f9fa; --text: #1a2332; --text-light: #4a5568; --cool-grey: #7a8fa6; --cool-grey-light: #b0c0d0; --cool-grey-pale: #eef2f7; --accent: #3a6b9e; }
-  body.theme-purple { --navy-dark: #2d1b4e; --navy: #3d2660; --navy-mid: #4a2f72; --white: #faf8ff; --text: #1a0d2e; --text-light: #5a4070; --cool-grey: #9b85b8; --cool-grey-light: #c4b0d8; --cool-grey-pale: #f0ebf8; --accent: #c9a84c; }
-  body.theme-lightpurple { --navy-dark: #ffffff; --navy: #f5f0ff; --navy-mid: #ece4ff; --white: #ffffff; --text: #111111; --text-light: #444444; --cool-grey: #7a6d8a; --cool-grey-light: #c4b8d4; --cool-grey-pale: #f8f5ff; --accent: #2d1b4e; }
-  body.theme-minimal { --navy-dark: #ffffff; --navy: #f5f5f5; --navy-mid: #ebebeb; --white: #ffffff; --text: #111111; --text-light: #555555; --cool-grey: #888888; --cool-grey-light: #cccccc; --cool-grey-pale: #f8f8f8; --accent: #333333; }
+  /* CHARCOAL: dark grey page, black header, white text */
+  body.theme-darkgrey {
+    --navy-dark: #111111; --navy: #1a1a1a; --navy-mid: #2a2a2a;
+    --white: #f0f0f0; --text: #e8e8e8; --text-light: #aaaaaa;
+    --cool-grey: #888888; --cool-grey-light: #555555; --cool-grey-pale: #222222;
+    --accent: #888888;
+  }
 
-  /* Fix text colors for light themes */
-  body.theme-lightpurple header, body.theme-minimal header { border-bottom: 1px solid var(--cool-grey-light); }
-  body.theme-lightpurple nav a, body.theme-minimal nav a { color: var(--text-light); }
-  body.theme-lightpurple nav a:hover, body.theme-minimal nav a:hover { color: var(--text); }
-  body.theme-lightpurple .logo-slogan, body.theme-minimal .logo-slogan { color: var(--cool-grey); }
-  body.theme-lightpurple .nav-admin-btn, body.theme-minimal .nav-admin-btn { color: var(--text-light); border-color: var(--cool-grey-light); }
-  body.theme-lightpurple .nav-settings-btn, body.theme-minimal .nav-settings-btn { color: var(--text-light); }
-  body.theme-lightpurple .nav-user-btn, body.theme-minimal .nav-user-btn { color: var(--text-light); border-color: var(--cool-grey-light); }
-  body.theme-lightpurple .logo-name, body.theme-minimal .logo-name { color: var(--text); }
-  body.theme-lightpurple .headline-title, body.theme-minimal .headline-title { color: var(--text); }
-  body.theme-lightpurple .headline-excerpt, body.theme-minimal .headline-excerpt { color: var(--text-light); }
-  body.theme-lightpurple .headline-meta, body.theme-minimal .headline-meta { color: var(--cool-grey); }
+  /* NAVY & SLATE: dark navy page, dark grey header, white text */
+  body.theme-navygrey {
+    --navy-dark: #2d2d2d; --navy: #1a2744; --navy-mid: #243558;
+    --white: #f0f4f8; --text: #e0e8f0; --text-light: #8a9ab0;
+    --cool-grey: #7a8fa6; --cool-grey-light: #3a4a5a; --cool-grey-pale: #1a2232;
+    --accent: #5a7fa8;
+  }
+
+  /* AMETHYST: dark purple page, dark gold header/footer, white text */
+  body.theme-purple {
+    --navy-dark: #8b6914; --navy: #2d1b4e; --navy-mid: #3d2660;
+    --white: #fdf8ff; --text: #f0e8ff; --text-light: #c4b0d8;
+    --cool-grey: #9b85b8; --cool-grey-light: #4a3568; --cool-grey-pale: #1e0d35;
+    --accent: #c9a84c;
+  }
+
+  /* LAVENDER: white page, dark purple header/footer, black text */
+  body.theme-lightpurple {
+    --navy-dark: #2d1b4e; --navy: #f0ebff; --navy-mid: #e4d8ff;
+    --white: #f8f8ff; --text: #1a0d2e; --text-light: #5a4070;
+    --cool-grey: #7a6d8a; --cool-grey-light: #c4b0d8; --cool-grey-pale: #f0ebff;
+    --accent: #4a2d80;
+  }
+  body.theme-lightpurple header { background: #2d1b4e; }
+  body.theme-lightpurple .admin-bar { background: #3d2660; }
+  body.theme-lightpurple footer, body.theme-lightpurple .site-footer { background: #2d1b4e !important; }
+
+  /* MINIMAL: white page, light grey header/footer, black text */
+  body.theme-minimal {
+    --navy-dark: #cccccc; --navy: #f0f0f0; --navy-mid: #e8e8e8;
+    --white: #ffffff; --text: #111111; --text-light: #555555;
+    --cool-grey: #888888; --cool-grey-light: #cccccc; --cool-grey-pale: #f5f5f5;
+    --accent: #555555;
+  }
+  body.theme-minimal header { background: #cccccc; border-bottom: 1px solid #bbbbbb; }
+  body.theme-minimal header nav a { color: #333333; }
+  body.theme-minimal header nav a:hover { color: #000000; }
+  body.theme-minimal .logo-slogan { color: #666666; }
+  body.theme-minimal .nav-admin-btn { color: #333333; border-color: #999999; }
+  body.theme-minimal .nav-settings-btn { color: #333333; }
+  body.theme-minimal .nav-user-btn { color: #333333; border-color: #999999; }
+  body.theme-minimal .logo-name { color: #111111; }
+  body.theme-minimal .admin-bar { background: #bbbbbb; }
+  body.theme-minimal .admin-bar span { color: #333333; }
+  body.theme-minimal footer, body.theme-minimal .site-footer { background: #cccccc !important; color: #333333 !important; }
+
+  /* Light theme nav fixes for lightpurple */
+  body.theme-lightpurple header nav a { color: #d0b8f0; }
+  body.theme-lightpurple header nav a:hover { color: #ffffff; }
+  body.theme-lightpurple .logo-slogan { color: #b0a0c8; }
+  body.theme-lightpurple .nav-admin-btn { color: #d0b8f0; border-color: rgba(255,255,255,0.25); }
+  body.theme-lightpurple .nav-settings-btn { color: #d0b8f0; }
+  body.theme-lightpurple .nav-user-btn { color: #d0b8f0; border-color: rgba(255,255,255,0.25); }
+  body.theme-lightpurple .logo-name { color: #ffffff; }
+  body.theme-lightpurple .admin-bar span { color: #c4b0d8; }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -826,44 +871,44 @@
         </button>
         <button class="theme-btn" data-theme="darkgrey" onclick="applyTheme('darkgrey', this)">
           <div class="theme-preview">
-            <div class="tp-main" style="background:#1a1a1a"></div>
-            <div class="tp-sub" style="background:#000000"></div>
+            <div class="tp-main" style="background:#2a2a2a"></div>
+            <div class="tp-sub" style="background:#111111"></div>
             <div class="tp-text" style="background:#ffffff"></div>
           </div>
-          <span>Dark Grey</span>
+          <span>Charcoal</span>
           <span class="theme-sub">Dark grey / black / white</span>
         </button>
         <button class="theme-btn" data-theme="navygrey" onclick="applyTheme('navygrey', this)">
           <div class="theme-preview">
-            <div class="tp-main" style="background:#0d1b2a"></div>
-            <div class="tp-sub" style="background:#1c2b3a"></div>
+            <div class="tp-main" style="background:#1a2744"></div>
+            <div class="tp-sub" style="background:#3a3a3a"></div>
             <div class="tp-text" style="background:#ffffff"></div>
           </div>
-          <span>Navy &amp; Grey</span>
+          <span>Navy &amp; Slate</span>
           <span class="theme-sub">Dark navy / dark grey / white</span>
         </button>
         <button class="theme-btn" data-theme="purple" onclick="applyTheme('purple', this)">
           <div class="theme-preview">
             <div class="tp-main" style="background:#2d1b4e"></div>
-            <div class="tp-sub" style="background:#c9a84c"></div>
+            <div class="tp-sub" style="background:#b8860b"></div>
             <div class="tp-text" style="background:#ffffff"></div>
           </div>
-          <span>Royal Purple</span>
+          <span>Amethyst</span>
           <span class="theme-sub">Dark purple / dark gold / white</span>
         </button>
         <button class="theme-btn" data-theme="lightpurple" onclick="applyTheme('lightpurple', this)">
           <div class="theme-preview">
-            <div class="tp-main" style="background:#ffffff"></div>
+            <div class="tp-main" style="background:#f8f8ff"></div>
             <div class="tp-sub" style="background:#2d1b4e"></div>
             <div class="tp-text" style="background:#111111"></div>
           </div>
-          <span>Light Purple</span>
+          <span>Lavender</span>
           <span class="theme-sub">White / dark purple / black</span>
         </button>
         <button class="theme-btn" data-theme="minimal" onclick="applyTheme('minimal', this)">
           <div class="theme-preview">
             <div class="tp-main" style="background:#ffffff"></div>
-            <div class="tp-sub" style="background:#e8e8e8"></div>
+            <div class="tp-sub" style="background:#cccccc"></div>
             <div class="tp-text" style="background:#111111"></div>
           </div>
           <span>Minimal</span>
