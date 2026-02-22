@@ -1023,9 +1023,15 @@ async function initAuth() {
 
 function isAdminUser(user) {
   if (!user) return false;
-  // Admin detection: user has app_metadata.role = 'admin' OR we check against known admin email
-  // Simple approach: store admin email in a const and compare
-  return user.email === 'YOUR_ADMIN_EMAIL@example.com' // ← replace with your admin email || (user.app_metadata && user.app_metadata.role === 'admin');
+  // Check app_metadata (works server-side) OR hardcoded admin emails
+  const adminEmails = [
+    'joshuarisbon0819@gmail.com'  // ← your admin email
+    'ANIMAADMIN@gmail.com'   // ← another admin email
+    'joshuarecordsrecords@gmail.com' // ← another admin email 
+  ];
+  if (adminEmails.includes(user.email)) return true;
+  if (user.app_metadata && user.app_metadata.role === 'admin') return true;
+  return false;
 }
 
 function handleSessionUser(user) {
@@ -1089,17 +1095,25 @@ function handleUserClick() {
   }
 }
 
-// Admin login (same modal, same Supabase signIn)
+// Admin login — only works if the account has role=admin in Supabase
 async function doLogin() {
   const email = document.getElementById('login-email').value.trim();
   const pass = document.getElementById('login-pass').value;
   const err = document.getElementById('login-error'), btn = document.getElementById('login-btn');
   err.style.display = 'none'; btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Signing in…';
-  const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
   btn.disabled = false; btn.textContent = 'Sign In';
-  if (error) { err.textContent = error.message; err.style.display = 'block'; }
-  else { closeModal('login-modal'); document.getElementById('login-email').value = ''; document.getElementById('login-pass').value = ''; }
+  if (error) { err.textContent = 'Invalid credentials.'; err.style.display = 'block'; return; }
+  if (!isAdminUser(data.user)) {
+    await sb.auth.signOut();
+    err.textContent = 'Invalid credentials.';
+    err.style.display = 'block';
+    return;
+  }
+  closeModal('login-modal');
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-pass').value = '';
 }
 async function doLogout() { await sb.auth.signOut(); }
 
