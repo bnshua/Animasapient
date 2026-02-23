@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Animasapient</title>
+<link rel="icon" type="image/png" href="flavicon.png">
+<link rel="apple-touch-icon" href="flavicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -783,8 +785,100 @@
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
-  @media (max-width: 900px) { .post-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .post-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } .headline-title { font-size: 1.8rem; } nav { gap: 1rem; } nav a { font-size: 0.72rem; } }
+  /* ── MOBILE HAMBURGER ── */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--cool-grey-light); border-radius: 2px; transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-nav-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; }
+  .mobile-nav-overlay.open { display: block; }
+  .mobile-nav { display: none; position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--navy); z-index: 200; flex-direction: column; padding: 2rem 1.5rem; gap: 0; transition: right 0.3s ease; overflow-y: auto; }
+  .mobile-nav.open { right: 0; display: flex; }
+  .mobile-nav-close { align-self: flex-end; background: none; border: none; color: var(--cool-grey-light); font-size: 1.5rem; cursor: pointer; margin-bottom: 1.5rem; }
+  .mobile-nav a, .mobile-nav-link { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey-light); text-decoration: none; cursor: pointer; padding: 0.9rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: block; background: none; border-left: none; border-right: none; border-top: none; text-align: left; width: 100%; }
+  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 1rem 0; }
+  .mobile-nav-btn { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.8rem 0; color: var(--cool-grey-light); background: none; border: none; border-bottom: 1px solid rgba(255,255,255,0.06); cursor: pointer; text-align: left; width: 100%; }
+
+  @media (max-width: 900px) {
+    .post-grid { grid-template-columns: repeat(2, 1fr); }
+    .header-inner { padding: 0 1.5rem; }
+    .settings-wrap { padding: 3rem 1.5rem; }
+    .post-body-wrap { padding: 0 1.5rem; margin: 2.5rem auto; }
+  }
+
+  @media (max-width: 700px) {
+    /* Hide desktop nav, show hamburger */
+    nav { display: none; }
+    .hamburger { display: flex; }
+    .header-inner { height: 60px; padding: 0 1.2rem; }
+
+    /* Hero */
+    .headline-post { min-height: 320px; }
+    .headline-content { padding: 2rem 1.2rem; }
+    .headline-cat { font-size: 0.68rem; }
+    .headline-title { font-size: 1.55rem; line-height: 1.25; }
+    .headline-excerpt { font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .headline-meta { font-size: 0.72rem; }
+
+    /* Grid */
+    .post-grid { grid-template-columns: 1fr; padding: 0 1.2rem; gap: 1.5rem; margin-bottom: 3rem; }
+    .card { flex-direction: row; gap: 1rem; }
+    .card-img-wrap { width: 110px; min-width: 110px; height: 90px; flex-shrink: 0; }
+    .card-img { height: 90px; }
+    .card-body { flex: 1; padding: 0; }
+    .card-title { font-size: 1rem; }
+    .card-excerpt { display: none; }
+
+    /* Post page */
+    .post-hero { min-height: 260px; }
+    .post-hero-content { padding: 2rem 1.2rem; }
+    .post-hero-title { font-size: 1.6rem; }
+    .post-body-wrap { padding: 0 1.2rem; margin: 2rem auto; }
+    .post-content { font-size: 1rem; }
+    .back-btn { font-size: 0.75rem; margin-bottom: 1.5rem; }
+
+    /* About & Settings */
+    .about-header { padding: 2rem 1.2rem 1.5rem; }
+    .about-title { font-size: 2rem; }
+    .about-body { padding: 0 1.2rem 2rem; }
+    .settings-wrap { padding: 2rem 1.2rem; }
+    .theme-grid { grid-template-columns: repeat(2, 1fr); }
+    .account-row { flex-direction: column; gap: 0.6rem; }
+    .account-row-label { min-width: unset; }
+
+    /* Section divider */
+    .section-divider { padding: 0 1.2rem; }
+
+    /* Admin bar */
+    .admin-bar { padding: 0.6rem 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* Modals */
+    .modal-box { width: 95vw; max-width: 95vw; padding: 1.5rem 1.2rem; margin: 1rem; }
+    .post-modal-box { width: 98vw; max-width: 98vw; padding: 1.2rem; }
+    .form-row { grid-template-columns: 1fr; }
+
+    /* Footer */
+    footer { padding: 2rem 1.2rem; }
+    .footer-cats { gap: 1rem; }
+
+    /* Rating + comments */
+    .rating-section { margin-top: 2rem; }
+    .star-picker { gap: 4px; }
+    .sp-star { font-size: 1.6rem; }
+    .comment-item { padding: 0.8rem 0; }
+
+    /* Empty state */
+    .empty-state { padding: 3rem 1.2rem; }
+  }
+
+  @media (max-width: 400px) {
+    .headline-title { font-size: 1.3rem; }
+    .post-hero-title { font-size: 1.35rem; }
+    .theme-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .theme-btn { padding: 0.7rem 0.5rem; }
+  }
 </style>
 </head>
 <body>
@@ -806,8 +900,27 @@
       <button class="nav-user-btn" id="user-nav-btn" onclick="handleUserClick()">Sign In</button>
       <button class="nav-admin-btn" id="admin-nav-btn" onclick="handleAdminClick()">Admin</button>
     </nav>
+    <button class="hamburger" id="hamburger-btn" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay" onclick="closeMobileNav()"></div>
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+  <a onclick="goHome(); closeMobileNav()">Home</a>
+  <a onclick="filterCat('Philosophy'); closeMobileNav()">Philosophy</a>
+  <a onclick="filterCat('Religion & Spirituality'); closeMobileNav()">Religion &amp; Spirituality</a>
+  <a onclick="filterCat('Geography'); closeMobileNav()">Geography</a>
+  <a onclick="filterCat('Culture'); closeMobileNav()">Culture</a>
+  <a onclick="showPage('about', true, '/about'); closeMobileNav()">About</a>
+  <div class="mobile-nav-divider"></div>
+  <button class="mobile-nav-btn" onclick="openSettings(); closeMobileNav()">⚙ Settings</button>
+  <button class="mobile-nav-btn" id="mobile-user-btn" onclick="handleUserClick(); closeMobileNav()">Sign In</button>
+  <button class="mobile-nav-btn" id="mobile-admin-btn" onclick="handleAdminClick(); closeMobileNav()">Admin</button>
+</div>
 
 <div class="admin-bar" id="admin-bar">
   <span id="admin-label">Administrator</span>
@@ -1300,25 +1413,31 @@ function handleSessionUser(user) {
 function applyAdminUI(user) {
   const bar = document.getElementById('admin-bar');
   const btn = document.getElementById('admin-nav-btn');
+  const mobileAdminBtn = document.getElementById('mobile-admin-btn');
   if (user) {
     bar.classList.add('visible'); btn.textContent = '+ New Post'; btn.classList.add('logged-in');
     document.body.classList.add('admin-mode');
     document.getElementById('admin-label').textContent = user.email;
+    if (mobileAdminBtn) mobileAdminBtn.textContent = '+ New Post';
   } else {
     bar.classList.remove('visible'); btn.textContent = 'Admin'; btn.classList.remove('logged-in');
     document.body.classList.remove('admin-mode');
+    if (mobileAdminBtn) mobileAdminBtn.textContent = 'Admin';
   }
 }
 
 function applyUserUI(user) {
   const btn = document.getElementById('user-nav-btn');
+  const mobileBtn = document.getElementById('mobile-user-btn');
   if (user) {
     const displayName = user.user_metadata?.display_name || user.email.split('@')[0];
     btn.textContent = displayName;
     btn.classList.add('signed-in');
+    if (mobileBtn) { mobileBtn.textContent = '👤 ' + displayName; }
   } else {
     btn.textContent = 'Sign In';
     btn.classList.remove('signed-in');
+    if (mobileBtn) { mobileBtn.textContent = 'Sign In'; }
   }
 }
 
@@ -2195,6 +2314,22 @@ function fmtDatetime(s) { return new Date(s).toLocaleDateString('en-US', { year:
 function todayStr() { return new Date().toISOString().split('T')[0]; }
 function x(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
 
+
+// ── MOBILE NAV ────────────────────────────────────────────────
+function toggleMobileNav() {
+  const nav = document.getElementById('mobile-nav');
+  const overlay = document.getElementById('mobile-nav-overlay');
+  const btn = document.getElementById('hamburger-btn');
+  const isOpen = nav.classList.contains('open');
+  nav.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+function closeMobileNav() {
+  document.getElementById('mobile-nav').classList.remove('open');
+  document.getElementById('mobile-nav-overlay').classList.remove('open');
+  document.getElementById('hamburger-btn').classList.remove('open');
+}
 
 // ── SETTINGS & THEMES ────────────────────────────────────────
 const THEMES = {
