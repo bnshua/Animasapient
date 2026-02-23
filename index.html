@@ -6,6 +6,22 @@
 <title>Animasapient</title>
 <link rel="icon" type="image/png" href="flavicon.png">
 <link rel="apple-touch-icon" href="flavicon.png">
+<script>
+// Runs BEFORE any CSS paint — prevents flash of desktop layout on phones
+(function() {
+  var isTouch = (
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0 ||
+    /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(navigator.userAgent)
+  );
+  if (isTouch) {
+    document.documentElement.classList.add('is-touch');
+    var w = window.screen.width / (window.devicePixelRatio || 1);
+    if (w <= 430) document.documentElement.classList.add('is-small');
+    else if (w >= 768) document.documentElement.classList.add('is-tablet');
+  }
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -785,7 +801,7 @@
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
-  /* ── MOBILE HAMBURGER ── */
+  /* ── HAMBURGER (hidden by default, shown on touch devices via JS) ── */
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
   .hamburger span { display: block; width: 22px; height: 2px; background: var(--cool-grey-light); border-radius: 2px; transition: all 0.3s; }
   .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -796,103 +812,104 @@
   .mobile-nav { display: none; position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--navy); z-index: 200; flex-direction: column; padding: 2rem 1.5rem; gap: 0; transition: right 0.3s ease; overflow-y: auto; }
   .mobile-nav.open { right: 0; display: flex; }
   .mobile-nav-close { align-self: flex-end; background: none; border: none; color: var(--cool-grey-light); font-size: 1.5rem; cursor: pointer; margin-bottom: 1.5rem; }
-  .mobile-nav a, .mobile-nav-link { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey-light); text-decoration: none; cursor: pointer; padding: 0.9rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: block; background: none; border-left: none; border-right: none; border-top: none; text-align: left; width: 100%; }
-  .mobile-nav a:last-child { border-bottom: none; }
+  .mobile-nav a { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey-light); text-decoration: none; cursor: pointer; padding: 0.9rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: block; }
   .mobile-nav-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 1rem 0; }
   .mobile-nav-btn { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.8rem 0; color: var(--cool-grey-light); background: none; border: none; border-bottom: 1px solid rgba(255,255,255,0.06); cursor: pointer; text-align: left; width: 100%; }
 
-  @media (max-width: 1100px) {
-    .post-grid { grid-template-columns: repeat(2, 1fr); }
-    .header-inner { padding: 0 1.5rem; }
-    .settings-wrap { padding: 3rem 1.5rem; }
-    .post-body-wrap { padding: 0 1.5rem; margin: 2.5rem auto; }
-  }
+  /* Applied by JS when touch device detected */
+  html.is-touch nav { display: none; }
+  html.is-touch .hamburger { display: flex; }
+  html.is-touch .header-inner { height: 60px; padding: 0 1.2rem; }
+  html.is-touch .headline-post { min-height: 320px; }
+  html.is-touch .headline-content { padding: 2rem 1.2rem; }
+  html.is-touch .headline-title { font-size: 1.55rem; line-height: 1.25; }
+  html.is-touch .headline-excerpt { font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  html.is-touch .post-grid { grid-template-columns: 1fr; padding: 0 1.2rem; gap: 1.5rem; margin-bottom: 3rem; }
+  html.is-touch .card { flex-direction: row; gap: 1rem; }
+  html.is-touch .card-img-wrap { width: 110px; min-width: 110px; height: 90px; flex-shrink: 0; }
+  html.is-touch .card-img { height: 90px; }
+  html.is-touch .card-body { flex: 1; padding: 0; }
+  html.is-touch .card-title { font-size: 1rem; }
+  html.is-touch .card-excerpt { display: none; }
+  html.is-touch .post-hero { min-height: 260px; }
+  html.is-touch .post-hero-content { padding: 2rem 1.2rem; }
+  html.is-touch .post-hero-title { font-size: 1.6rem; }
+  html.is-touch .post-body-wrap { padding: 0 1.2rem; margin: 2rem auto; }
+  html.is-touch .post-content { font-size: 1rem; }
+  html.is-touch .back-btn { font-size: 0.75rem; margin-bottom: 1.5rem; }
+  html.is-touch .about-title { font-size: 2rem; }
+  html.is-touch .settings-wrap { padding: 2rem 1.2rem; }
+  html.is-touch .theme-grid { grid-template-columns: repeat(2, 1fr); }
+  html.is-touch .account-row { flex-direction: column; gap: 0.6rem; }
+  html.is-touch .account-row-label { min-width: unset; }
+  html.is-touch .section-divider { padding: 0 1.2rem; }
+  html.is-touch .admin-bar { padding: 0.6rem 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
+  html.is-touch .modal-box { width: 95vw; max-width: 95vw; padding: 1.5rem 1.2rem; max-height: 90dvh; overflow-y: auto; }
+  html.is-touch .post-modal-box { max-height: 95dvh; overflow-y: auto; }
+  html.is-touch .post-modal-box { width: 98vw; max-width: 98vw; padding: 1.2rem; }
+  html.is-touch .form-row { grid-template-columns: 1fr; }
+  html.is-touch footer { padding: 2rem 1.2rem; }
+  html.is-touch .footer-cats { gap: 1rem; }
+  html.is-touch .sp-star { font-size: 1.6rem; }
+  html.is-touch .empty-state { padding: 3rem 1.2rem; }
 
-  @media (max-width: 1024px) {
-    /* Hide desktop nav, show hamburger */
-    nav { display: none; }
-    .hamburger { display: flex; }
-    .header-inner { height: 60px; padding: 0 1.2rem; }
+  /* ── ALL TOUCH DEVICES: new features ── */
+  html.is-touch .search-bar-wrap { padding: 1rem 1.2rem 0; }
+  html.is-touch .search-bar input { font-size: 0.95rem; padding: 0.65rem 0.8rem; }
+  html.is-touch .search-results-label { padding: 0.6rem 1.2rem 0; }
+  html.is-touch .post-meta-pills { gap: 0.6rem; margin-top: 0.5rem; }
+  html.is-touch .font-size-ctrl { margin-bottom: 1rem; }
+  html.is-touch .font-size-ctrl button { width: 36px; height: 36px; font-size: 1rem; }
+  html.is-touch .related-grid { grid-template-columns: 1fr; gap: 0.8rem; }
+  html.is-touch .related-section { margin-top: 2rem; padding-top: 1.5rem; }
+  html.is-touch .post-tags { margin-top: 1.2rem; padding-top: 1.2rem; }
+  html.is-touch .tag { font-size: 0.72rem; padding: 4px 12px; }
+  html.is-touch .history-item { gap: 0.8rem; }
+  html.is-touch .comment-header { flex-wrap: wrap; gap: 0.4rem; }
+  html.is-touch .comment-like-btn { margin-left: 0; }
 
-    /* Hero */
-    .headline-post { min-height: 320px; }
-    .headline-content { padding: 2rem 1.2rem; }
-    .headline-cat { font-size: 0.68rem; }
-    .headline-title { font-size: 1.55rem; line-height: 1.25; }
-    .headline-excerpt { font-size: 0.9rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .headline-meta { font-size: 0.72rem; }
+  /* ── PHILOSOPHERDLE MOBILE ── */
+  html.is-touch .phil-wrap { padding: 1.5rem 0.8rem; }
+  html.is-touch .phil-title { font-size: 1.7rem; }
+  html.is-touch .phil-header { margin-bottom: 1.2rem; padding-bottom: 1.2rem; }
+  html.is-touch .phil-grid { gap: 4px; margin-bottom: 1rem; }
+  html.is-touch .phil-row { gap: 3px; }
+  html.is-touch .phil-cell { width: 36px; height: 36px; font-size: 0.82rem; border-radius: 2px; }
+  html.is-touch .phil-keyboard { gap: 5px; }
+  html.is-touch .phil-kb-row { gap: 4px; }
+  html.is-touch .phil-key { min-width: 28px; height: 44px; font-size: 0.78rem; padding: 0 3px; border-radius: 3px; }
+  html.is-touch .phil-key.wide { min-width: 46px; font-size: 0.68rem; }
+  html.is-touch .phil-stats { gap: 0.6rem; padding: 0.8rem; }
+  html.is-touch .phil-stat-num { font-size: 1.4rem; }
+  html.is-touch .phil-mode-btns { gap: 0.6rem; margin-bottom: 1rem; }
+  html.is-touch .phil-mode-btn { padding: 5px 14px; font-size: 0.75rem; }
+  html.is-touch .phil-msg { font-size: 0.9rem; }
+  html.is-touch .phil-guess-count { font-size: 0.72rem; }
+  html.is-touch .phil-names-note { font-size: 0.72rem; }
+  html.is-touch .phil-btn { padding: 9px 18px; font-size: 0.78rem; }
 
-    /* Grid */
-    .post-grid { grid-template-columns: 1fr; padding: 0 1.2rem; gap: 1.5rem; margin-bottom: 3rem; }
-    .card { flex-direction: row; gap: 1rem; }
-    .card-img-wrap { width: 110px; min-width: 110px; height: 90px; flex-shrink: 0; }
-    .card-img { height: 90px; }
-    .card-body { flex: 1; padding: 0; }
-    .card-title { font-size: 1rem; }
-    .card-excerpt { display: none; }
+  /* Extra small phones — shrink cells more for long names */
+  html.is-touch.is-small .phil-cell { width: 30px; height: 30px; font-size: 0.72rem; }
+  html.is-touch.is-small .phil-key { min-width: 24px; height: 40px; font-size: 0.68rem; padding: 0 2px; }
+  html.is-touch.is-small .phil-key.wide { min-width: 40px; }
+  html.is-touch.is-small .phil-title { font-size: 1.4rem; }
 
-    /* Post page */
-    .post-hero { min-height: 260px; }
-    .post-hero-content { padding: 2rem 1.2rem; }
-    .post-hero-title { font-size: 1.6rem; }
-    .post-body-wrap { padding: 0 1.2rem; margin: 2rem auto; }
-    .post-content { font-size: 1rem; }
-    .back-btn { font-size: 0.75rem; margin-bottom: 1.5rem; }
+  /* Small phones — general */
+  html.is-touch.is-small .headline-title { font-size: 1.3rem; }
+  html.is-touch.is-small .post-hero-title { font-size: 1.35rem; }
+  html.is-touch.is-small .theme-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  html.is-touch.is-small .theme-btn { padding: 0.7rem 0.5rem; }
 
-    /* About & Settings */
-    .about-header { padding: 2rem 1.2rem 1.5rem; }
-    .about-title { font-size: 2rem; }
-    .about-body { padding: 0 1.2rem 2rem; }
-    .settings-wrap { padding: 2rem 1.2rem; }
-    .theme-grid { grid-template-columns: repeat(2, 1fr); }
-    .account-row { flex-direction: column; gap: 0.6rem; }
-    .account-row-label { min-width: unset; }
-
-    /* Section divider */
-    .section-divider { padding: 0 1.2rem; }
-
-    /* Admin bar */
-    .admin-bar { padding: 0.6rem 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
-
-    /* Modals */
-    .modal-box { width: 95vw; max-width: 95vw; padding: 1.5rem 1.2rem; margin: 1rem; }
-    .post-modal-box { width: 98vw; max-width: 98vw; padding: 1.2rem; }
-    .form-row { grid-template-columns: 1fr; }
-
-    /* Footer */
-    footer { padding: 2rem 1.2rem; }
-    .footer-cats { gap: 1rem; }
-
-    /* Rating + comments */
-    .rating-section { margin-top: 2rem; }
-    .star-picker { gap: 4px; }
-    .sp-star { font-size: 1.6rem; }
-    .comment-item { padding: 0.8rem 0; }
-
-    /* Empty state */
-    .empty-state { padding: 3rem 1.2rem; }
-  }
-
-  @media (max-width: 480px) {
-    .headline-title { font-size: 1.3rem; }
-    .post-hero-title { font-size: 1.35rem; }
-    .theme-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-    .theme-btn { padding: 0.7rem 0.5rem; }
-  }
-
-  /* Restore desktop nav for actual computers (mouse/trackpad users) */
-  @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
-    nav { display: flex !important; }
-    .hamburger { display: none !important; }
-    .mobile-nav { display: none !important; }
-    .mobile-nav-overlay { display: none !important; }
-    .header-inner { height: 70px; padding: 0 2.5rem; }
-    .post-grid { grid-template-columns: repeat(3, 1fr); }
-    .card { flex-direction: column; }
-    .card-img-wrap { width: 100%; height: auto; }
-    .card-img { height: 200px; }
-    .card-excerpt { display: block; }
-  }
+  /* Tablet: 2-col grid, bigger game cells */
+  html.is-touch.is-tablet .post-grid { grid-template-columns: repeat(2, 1fr); }
+  html.is-touch.is-tablet .card { flex-direction: column; }
+  html.is-touch.is-tablet .card-img-wrap { width: 100%; height: auto; }
+  html.is-touch.is-tablet .card-img { height: 200px; }
+  html.is-touch.is-tablet .card-excerpt { display: block; }
+  html.is-touch.is-tablet .phil-cell { width: 44px; height: 44px; font-size: 0.95rem; }
+  html.is-touch.is-tablet .phil-key { min-width: 36px; height: 48px; font-size: 0.85rem; }
+  html.is-touch.is-tablet .phil-key.wide { min-width: 58px; }
+  html.is-touch.is-tablet .related-grid { grid-template-columns: repeat(2, 1fr); }
 </style>
 </head>
 <body>
@@ -910,6 +927,7 @@
       <a onclick="filterCat('Geography')">Geography</a>
       <a onclick="filterCat('Culture')">Culture</a>
       <a onclick="showPage('about', true, '/about')">About</a>
+      <a onclick="openPhilosopherdle()">Philosopherdle</a>
       <button class="nav-settings-btn" id="settings-nav-btn" onclick="openSettings()" title="Settings">⚙</button>
       <button class="nav-user-btn" id="user-nav-btn" onclick="handleUserClick()">Sign In</button>
       <button class="nav-admin-btn" id="admin-nav-btn" onclick="handleAdminClick()">Admin</button>
@@ -930,6 +948,7 @@
   <a onclick="filterCat('Geography'); closeMobileNav()">Geography</a>
   <a onclick="filterCat('Culture'); closeMobileNav()">Culture</a>
   <a onclick="showPage('about', true, '/about'); closeMobileNav()">About</a>
+  <a onclick="openPhilosopherdle(); closeMobileNav()">Philosopherdle</a>
   <div class="mobile-nav-divider"></div>
   <button class="mobile-nav-btn" onclick="openSettings(); closeMobileNav()">⚙ Settings</button>
   <button class="mobile-nav-btn" id="mobile-user-btn" onclick="handleUserClick(); closeMobileNav()">Sign In</button>
@@ -946,6 +965,13 @@
 
 <!-- HOME -->
 <div id="home-page" class="page active">
+  <div class="search-bar-wrap">
+    <div class="search-bar">
+      <span class="search-bar-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Search articles by keyword, tag, or title…" oninput="handleSearch(this.value)">
+    </div>
+  </div>
+  <div id="search-results-label" class="search-results-label" style="display:none;"></div>
   <div id="headline-wrap"></div>
   <div class="section-divider" id="grid-divider" style="display:none;">
     <div class="divider-line"></div>
@@ -1096,6 +1122,14 @@
         </div>
       </div>
 
+      <!-- Reading History -->
+      <div class="account-row" style="flex-direction:column;gap:0.8rem;">
+        <div class="account-row-label">Reading History</div>
+        <div id="reading-history-list" class="history-list">
+          <span class="history-empty">Loading…</span>
+        </div>
+      </div>
+
       <!-- Log Out -->
       <div class="account-row">
         <div class="account-row-label">Session</div>
@@ -1123,7 +1157,21 @@
   </div>
   <div class="post-body-wrap">
     <button class="back-btn" onclick="goHome()">← Return to All Articles</button>
+    <div class="post-meta-pills" id="ph-meta-pills"></div>
+    <div class="font-size-ctrl">
+      <button onclick="changeFontSize(-1)" title="Decrease font size">A−</button>
+      <span class="font-size-label">Text Size</span>
+      <button onclick="changeFontSize(1)" title="Increase font size">A+</button>
+    </div>
     <div class="post-content" id="ph-body"></div>
+    <div class="post-tags" id="post-tags-section" style="display:none;">
+      <div class="post-tags-label">Tags</div>
+      <div class="tag-list" id="post-tags-list"></div>
+    </div>
+    <div class="related-section" id="related-section" style="display:none;">
+      <div class="related-label">Related Articles</div>
+      <div class="related-grid" id="related-grid"></div>
+    </div>
 
     <!-- CITATION SECTION -->
     <div class="citation-section" id="citation-section">
@@ -1171,6 +1219,34 @@
     </div>
 
     <div id="ph-admin" style="margin-top:2rem;"></div>
+  </div>
+</div>
+
+<!-- PHILOSOPHERDLE -->
+<div id="phil-page" class="page">
+  <div class="phil-wrap">
+    <div class="phil-header">
+      <div class="about-eyebrow">Daily Challenge</div>
+      <div class="phil-title">Philosopherdle</div>
+      <div class="phil-subtitle">Guess the philosopher's name — one letter at a time</div>
+    </div>
+    <div class="phil-mode-btns">
+      <button class="phil-mode-btn active" id="phil-daily-btn" onclick="switchPhilMode('daily')">Daily</button>
+      <button class="phil-mode-btn" id="phil-practice-btn" onclick="switchPhilMode('practice')">Practice</button>
+    </div>
+    <div class="phil-stats" id="phil-stats" style="display:none;">
+      <div><div class="phil-stat-num" id="ps-played">0</div><div class="phil-stat-lbl">Played</div></div>
+      <div><div class="phil-stat-num" id="ps-wins">0</div><div class="phil-stat-lbl">Won</div></div>
+      <div><div class="phil-stat-num" id="ps-streak">0</div><div class="phil-stat-lbl">Streak</div></div>
+      <div><div class="phil-stat-num" id="ps-best">0</div><div class="phil-stat-lbl">Best</div></div>
+    </div>
+    <div class="phil-guess-count" id="phil-guess-count"></div>
+    <div class="phil-grid" id="phil-grid"></div>
+    <div class="phil-msg" id="phil-msg"></div>
+    <div class="phil-keyboard" id="phil-keyboard"></div>
+    <div style="text-align:center;margin-top:0.5rem;" id="phil-action-area"></div>
+    <div class="phil-timer" id="phil-timer"></div>
+    <div class="phil-names-note">Philosophers include thinkers from Plato to the present day, spanning every tradition and era.</div>
   </div>
 </div>
 
@@ -1295,6 +1371,10 @@
       <div class="form-group">
         <label>Excerpt</label>
         <input type="text" id="p-excerpt" placeholder="A brief one-line summary…">
+      </div>
+      <div class="form-group">
+        <label>Tags <span style="font-style:italic;text-transform:none;letter-spacing:0;font-size:0.7rem;">(comma-separated, e.g. Stoicism, Ancient Greece)</span></label>
+        <input type="text" id="p-tags" placeholder="e.g. Stoicism, Ancient Greece, Ethics">
       </div>
       <div class="form-group">
         <label>Body</label>
@@ -1628,7 +1708,7 @@ function heroHTML(p) {
       <div class="headline-category">${x(p.category)}</div>
       <h2 class="headline-title">${x(p.title)}</h2>
       ${p.excerpt ? `<p class="headline-excerpt">${x(p.excerpt)}</p>` : ''}
-      <div class="headline-meta">${fmtDate(p.date)}</div>
+      <div class="headline-meta">${fmtDate(p.date)} · ${readingTime(p.body)}</div>
       <div class="headline-stars">${starsHTML(r.avg, r.count)}</div>
       ${ab}
     </div></div>`;
@@ -1644,7 +1724,7 @@ function cardHTML(p) {
     <div class="card-category">${x(p.category)}</div>
     <div class="card-title">${x(p.title)}</div>
     ${p.excerpt ? `<div class="card-excerpt">${x(p.excerpt)}</div>` : ''}
-    <div class="card-meta">${fmtDate(p.date)}</div>
+    <div class="card-meta">${fmtDate(p.date)} · ${readingTime(p.body)}</div>
     <div class="card-stars">${starsHTML(r.avg, r.count)}</div>
     ${ab}</div>`;
 }
@@ -1806,12 +1886,15 @@ async function renderComments(postId) {
     const avatarHtml = c.avatar_url
       ? `<img class="comment-avatar" src="${x(c.avatar_url)}" alt="">`
       : `<div class="comment-avatar-ph">${initial}</div>`;
+    const liked = JSON.parse(localStorage.getItem('anima-liked-comments') || '[]').includes(c.id);
+    const likes = c.likes || 0;
     return `<div class="comment-item" id="comment-${c.id}">
       <div class="comment-header">
         ${avatarHtml}
         <span class="comment-author">${x(c.display_name || 'Anonymous')}</span>
         <span class="comment-date">${fmtDatetime(c.created_at)}</span>
         ${canDelete ? `<button class="comment-delete-btn" onclick="deleteComment('${c.id}')">Delete</button>` : ''}
+        <button class="comment-like-btn${liked?' liked':''}" onclick="likeComment('${c.id}', this)">♥ <span class="like-count">${likes}</span></button>
       </div>
       <div class="comment-body">${x(c.body)}</div>
     </div>`;
@@ -1856,7 +1939,7 @@ function resetImageSection() {
 }
 function openNewPost() {
   document.getElementById('post-modal-title').textContent = 'New Article';
-  ['p-title','p-excerpt','p-body','p-byline','p-slug'].forEach(id => document.getElementById(id).value = '');
+  ['p-title','p-excerpt','p-body','p-byline','p-slug','p-tags'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('p-cat').value = 'Philosophy';
   document.getElementById('p-date').value = todayStr();
   document.getElementById('p-edit-id').value = '';
@@ -2329,6 +2412,493 @@ function todayStr() { return new Date().toISOString().split('T')[0]; }
 function x(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
 
 
+
+// ── READING TIME ─────────────────────────────────────────────
+function readingTime(text) {
+  const words = (text || '').split(/\s+/).filter(Boolean).length;
+  const mins = Math.max(1, Math.round(words / 200));
+  return mins + ' min read';
+}
+
+// ── FONT SIZE CONTROL ─────────────────────────────────────────
+let currentFontSize = parseInt(localStorage.getItem('anima-fontsize') || '18');
+function applyFontSize() {
+  document.getElementById('ph-body').style.fontSize = currentFontSize + 'px';
+}
+function changeFontSize(delta) {
+  currentFontSize = Math.min(26, Math.max(14, currentFontSize + delta));
+  localStorage.setItem('anima-fontsize', currentFontSize);
+  applyFontSize();
+}
+
+// ── SEARCH ───────────────────────────────────────────────────
+let searchTimeout = null;
+function handleSearch(val) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => doSearch(val.trim()), 250);
+}
+async function doSearch(q) {
+  const hw = document.getElementById('headline-wrap');
+  const grid = document.getElementById('post-grid');
+  const divider = document.getElementById('grid-divider');
+  const lbl = document.getElementById('search-results-label');
+  const loader = document.getElementById('home-loader');
+  if (!q) {
+    lbl.style.display = 'none';
+    renderHome();
+    return;
+  }
+  loader.style.display = 'block';
+  hw.innerHTML = ''; grid.innerHTML = ''; divider.style.display = 'none';
+  try {
+    const ql = q.toLowerCase();
+    const results = cachedPosts.filter(p =>
+      (p.title||'').toLowerCase().includes(ql) ||
+      (p.excerpt||'').toLowerCase().includes(ql) ||
+      (p.body||'').toLowerCase().includes(ql) ||
+      (p.tags||'').toLowerCase().includes(ql) ||
+      (p.category||'').toLowerCase().includes(ql)
+    );
+    // Also search DB if no cached results
+    let all = results;
+    if (cachedPosts.length === 0) {
+      const { data } = await sb.from('posts').select('*').order('date', { ascending: false });
+      if (data) { cachedPosts = data; all = data.filter(p => (p.title||'').toLowerCase().includes(ql) || (p.excerpt||'').toLowerCase().includes(ql) || (p.tags||'').toLowerCase().includes(ql)); }
+    }
+    lbl.style.display = 'block';
+    lbl.textContent = all.length ? `${all.length} result${all.length!==1?'s':''} for "${q}"` : `No results for "${q}"`;
+    if (all.length) {
+      grid.innerHTML = all.map(cardHTML).join('');
+      divider.style.display = 'none';
+    }
+  } catch(e) { console.warn('Search error:', e); }
+  loader.style.display = 'none';
+}
+
+// ── VIEW COUNTER ──────────────────────────────────────────────
+async function incrementViewCount(postId) {
+  try {
+    const viewed = JSON.parse(sessionStorage.getItem('anima-viewed') || '[]');
+    if (viewed.includes(postId)) return;
+    viewed.push(postId);
+    sessionStorage.setItem('anima-viewed', JSON.stringify(viewed));
+    await sb.rpc('increment_views', { post_id: postId });
+  } catch(e) {}
+}
+
+// ── READING HISTORY ───────────────────────────────────────────
+async function recordReadingHistory(post) {
+  if (!currentPublicUser) return;
+  try {
+    await sb.from('reading_history').upsert({
+      user_id: currentPublicUser.id,
+      post_id: post.id,
+      read_at: new Date().toISOString()
+    }, { onConflict: 'user_id,post_id' });
+  } catch(e) {}
+}
+
+async function loadReadingHistory() {
+  const el = document.getElementById('reading-history-list');
+  if (!el || !currentPublicUser) return;
+  try {
+    const { data } = await sb.from('reading_history')
+      .select('post_id, read_at, posts(id, title, image_url, category)')
+      .eq('user_id', currentPublicUser.id)
+      .order('read_at', { ascending: false })
+      .limit(20);
+    if (!data || !data.length) { el.innerHTML = '<span class="history-empty">No articles read yet.</span>'; return; }
+    el.innerHTML = data.map(h => {
+      const p = h.posts;
+      if (!p) return '';
+      const imgHtml = p.image_url ? `<img class="history-item-img" src="${p.image_url}" alt="">` : `<div class="history-item-img"></div>`;
+      const date = new Date(h.read_at).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+      return `<div class="history-item" onclick="openPost('${p.id}')">
+        ${imgHtml}
+        <span class="history-title">${x(p.title)}</span>
+        <span class="history-date">${date}</span>
+      </div>`;
+    }).join('');
+  } catch(e) { el.innerHTML = '<span class="history-empty">Could not load history.</span>'; }
+}
+
+// ── TAGS ─────────────────────────────────────────────────────
+function renderPostTags(tags) {
+  if (!tags) { document.getElementById('post-tags-section').style.display = 'none'; return; }
+  const tagArr = tags.split(',').map(t => t.trim()).filter(Boolean);
+  if (!tagArr.length) { document.getElementById('post-tags-section').style.display = 'none'; return; }
+  document.getElementById('post-tags-section').style.display = 'block';
+  document.getElementById('post-tags-list').innerHTML = tagArr.map(t =>
+    `<span class="tag" onclick="searchByTag('${x(t)}')">${x(t)}</span>`
+  ).join('');
+}
+function searchByTag(tag) {
+  document.getElementById('search-input').value = tag;
+  showPage('home');
+  doSearch(tag);
+}
+
+// ── RELATED ARTICLES ─────────────────────────────────────────
+async function renderRelated(post) {
+  const sec = document.getElementById('related-section');
+  const grid = document.getElementById('related-grid');
+  try {
+    const related = cachedPosts.filter(p => p.id !== post.id && p.category === post.category).slice(0, 3);
+    if (!related.length) { sec.style.display = 'none'; return; }
+    sec.style.display = 'block';
+    grid.innerHTML = related.map(p => `
+      <div class="related-card" onclick="openPost('${p.id}')">
+        <div class="related-cat">${x(p.category)}</div>
+        <div class="related-title">${x(p.title)}</div>
+        <div class="related-date">${fmtDate(p.date)}</div>
+      </div>`).join('');
+  } catch(e) { sec.style.display = 'none'; }
+}
+
+// ── COMMENT LIKES ─────────────────────────────────────────────
+async function likeComment(commentId, btn) {
+  if (!currentPublicUser) { openModal('user-modal'); return; }
+  try {
+    const liked = JSON.parse(localStorage.getItem('anima-liked-comments') || '[]');
+    const isLiked = liked.includes(commentId);
+    if (isLiked) {
+      await sb.rpc('decrement_comment_likes', { comment_id: commentId });
+      const idx = liked.indexOf(commentId);
+      liked.splice(idx, 1);
+      btn.classList.remove('liked');
+      btn.querySelector('.like-count').textContent = Math.max(0, parseInt(btn.querySelector('.like-count').textContent) - 1);
+    } else {
+      await sb.rpc('increment_comment_likes', { comment_id: commentId });
+      liked.push(commentId);
+      btn.classList.add('liked');
+      btn.querySelector('.like-count').textContent = parseInt(btn.querySelector('.like-count').textContent) + 1;
+    }
+    localStorage.setItem('anima-liked-comments', JSON.stringify(liked));
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════════════════════════
+// ── PHILOSOPHERDLE ────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════
+const PHIL_WORDS = ['Plato','Aristotle','Socrates','Kant','Nietzsche','Descartes','Locke','Hume','Hobbes','Spinoza','Rousseau','Kierkegaard','Hegel','Marx','Mill','Confucius','Laozi','Zhuangzi','Avicenna','Averroes','Aquinas','Augustine','Machiavelli','Voltaire','Diderot','Sartre','Beauvoir','Camus','Heidegger','Wittgenstein','Russell','Leibniz','Pascal','Montesquieu','Bacon','More','Bruno','Schopenhauer','Husserl','Arendt','Foucault','Derrida','Rawls','Nozick','Kuhn','Quine','Berkeley','Moore','Ayer','Berlin','Rand','Marcuse','Adorno','Habermas','Zizek','Butler','Singer','MacIntyre','Taylor','West','Appiah','Nussbaum','Foot','Anscombe','Rorty','Putnam','Dennett','Chomsky','Ricoeur','Merleau-Ponty','Levinas','Popper','Ryle','Nagel','Williams','Parfit','Weil','Malebranche','Bayle','Plotinus','Pythagoras','Heraclitus','Parmenides','Anaximander','Anaxagoras','Democritus','Epicurus','Epictetus','Aurelius','Seneca','Cicero','Boethius','Maimonides','Ghazali','Nagarjuna','Shankara','Ramanuja','Chanakya','Khaldun','Ockham','Scotus','Abelard','Eckhart','Ficino','Pico','Hutcheson','Reid','Bentham','Engels','Gramsci','Bergson','James','Dewey','Peirce','Tarski','Lyotard','Deleuze','Guattari','Irigaray','Baudrillard','Fanon','Mbembe','hooks','Davis','Murdoch','Sontag','Han','Bostrom','Thomson','Frankfurt','Wollstonecraft','Paine','Spencer','Stirner','Ortega','Unamuno','Jaspers','Marcel','Cassirer','Gadamer','Strauss','Bloom','Gilson','Maritain','Laing','Feigl','Sellars','Goodman','Bloch','Lukacs','Kojeve','Proudhon','Bakunin','Luxemburg','Bodin','Grotius','Pufendorf','Fukuyama','Fineman','Sen','Pogge','Benhabib','Lefebvre','Castoriadis','Kristeva','Feyerabend','Lakatos','Jonas','Stein','Vasconcelos','Dussel','Nishida','Nishitani','Aurobindo','Radhakrishnan','Tagore','Shariati','Rahman','Nasr','Soroush','Wiredu','Hountondji','Oruka','Mbiti','Nyerere','Mozi','Zhu','Wang'];
+
+let philState = {
+  mode: 'daily',         // 'daily' | 'practice'
+  answer: '',
+  maxLen: 0,
+  maxGuesses: 6,
+  guesses: [],
+  currentRow: 0,
+  currentInput: [],
+  gameOver: false,
+  stats: { played: 0, wins: 0, streak: 0, best: 0, lastDate: '' }
+};
+
+function getDailyWord() {
+  const epoch = new Date('2025-01-01');
+  const now = new Date();
+  const dayNum = Math.floor((now - epoch) / 86400000);
+  return PHIL_WORDS[dayNum % PHIL_WORDS.length].toUpperCase();
+}
+
+function getPracticeWord() {
+  return PHIL_WORDS[Math.floor(Math.random() * PHIL_WORDS.length)].toUpperCase();
+}
+
+function getTodayStr() {
+  const n = new Date();
+  return n.getFullYear() + '-' + String(n.getMonth()+1).padStart(2,'0') + '-' + String(n.getDate()).padStart(2,'0');
+}
+
+function openPhilosopherdle() {
+  showPage('phil', true, '/philosopherdle');
+  loadPhilStats();
+  initPhil('daily');
+}
+
+function switchPhilMode(mode) {
+  document.getElementById('phil-daily-btn').classList.toggle('active', mode==='daily');
+  document.getElementById('phil-practice-btn').classList.toggle('active', mode==='practice');
+  initPhil(mode);
+}
+
+function loadPhilStats() {
+  const saved = JSON.parse(localStorage.getItem('anima-phil-stats') || 'null');
+  if (saved) philState.stats = saved;
+}
+
+function savePhilStats() {
+  localStorage.setItem('anima-phil-stats', JSON.stringify(philState.stats));
+}
+
+function initPhil(mode) {
+  philState.mode = mode;
+  const statsEl = document.getElementById('phil-stats');
+
+  if (mode === 'daily') {
+    const today = getTodayStr();
+    // Check if already played today
+    const savedGame = JSON.parse(localStorage.getItem('anima-phil-daily-' + today) || 'null');
+    philState.answer = getDailyWord();
+    philState.maxLen = philState.answer.length;
+    philState.maxGuesses = Math.min(8, philState.maxLen + 2);
+
+    if (savedGame) {
+      // Restore completed game
+      philState.guesses = savedGame.guesses;
+      philState.currentRow = savedGame.guesses.length;
+      philState.gameOver = savedGame.gameOver;
+      philState.currentInput = [];
+      statsEl.style.display = 'grid';
+      updatePhilStatsDisplay();
+      renderPhilGrid();
+      renderPhilKeyboard();
+      if (philState.gameOver) {
+        const won = philState.guesses[philState.guesses.length-1] === philState.answer;
+        showPhilResult(won);
+      }
+      return;
+    }
+    philState.guesses = [];
+    philState.currentRow = 0;
+    philState.currentInput = [];
+    philState.gameOver = false;
+    statsEl.style.display = 'grid';
+    updatePhilStatsDisplay();
+  } else {
+    philState.answer = getPracticeWord();
+    philState.maxLen = philState.answer.length;
+    philState.maxGuesses = Math.min(8, philState.maxLen + 2);
+    philState.guesses = [];
+    philState.currentRow = 0;
+    philState.currentInput = [];
+    philState.gameOver = false;
+    statsEl.style.display = 'none';
+  }
+
+  document.getElementById('phil-msg').textContent = '';
+  document.getElementById('phil-msg').className = 'phil-msg';
+  document.getElementById('phil-timer').textContent = '';
+  document.getElementById('phil-action-area').innerHTML = '';
+  document.getElementById('phil-guess-count').textContent = `${philState.answer.length} letters · ${philState.maxGuesses} guesses`;
+  renderPhilGrid();
+  renderPhilKeyboard();
+  if (mode === 'daily') startPhilTimer();
+}
+
+function updatePhilStatsDisplay() {
+  document.getElementById('ps-played').textContent = philState.stats.played;
+  document.getElementById('ps-wins').textContent = philState.stats.wins;
+  document.getElementById('ps-streak').textContent = philState.stats.streak;
+  document.getElementById('ps-best').textContent = philState.stats.best || '—';
+}
+
+function renderPhilGrid() {
+  const grid = document.getElementById('phil-grid');
+  grid.innerHTML = '';
+  // Dynamically shrink cells for very long names on mobile
+  const isSmall = document.documentElement.classList.contains('is-small');
+  const isTouch = document.documentElement.classList.contains('is-touch');
+  const isTablet = document.documentElement.classList.contains('is-tablet');
+  let cellSize = 44;
+  if (isTouch && !isTablet) cellSize = 36;
+  if (isSmall) cellSize = 30;
+  // For names longer than 10 chars, shrink further
+  if (philState.maxLen > 12 && isTouch && !isTablet) cellSize = Math.max(22, Math.floor(320 / philState.maxLen));
+  else if (philState.maxLen > 10 && isTouch && !isTablet) cellSize = Math.max(26, Math.floor(340 / philState.maxLen));
+  const fontSize = Math.max(0.55, cellSize * 0.022) + 'rem';
+
+  for (let r = 0; r < philState.maxGuesses; r++) {
+    const row = document.createElement('div');
+    row.className = 'phil-row';
+    row.id = 'phil-row-' + r;
+    for (let c = 0; c < philState.maxLen; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'phil-cell';
+      cell.id = `phil-cell-${r}-${c}`;
+      cell.style.width = cellSize + 'px';
+      cell.style.height = cellSize + 'px';
+      cell.style.fontSize = fontSize;
+      if (r < philState.guesses.length) {
+        const g = philState.guesses[r];
+        cell.textContent = g[c] || '';
+        cell.classList.add(getLetterClass(g, c, philState.answer));
+      } else if (r === philState.currentRow) {
+        cell.textContent = philState.currentInput[c] || '';
+        if (philState.currentInput[c]) cell.classList.add('current-input');
+      }
+      row.appendChild(cell);
+    }
+    grid.appendChild(row);
+  }
+}
+
+function getLetterClass(guess, pos, answer) {
+  if (guess[pos] === answer[pos]) return 'correct';
+  if (answer.includes(guess[pos])) return 'present';
+  return 'absent';
+}
+
+function renderPhilKeyboard() {
+  const kb = document.getElementById('phil-keyboard');
+  kb.innerHTML = '';
+  const rows = ['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
+  const letterStatus = {};
+  philState.guesses.forEach(g => {
+    g.split('').forEach((ch, i) => {
+      const cls = getLetterClass(g, i, philState.answer);
+      const cur = letterStatus[ch];
+      if (cls === 'correct') letterStatus[ch] = 'correct';
+      else if (cls === 'present' && cur !== 'correct') letterStatus[ch] = 'present';
+      else if (!cur) letterStatus[ch] = 'absent';
+    });
+  });
+  rows.forEach((row, ri) => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'phil-kb-row';
+    if (ri === 2) {
+      const enter = document.createElement('button');
+      enter.className = 'phil-key wide'; enter.textContent = 'Enter';
+      enter.onclick = () => submitPhilGuess();
+      rowEl.appendChild(enter);
+    }
+    row.split('').forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'phil-key' + (letterStatus[ch] ? ' ' + letterStatus[ch] : '');
+      btn.textContent = ch; btn.id = 'pk-' + ch;
+      btn.onclick = () => typePhilLetter(ch);
+      rowEl.appendChild(btn);
+    });
+    if (ri === 2) {
+      const del = document.createElement('button');
+      del.className = 'phil-key wide'; del.textContent = '⌫';
+      del.onclick = () => deletePhilLetter();
+      rowEl.appendChild(del);
+    }
+    kb.appendChild(rowEl);
+  });
+}
+
+function typePhilLetter(ch) {
+  if (philState.gameOver) return;
+  if (philState.currentInput.length >= philState.maxLen) return;
+  philState.currentInput.push(ch);
+  updateCurrentRow();
+}
+
+function deletePhilLetter() {
+  if (philState.gameOver) return;
+  philState.currentInput.pop();
+  updateCurrentRow();
+}
+
+function updateCurrentRow() {
+  for (let c = 0; c < philState.maxLen; c++) {
+    const cell = document.getElementById(`phil-cell-${philState.currentRow}-${c}`);
+    if (!cell) continue;
+    cell.textContent = philState.currentInput[c] || '';
+    cell.className = 'phil-cell' + (philState.currentInput[c] ? ' current-input' : '');
+  }
+}
+
+function submitPhilGuess() {
+  if (philState.gameOver) return;
+  const guess = philState.currentInput.join('');
+  if (guess.length !== philState.maxLen) {
+    showPhilMsg(`Need ${philState.maxLen} letters`, 'error'); return;
+  }
+  // Accept any sequence of letters (we don't restrict to the word list for guesses)
+  philState.guesses.push(guess);
+  philState.currentRow++;
+  philState.currentInput = [];
+  document.getElementById('phil-msg').textContent = '';
+
+  renderPhilGrid();
+  renderPhilKeyboard();
+
+  const won = guess === philState.answer;
+  const lost = !won && philState.currentRow >= philState.maxGuesses;
+
+  if (won || lost) {
+    philState.gameOver = true;
+    if (philState.mode === 'daily') {
+      // Save game state
+      const today = getTodayStr();
+      localStorage.setItem('anima-phil-daily-' + today, JSON.stringify({
+        guesses: philState.guesses, gameOver: true
+      }));
+      // Update stats
+      philState.stats.played++;
+      if (won) {
+        philState.stats.wins++;
+        philState.stats.streak++;
+        const guessNum = philState.currentRow;
+        if (!philState.stats.best || guessNum < philState.stats.best) philState.stats.best = guessNum;
+      } else {
+        philState.stats.streak = 0;
+      }
+      philState.stats.lastDate = today;
+      savePhilStats();
+      updatePhilStatsDisplay();
+    }
+    showPhilResult(won);
+  }
+}
+
+function showPhilResult(won) {
+  const answer = philState.answer;
+  const displayName = PHIL_WORDS.find(w => w.toUpperCase() === answer) || answer;
+  if (won) {
+    showPhilMsg(`✓ ${displayName}!`, 'success');
+  } else {
+    showPhilMsg(`The philosopher was: ${displayName}`, 'error');
+  }
+  const actionArea = document.getElementById('phil-action-area');
+  if (philState.mode === 'daily') {
+    actionArea.innerHTML = `<button class="phil-btn secondary" onclick="switchPhilMode('practice')">Practice Mode</button>`;
+    startPhilTimer();
+  } else {
+    actionArea.innerHTML = `<button class="phil-btn" onclick="initPhil('practice')">New Philosopher</button>
+      <button class="phil-btn secondary" onclick="switchPhilMode('daily')">Daily</button>`;
+  }
+}
+
+function showPhilMsg(msg, type) {
+  const el = document.getElementById('phil-msg');
+  el.textContent = msg;
+  el.className = 'phil-msg' + (type ? ' ' + type : '');
+}
+
+function startPhilTimer() {
+  const timerEl = document.getElementById('phil-timer');
+  function update() {
+    const now = new Date();
+    const tomorrow = new Date(now);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0,0,0,0);
+    const diff = tomorrow - now;
+    const h = Math.floor(diff/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    timerEl.textContent = `Next philosopher in ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+// Keyboard support for Philosopherdle
+document.addEventListener('keydown', e => {
+  const philPage = document.getElementById('phil-page');
+  if (!philPage || !philPage.classList.contains('active')) return;
+  if (philState.gameOver) return;
+  if (e.key === 'Enter') { submitPhilGuess(); return; }
+  if (e.key === 'Backspace') { deletePhilLetter(); return; }
+  if (/^[a-zA-Z]$/.test(e.key)) { typePhilLetter(e.key.toUpperCase()); }
+});
+
+// ── TOUCH DEVICE DETECTION (already ran in <head>, this is a safety net) ───
+// Classes are on <html> element, added before first paint
+
 // ── MOBILE NAV ────────────────────────────────────────────────
 function toggleMobileNav() {
   const nav = document.getElementById('mobile-nav');
@@ -2396,6 +2966,7 @@ function loadSavedTheme() {
 
 function populateAccountSection() {
   if (!currentPublicUser) return;
+  loadReadingHistory();
   // Member since
   const created = new Date(currentPublicUser.created_at);
   const now = new Date();
