@@ -799,6 +799,31 @@
   body.theme-lightpurple .logo-name { color: #ffffff; }
   body.theme-lightpurple .admin-bar span { color: #c4b0d8; }
 
+  /* ── DESKTOP DROPDOWN MENU ── */
+  .desktop-menu-wrap { position: relative; display: flex; align-items: center; }
+  .desktop-hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+  .desktop-hamburger span { display: block; width: 22px; height: 2px; background: var(--cool-grey-light); border-radius: 2px; transition: all 0.3s; }
+  .desktop-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .desktop-hamburger.open span:nth-child(2) { opacity: 0; }
+  .desktop-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .desktop-dropdown {
+    display: none; position: absolute; top: calc(100% + 10px); right: 0;
+    background: var(--navy); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px; min-width: 180px; box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    z-index: 300; overflow: hidden;
+  }
+  .desktop-dropdown.open { display: block; animation: dropdownFade 0.18s ease; }
+  @keyframes dropdownFade { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  .desktop-dd-item { font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey-light); text-decoration: none; cursor: pointer; display: block; padding: 0.75rem 1.2rem; transition: background 0.15s, color 0.15s; }
+  .desktop-dd-item:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+  .desktop-dd-btn { font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey-light); background: none; border: none; cursor: pointer; display: block; width: 100%; text-align: left; padding: 0.75rem 1.2rem; transition: background 0.15s, color 0.15s; }
+  .desktop-dd-btn:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+  .desktop-dd-btn.signed-in { color: #80c8a0; }
+  .desktop-dd-btn.logged-in { color: #80a8d8; }
+  .desktop-dd-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 0.2rem 0; }
+  /* Hide desktop dropdown on touch/mobile — hamburger handles it there */
+  html.is-touch .desktop-menu-wrap { display: none; }
+
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
   /* ── HAMBURGER (hidden by default, shown on touch devices via JS) ── */
@@ -927,10 +952,19 @@
       <a onclick="filterCat('Geography')">Geography</a>
       <a onclick="filterCat('Culture')">Culture</a>
       <a onclick="showPage('about', true, '/about')">About</a>
-      <a onclick="openPhilosopherdle()">Philosopherdle</a>
-      <button class="nav-settings-btn" id="settings-nav-btn" onclick="openSettings()" title="Settings">⚙</button>
-      <button class="nav-user-btn" id="user-nav-btn" onclick="handleUserClick()">Sign In</button>
-      <button class="nav-admin-btn" id="admin-nav-btn" onclick="handleAdminClick()">Admin</button>
+      <!-- Desktop dropdown menu -->
+      <div class="desktop-menu-wrap" id="desktop-menu-wrap">
+        <button class="desktop-hamburger" id="desktop-hamburger-btn" onclick="toggleDesktopMenu()" aria-label="More">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="desktop-dropdown" id="desktop-dropdown">
+          <a class="desktop-dd-item" onclick="openPhilosopherdle(); closeDesktopMenu()">Philosopherdle</a>
+          <div class="desktop-dd-divider"></div>
+          <button class="desktop-dd-btn" onclick="openSettings(); closeDesktopMenu()">⚙ Settings</button>
+          <button class="desktop-dd-btn" id="desktop-user-btn" onclick="handleUserClick(); closeDesktopMenu()">Sign In</button>
+          <button class="desktop-dd-btn" id="desktop-admin-btn" onclick="handleAdminClick(); closeDesktopMenu()">Admin</button>
+        </div>
+      </div>
     </nav>
     <button class="hamburger" id="hamburger-btn" onclick="toggleMobileNav()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -1506,32 +1540,32 @@ function handleSessionUser(user) {
 
 function applyAdminUI(user) {
   const bar = document.getElementById('admin-bar');
-  const btn = document.getElementById('admin-nav-btn');
+  const desktopAdminBtn = document.getElementById('desktop-admin-btn');
   const mobileAdminBtn = document.getElementById('mobile-admin-btn');
   if (user) {
-    bar.classList.add('visible'); btn.textContent = '+ New Post'; btn.classList.add('logged-in');
+    bar.classList.add('visible');
     document.body.classList.add('admin-mode');
     document.getElementById('admin-label').textContent = user.email;
     if (mobileAdminBtn) mobileAdminBtn.textContent = '+ New Post';
+    if (desktopAdminBtn) { desktopAdminBtn.textContent = '+ New Post'; desktopAdminBtn.classList.add('logged-in'); }
   } else {
-    bar.classList.remove('visible'); btn.textContent = 'Admin'; btn.classList.remove('logged-in');
+    bar.classList.remove('visible');
     document.body.classList.remove('admin-mode');
     if (mobileAdminBtn) mobileAdminBtn.textContent = 'Admin';
+    if (desktopAdminBtn) { desktopAdminBtn.textContent = 'Admin'; desktopAdminBtn.classList.remove('logged-in'); }
   }
 }
 
 function applyUserUI(user) {
-  const btn = document.getElementById('user-nav-btn');
   const mobileBtn = document.getElementById('mobile-user-btn');
+  const desktopBtn = document.getElementById('desktop-user-btn');
   if (user) {
     const displayName = user.user_metadata?.display_name || user.email.split('@')[0];
-    btn.textContent = displayName;
-    btn.classList.add('signed-in');
     if (mobileBtn) { mobileBtn.textContent = '👤 ' + displayName; }
+    if (desktopBtn) { desktopBtn.textContent = '👤 ' + displayName; desktopBtn.classList.add('signed-in'); }
   } else {
-    btn.textContent = 'Sign In';
-    btn.classList.remove('signed-in');
     if (mobileBtn) { mobileBtn.textContent = 'Sign In'; }
+    if (desktopBtn) { desktopBtn.textContent = 'Sign In'; desktopBtn.classList.remove('signed-in'); }
   }
 }
 
@@ -3031,6 +3065,25 @@ async function sendPasswordReset() {
   if (error) { msg.textContent = 'Error: ' + error.message; msg.style.color = '#8b2635'; }
   else { msg.textContent = 'Reset email sent! Check your inbox.'; msg.style.color = '#1a5c2e'; }
   msg.style.display = 'block';
+}
+
+// ── DESKTOP DROPDOWN MENU ─────────────────────────────────────
+function toggleDesktopMenu() {
+  const btn = document.getElementById('desktop-hamburger-btn');
+  const dd = document.getElementById('desktop-dropdown');
+  const open = dd.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  if (open) {
+    setTimeout(() => document.addEventListener('click', closeDesktopMenuOutside, { once: true }), 0);
+  }
+}
+function closeDesktopMenu() {
+  document.getElementById('desktop-dropdown').classList.remove('open');
+  document.getElementById('desktop-hamburger-btn').classList.remove('open');
+}
+function closeDesktopMenuOutside(e) {
+  const wrap = document.getElementById('desktop-menu-wrap');
+  if (wrap && !wrap.contains(e.target)) closeDesktopMenu();
 }
 
 // ── INIT ─────────────────────────────────────────────────────
