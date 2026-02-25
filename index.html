@@ -22,6 +22,7 @@
   }
 })();
 </script>
+<link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -414,10 +415,9 @@
 
   /* FOOTER */
   footer { background: var(--navy-dark); padding: 2.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); }
-  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
-  .footer-slogan { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; font-style: italic; color: var(--cool-grey); letter-spacing: 0.08em; margin-bottom: 1.2rem; }
-  .footer-cats { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
-  .footer-cats span { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(138,150,168,0.6); }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
+  .footer-slogan { font-family: 'Cormorant Garamond', serif; font-size: 0.76rem; font-style: italic; color: var(--cool-grey); letter-spacing: 0.08em; }
+  .footer-cats span { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey); }
 
 
   /* USER AUTH in nav */
@@ -799,30 +799,190 @@
   body.theme-lightpurple .logo-name { color: #ffffff; }
   body.theme-lightpurple .admin-bar span { color: #c4b0d8; }
 
-  /* ── DESKTOP DROPDOWN MENU ── */
-  .desktop-menu-wrap { position: relative; display: flex; align-items: center; }
-  .desktop-hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
-  .desktop-hamburger span { display: block; width: 22px; height: 2px; background: var(--cool-grey-light); border-radius: 2px; transition: all 0.3s; }
-  .desktop-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .desktop-hamburger.open span:nth-child(2) { opacity: 0; }
-  .desktop-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  .desktop-dropdown {
-    display: none; position: absolute; top: calc(100% + 10px); right: 0;
-    background: var(--navy); border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 4px; min-width: 180px; box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-    z-index: 300; overflow: hidden;
-  }
-  .desktop-dropdown.open { display: block; animation: dropdownFade 0.18s ease; }
-  @keyframes dropdownFade { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
-  .desktop-dd-item { font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey-light); text-decoration: none; cursor: pointer; display: block; padding: 0.75rem 1.2rem; transition: background 0.15s, color 0.15s; }
-  .desktop-dd-item:hover { background: rgba(255,255,255,0.07); color: var(--white); }
-  .desktop-dd-btn { font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey-light); background: none; border: none; cursor: pointer; display: block; width: 100%; text-align: left; padding: 0.75rem 1.2rem; transition: background 0.15s, color 0.15s; }
-  .desktop-dd-btn:hover { background: rgba(255,255,255,0.07); color: var(--white); }
-  .desktop-dd-btn.signed-in { color: #80c8a0; }
-  .desktop-dd-btn.logged-in { color: #80a8d8; }
-  .desktop-dd-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 0.2rem 0; }
-  /* Hide desktop dropdown on touch/mobile — hamburger handles it there */
-  html.is-touch .desktop-menu-wrap { display: none; }
+
+  /* ── PHILOSOPHERDLE ── */
+  .phil-outer { max-width: 520px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; display: flex; flex-direction: column; align-items: center; }
+  .phil-header { text-align: center; width: 100%; margin-bottom: 1.5rem; }
+  .phil-eyebrow { font-family: 'Cormorant Garamond', serif; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 0.4rem; }
+  .phil-title { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; color: var(--text); letter-spacing: 0.02em; line-height: 1; }
+  .phil-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 0.88rem; color: var(--cool-grey); font-style: italic; margin-top: 0.4rem; }
+  .phil-header-line { width: 100%; height: 1px; background: var(--cool-grey-light); margin-top: 1.2rem; }
+  .phil-mode-row { display: flex; gap: 0; margin-bottom: 1.5rem; border: 1px solid var(--cool-grey-light); border-radius: 4px; overflow: hidden; }
+  .phil-mode-btn { flex: 1; background: transparent; border: none; color: var(--cool-grey); padding: 7px 20px; font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .phil-mode-btn:first-child { border-right: 1px solid var(--cool-grey-light); }
+  .phil-mode-btn.active { background: var(--navy-dark); color: var(--white); }
+  .phil-stats-bar { display: flex; align-items: center; gap: 0; width: 100%; background: var(--cool-grey-pale); border: 1px solid var(--cool-grey-light); border-radius: 4px; margin-bottom: 1.2rem; padding: 0.8rem 0; }
+  .phil-stat { flex: 1; text-align: center; }
+  .phil-stat-div { width: 1px; height: 30px; background: var(--cool-grey-light); }
+  .phil-stat-n { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--text); line-height: 1; }
+  .phil-stat-l { font-family: 'Cormorant Garamond', serif; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey); margin-top: 2px; }
+  .phil-hint-row { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 0.8rem; }
+  .phil-board-wrap { width: 100%; display: flex; justify-content: center; margin-bottom: 1rem; }
+  .phil-board { display: flex; flex-direction: column; gap: 5px; }
+  .phil-row { display: flex; gap: 5px; justify-content: center; }
+  .phil-cell { width: 52px; height: 52px; border: 2px solid var(--cool-grey-light); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; text-transform: uppercase; color: var(--text); user-select: none; }
+  .phil-cell.filled { border-color: var(--cool-grey); animation: phil-pop 0.1s ease; }
+  .phil-cell.revealed { border-color: transparent; }
+  .phil-cell.correct { background: #538d4e; border-color: #538d4e; color: white; }
+  .phil-cell.present { background: #b59f3b; border-color: #b59f3b; color: white; }
+  .phil-cell.absent { background: #3a3a3c; border-color: #3a3a3c; color: white; }
+  .phil-cell.shake { animation: phil-shake 0.5s ease; }
+  @keyframes phil-pop { 0%{transform:scale(1)} 50%{transform:scale(1.12)} 100%{transform:scale(1)} }
+  @keyframes phil-shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-4px)} 40%{transform:translateX(4px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+  .phil-toast { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-style: italic; color: var(--cool-grey); min-height: 1.4rem; text-align: center; margin-bottom: 0.6rem; transition: opacity 0.3s; }
+  .phil-toast.visible { font-style: normal; font-weight: 500; }
+  .phil-toast.error { color: #c0392b; font-style: normal; }
+  .phil-toast.success { color: #27ae60; font-style: normal; }
+  .phil-kbd-wrap { width: 100%; max-width: 500px; }
+  .phil-kbd { display: flex; flex-direction: column; gap: 6px; align-items: center; margin-bottom: 1.2rem; }
+  .phil-kbd-row { display: flex; gap: 5px; justify-content: center; }
+  .phil-key { min-width: 38px; height: 52px; padding: 0 4px; background: var(--cool-grey-pale); border: 1px solid var(--cool-grey-light); border-radius: 4px; font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 0.04em; cursor: pointer; color: var(--text); transition: background 0.15s, color 0.15s; text-transform: uppercase; user-select: none; display: flex; align-items: center; justify-content: center; }
+  .phil-key:active { transform: scale(0.95); }
+  .phil-key.wide { min-width: 60px; font-size: 0.72rem; letter-spacing: 0.06em; }
+  .phil-key.correct { background: #538d4e; border-color: #538d4e; color: white; }
+  .phil-key.present { background: #b59f3b; border-color: #b59f3b; color: white; }
+  .phil-key.absent { background: #818384; border-color: #818384; color: white; }
+  .phil-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .phil-action-btn { background: var(--navy-dark); color: var(--white); border: none; padding: 10px 28px; font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: opacity 0.2s; }
+  .phil-action-btn:hover { opacity: 0.85; }
+  .phil-action-btn.outline { background: transparent; border: 1px solid var(--cool-grey-light); color: var(--text); }
+  .phil-action-btn.outline:hover { border-color: var(--accent); color: var(--accent); }
+  .phil-next-row { font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; color: var(--cool-grey); text-align: center; min-height: 1.2rem; }
+  .phil-footer-note { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; color: var(--cool-grey); text-align: center; margin-top: 1.5rem; font-style: italic; border-top: 1px solid var(--cool-grey-light); padding-top: 1rem; width: 100%; }
+
+
+  /* ── RICH TEXT EDITOR ── */
+  .editor-toolbar { display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px; background: var(--navy-dark); border: 1px solid rgba(255,255,255,0.1); border-bottom: none; border-radius: 3px 3px 0 0; align-items: center; }
+  .editor-tool { background: none; border: 1px solid transparent; border-radius: 2px; height: 26px; min-width: 26px; padding: 0 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.82rem; color: var(--cool-grey-light); transition: all 0.15s; font-family: 'Playfair Display', serif; font-weight: 700; }
+  .editor-tool:hover { background: rgba(255,255,255,0.1); color: var(--white); border-color: rgba(255,255,255,0.15); }
+  .editor-tool.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
+  .editor-tool-text { font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400; }
+  .editor-tool-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.15); margin: 0 4px; align-self: center; }
+  .editor-body { border: 1px solid var(--cool-grey-light); border-radius: 0 0 3px 3px; min-height: 260px; padding: 14px 16px; font-family: 'Crimson Pro', serif; font-size: 1.05rem; color: var(--text); background: var(--white); outline: none; line-height: 1.75; }
+  .editor-body:focus { border-color: var(--accent); }
+  .editor-body p { margin-bottom: 0.9em; }
+  .editor-body blockquote { border-left: 3px solid var(--cool-grey-light); padding-left: 1.2em; margin: 0.6em 0; color: var(--text-light); font-style: italic; }
+  .editor-body:empty::before { content: attr(placeholder); color: var(--cool-grey); pointer-events: none; font-style: italic; }
+
+  /* Link popup */
+  .link-popup-overlay { display: none; position: fixed; inset: 0; background: rgba(10,16,35,0.7); z-index: 9998; backdrop-filter: blur(2px); }
+  .link-popup-overlay.open { display: block; }
+  .link-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--white); border: 1px solid var(--cool-grey-light); border-radius: 4px; padding: 1.8rem; z-index: 9999; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 360px; max-width: 95vw; display: none; }
+  .link-popup.open { display: block; }
+  .link-popup-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--navy); margin-bottom: 1.2rem; font-style: italic; }
+  .link-popup label { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cool-grey); display: block; margin-bottom: 0.3rem; }
+  .link-popup input { width: 100%; border: 1px solid var(--cool-grey-light); padding: 8px 10px; font-family: 'Crimson Pro', serif; font-size: 0.95rem; border-radius: 2px; background: var(--white); color: var(--text); outline: none; margin-bottom: 0.8rem; }
+  .link-popup input:focus { border-color: var(--accent); }
+  .link-popup-btns { display: flex; gap: 0.6rem; }
+
+  /* ── FILE ATTACHMENTS ── */
+  .attach-area { border: 1px solid var(--cool-grey-light); border-radius: 3px; padding: 1.2rem; background: var(--cool-grey-pale); }
+  .attach-area-top { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .attach-hint { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; color: var(--cool-grey); font-style: italic; }
+  .attach-list { margin-top: 0.9rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .attach-item { display: flex; align-items: center; gap: 0.7rem; padding: 0.55rem 0.9rem; background: var(--white); border: 1px solid var(--cool-grey-light); border-radius: 3px; }
+  .attach-item-icon { font-size: 1rem; flex-shrink: 0; }
+  .attach-item-name { font-family: 'Crimson Pro', serif; font-size: 0.9rem; color: var(--text); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .attach-item-ext { font-family: 'Cormorant Garamond', serif; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey); flex-shrink: 0; }
+  .attach-item-remove { background: none; border: none; color: var(--cool-grey); cursor: pointer; font-size: 0.9rem; padding: 2px 5px; line-height: 1; border-radius: 2px; transition: all 0.15s; }
+  .attach-item-remove:hover { background: #8b2635; color: white; }
+
+  /* Post page file attachments */
+  .post-attachments { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--cool-grey-light); }
+  .post-attach-label { font-family: 'Cormorant Garamond', serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 1.2rem; }
+  .post-attach-list { display: flex; flex-direction: column; gap: 0; }
+  .post-attach-item { display: flex; align-items: center; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid var(--cool-grey-pale); text-decoration: none; color: var(--text); transition: padding-left 0.2s; }
+  .post-attach-item:hover { padding-left: 0.4rem; }
+  .post-attach-item:last-child { border-bottom: none; }
+  .post-attach-item:hover .post-attach-name { color: var(--accent); }
+  .post-attach-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .post-attach-name { font-family: 'Crimson Pro', serif; font-size: 1rem; flex: 1; transition: color 0.2s; }
+  .post-attach-type { font-family: 'Cormorant Garamond', serif; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cool-grey); flex-shrink: 0; }
+  .post-attach-dl { font-family: 'Cormorant Garamond', serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); flex-shrink: 0; }
+  .post-embed-wrap { margin-top: 1.8rem; border: 1px solid var(--cool-grey-light); border-radius: 2px; overflow: hidden; background: #f8f8f8; }
+  .post-embed-wrap iframe { display: block; width: 100%; height: 640px; border: none; }
+  html.is-touch .post-embed-wrap iframe { height: 380px; }
+
+  /* ── DYSLEXIC FONT ── */
+  html.dyslexic-font .post-content,
+  html.dyslexic-font .about-body p,
+  html.dyslexic-font .card-excerpt,
+  html.dyslexic-font .comment-body,
+  html.dyslexic-font .editor-body { font-family: 'OpenDyslexic', sans-serif !important; line-height: 2 !important; letter-spacing: 0.01em !important; }
+  .dyslexic-toggle { display: flex; align-items: center; gap: 1.2rem; }
+  .toggle-switch { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .toggle-slider { position: absolute; inset: 0; background: var(--cool-grey-light); border-radius: 26px; cursor: pointer; transition: background 0.25s; border: 1px solid var(--cool-grey-light); }
+  .toggle-slider::after { content: ''; position: absolute; width: 20px; height: 20px; left: 2px; top: 2px; background: white; border-radius: 50%; transition: transform 0.25s; box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+  .toggle-switch input:checked + .toggle-slider { background: var(--accent); border-color: var(--accent); }
+  .toggle-switch input:checked + .toggle-slider::after { transform: translateX(20px); }
+  .toggle-label { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--text); font-style: italic; }
+  .toggle-sublabel { font-family: 'Cormorant Garamond', serif; font-size: 0.76rem; color: var(--cool-grey); margin-top: 2px; }
+
+  /* ── POLISH: post content rich text ── */
+  .post-content a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .post-content a:hover { color: var(--text); }
+  .post-content strong, .post-content b { font-weight: 700; color: var(--text); }
+  .post-content em, .post-content i { font-style: italic; }
+  .post-content u { text-decoration: underline; text-underline-offset: 2px; }
+  .post-content blockquote { border-left: 3px solid var(--cool-grey-light); padding-left: 1.5em; margin: 1.5em 0; color: var(--text-light); font-style: italic; font-size: 1.05rem; }
+  .post-content ul, .post-content ol { padding-left: 1.8em; margin-bottom: 1em; }
+  .post-content li { margin-bottom: 0.3em; }
+
+
+  /* ══════════════════════════════════════════════════════
+     SEARCH BAR
+  ══════════════════════════════════════════════════════ */
+  .search-bar-wrap { max-width: 1280px; margin: 0 auto; padding: 2rem 2.5rem 0; }
+  .search-bar { display: flex; align-items: center; background: var(--white); border: 1px solid var(--cool-grey-light); border-radius: 3px; overflow: hidden; transition: border-color 0.2s; }
+  .search-bar:focus-within { border-color: var(--accent); }
+  .search-bar-icon { display: flex; align-items: center; padding: 0 0.8rem 0 1rem; color: var(--cool-grey); font-size: 0.82rem; font-family: 'Cormorant Garamond', serif; letter-spacing: 0.12em; text-transform: uppercase; }
+  .search-bar input { flex: 1; background: none; border: none; outline: none; padding: 0.8rem 1rem 0.8rem 0.2rem; font-family: 'Crimson Pro', serif; font-size: 1rem; color: var(--text); }
+  .search-bar input::placeholder { color: var(--cool-grey); font-style: italic; }
+  .search-results-label { max-width: 1280px; margin: 0 auto; padding: 0.8rem 2.5rem 0; font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cool-grey); }
+
+  /* ══════════════════════════════════════════════════════
+     POST TAGS
+  ══════════════════════════════════════════════════════ */
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag { font-family: 'Cormorant Garamond', serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 14px; border: 1px solid var(--cool-grey-light); border-radius: 20px; color: var(--text-light); cursor: pointer; transition: all 0.2s; }
+  .tag:hover, .tag.active-tag { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  /* ══════════════════════════════════════════════════════
+     RELATED ARTICLES
+  ══════════════════════════════════════════════════════ */
+  .related-section { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--cool-grey-light); }
+  .related-label { font-family: 'Cormorant Garamond', serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 1.5rem; }
+  .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .related-card { cursor: pointer; padding: 0; }
+  .related-card:not(:last-child) { padding-right: 1.5rem; border-right: 1px solid var(--cool-grey-light); }
+  .related-card:not(:first-child) { padding-left: 1.5rem; }
+  .related-card:hover .related-title { color: var(--accent); }
+  .related-cat { font-family: 'Cormorant Garamond', serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .related-title { font-family: 'Playfair Display', serif; font-size: 0.92rem; color: var(--text); line-height: 1.4; transition: color 0.2s; }
+  .related-date { font-family: 'Cormorant Garamond', serif; font-size: 0.65rem; color: var(--cool-grey); margin-top: 0.5rem; }
+
+  /* ══════════════════════════════════════════════════════
+     READING HISTORY
+  ══════════════════════════════════════════════════════ */
+  .history-list { display: flex; flex-direction: column; }
+  .history-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--cool-grey-pale); cursor: pointer; transition: padding-left 0.18s; }
+  .history-item:last-child { border-bottom: none; }
+  .history-item:hover { padding-left: 0.3rem; }
+  .history-item:hover .history-title { color: var(--accent); }
+  .history-item-img { width: 52px; height: 40px; object-fit: cover; border-radius: 2px; flex-shrink: 0; background: var(--navy-mid); }
+  .history-title { font-family: 'Playfair Display', serif; font-size: 0.88rem; color: var(--text); flex: 1; line-height: 1.35; transition: color 0.2s; }
+  .history-date { font-family: 'Cormorant Garamond', serif; font-size: 0.66rem; color: var(--cool-grey); flex-shrink: 0; }
+  .history-empty { font-family: 'Cormorant Garamond', serif; font-size: 0.88rem; color: var(--cool-grey); font-style: italic; padding: 0.5rem 0; }
+
+  /* ══════════════════════════════════════════════════════
+     FOOTER (updated layout)
+  ══════════════════════════════════════════════════════ */
+  .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 2rem; }
+  .footer-left { display: flex; flex-direction: column; gap: 0.3rem; }
+  .footer-cats { display: flex; flex-direction: column; gap: 0.5rem; text-align: right; }
+  .footer-cats span { cursor: pointer; transition: color 0.2s; }
+  .footer-cats span:hover { color: var(--white); }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -870,8 +1030,7 @@
   html.is-touch .section-divider { padding: 0 1.2rem; }
   html.is-touch .admin-bar { padding: 0.6rem 1.2rem; flex-wrap: wrap; gap: 0.5rem; }
   html.is-touch .modal-box { width: 95vw; max-width: 95vw; padding: 1.5rem 1.2rem; max-height: 90dvh; overflow-y: auto; }
-  html.is-touch .post-modal-box { max-height: 95dvh; overflow-y: auto; }
-  html.is-touch .post-modal-box { width: 98vw; max-width: 98vw; padding: 1.2rem; }
+  html.is-touch .post-modal-box { width: 98vw; max-width: 98vw; padding: 1.2rem; max-height: 95dvh; overflow-y: auto; }
   html.is-touch .form-row { grid-template-columns: 1fr; }
   html.is-touch footer { padding: 2rem 1.2rem; }
   html.is-touch .footer-cats { gap: 1rem; }
@@ -894,30 +1053,21 @@
   html.is-touch .comment-like-btn { margin-left: 0; }
 
   /* ── PHILOSOPHERDLE MOBILE ── */
-  html.is-touch .phil-wrap { padding: 1.5rem 0.8rem; }
-  html.is-touch .phil-title { font-size: 1.7rem; }
-  html.is-touch .phil-header { margin-bottom: 1.2rem; padding-bottom: 1.2rem; }
-  html.is-touch .phil-grid { gap: 4px; margin-bottom: 1rem; }
-  html.is-touch .phil-row { gap: 3px; }
-  html.is-touch .phil-cell { width: 36px; height: 36px; font-size: 0.82rem; border-radius: 2px; }
-  html.is-touch .phil-keyboard { gap: 5px; }
-  html.is-touch .phil-kb-row { gap: 4px; }
-  html.is-touch .phil-key { min-width: 28px; height: 44px; font-size: 0.78rem; padding: 0 3px; border-radius: 3px; }
-  html.is-touch .phil-key.wide { min-width: 46px; font-size: 0.68rem; }
-  html.is-touch .phil-stats { gap: 0.6rem; padding: 0.8rem; }
-  html.is-touch .phil-stat-num { font-size: 1.4rem; }
-  html.is-touch .phil-mode-btns { gap: 0.6rem; margin-bottom: 1rem; }
-  html.is-touch .phil-mode-btn { padding: 5px 14px; font-size: 0.75rem; }
-  html.is-touch .phil-msg { font-size: 0.9rem; }
-  html.is-touch .phil-guess-count { font-size: 0.72rem; }
-  html.is-touch .phil-names-note { font-size: 0.72rem; }
-  html.is-touch .phil-btn { padding: 9px 18px; font-size: 0.78rem; }
+  html.is-touch .phil-outer { padding: 1.5rem 0.8rem 2rem; }
+  html.is-touch .phil-title { font-size: 2rem; }
+  html.is-touch .phil-cell { width: 42px; height: 42px; font-size: 1rem; }
+  html.is-touch .phil-key { min-width: 30px; height: 46px; font-size: 0.82rem; }
+  html.is-touch .phil-key.wide { min-width: 50px; font-size: 0.68rem; }
+  html.is-touch .phil-kbd-row { gap: 4px; }
+  html.is-touch .phil-kbd { gap: 5px; }
+  html.is-touch .phil-stat-n { font-size: 1.3rem; }
 
-  /* Extra small phones — shrink cells more for long names */
-  html.is-touch.is-small .phil-cell { width: 30px; height: 30px; font-size: 0.72rem; }
-  html.is-touch.is-small .phil-key { min-width: 24px; height: 40px; font-size: 0.68rem; padding: 0 2px; }
-  html.is-touch.is-small .phil-key.wide { min-width: 40px; }
-  html.is-touch.is-small .phil-title { font-size: 1.4rem; }
+  /* Extra small phones */
+  html.is-touch.is-small .phil-outer { padding: 1rem 0.5rem 1.5rem; }
+  html.is-touch.is-small .phil-title { font-size: 1.6rem; }
+  html.is-touch.is-small .phil-cell { width: 34px; height: 34px; font-size: 0.82rem; }
+  html.is-touch.is-small .phil-key { min-width: 26px; height: 42px; font-size: 0.72rem; padding: 0 2px; }
+  html.is-touch.is-small .phil-key.wide { min-width: 44px; font-size: 0.62rem; }
 
   /* Small phones — general */
   html.is-touch.is-small .headline-title { font-size: 1.3rem; }
@@ -952,19 +1102,10 @@
       <a onclick="filterCat('Geography')">Geography</a>
       <a onclick="filterCat('Culture')">Culture</a>
       <a onclick="showPage('about', true, '/about')">About</a>
-      <!-- Desktop dropdown menu -->
-      <div class="desktop-menu-wrap" id="desktop-menu-wrap">
-        <button class="desktop-hamburger" id="desktop-hamburger-btn" onclick="toggleDesktopMenu()" aria-label="More">
-          <span></span><span></span><span></span>
-        </button>
-        <div class="desktop-dropdown" id="desktop-dropdown">
-          <a class="desktop-dd-item" onclick="openPhilosopherdle(); closeDesktopMenu()">Philosopherdle</a>
-          <div class="desktop-dd-divider"></div>
-          <button class="desktop-dd-btn" onclick="openSettings(); closeDesktopMenu()">⚙ Settings</button>
-          <button class="desktop-dd-btn" id="desktop-user-btn" onclick="handleUserClick(); closeDesktopMenu()">Sign In</button>
-          <button class="desktop-dd-btn" id="desktop-admin-btn" onclick="handleAdminClick(); closeDesktopMenu()">Admin</button>
-        </div>
-      </div>
+      <a onclick="openPhilosopherdle()">Philosopherdle</a>
+      <button class="nav-settings-btn" id="settings-nav-btn" onclick="openSettings()" title="Settings">⚙</button>
+      <button class="nav-user-btn" id="user-nav-btn" onclick="handleUserClick()">Sign In</button>
+      <button class="nav-admin-btn" id="admin-nav-btn" onclick="handleAdminClick()">Admin</button>
     </nav>
     <button class="hamburger" id="hamburger-btn" onclick="toggleMobileNav()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -1001,7 +1142,7 @@
 <div id="home-page" class="page active">
   <div class="search-bar-wrap">
     <div class="search-bar">
-      <span class="search-bar-icon">🔍</span>
+      <span class="search-bar-icon" style="font-family:'Cormorant Garamond',serif;font-size:0.75rem;letter-spacing:0.12em;color:var(--cool-grey);text-transform:uppercase;padding-left:0.5rem;">Search</span>
       <input type="text" id="search-input" placeholder="Search articles by keyword, tag, or title…" oninput="handleSearch(this.value)">
     </div>
   </div>
@@ -1110,6 +1251,21 @@
       </div>
     </div>
 
+    <!-- ACCESSIBILITY -->
+    <div class="settings-section">
+      <div class="settings-section-label">Accessibility</div>
+      <div class="dyslexic-toggle">
+        <label class="toggle-switch">
+          <input type="checkbox" id="dyslexic-toggle" onchange="toggleDyslexicFont(this.checked)">
+          <div class="toggle-slider"></div>
+        </label>
+        <div>
+          <div class="toggle-label">Dyslexia-Friendly Font</div>
+          <div class="toggle-sublabel">Switches all reading text to OpenDyslexic</div>
+        </div>
+      </div>
+    </div>
+
     <!-- MY ACCOUNT (only shown when logged in) -->
     <div class="settings-section" id="account-section" style="display:none;">
       <div class="settings-section-label">My Account</div>
@@ -1202,6 +1358,10 @@
       <div class="post-tags-label">Tags</div>
       <div class="tag-list" id="post-tags-list"></div>
     </div>
+    <div class="post-attachments" id="post-attachments-section" style="display:none;">
+      <div class="post-attach-label">Attachments</div>
+      <div class="post-attach-list" id="post-attach-list"></div>
+    </div>
     <div class="related-section" id="related-section" style="display:none;">
       <div class="related-label">Related Articles</div>
       <div class="related-grid" id="related-grid"></div>
@@ -1258,37 +1418,52 @@
 
 <!-- PHILOSOPHERDLE -->
 <div id="phil-page" class="page">
-  <div class="phil-wrap">
+  <div class="phil-outer">
     <div class="phil-header">
-      <div class="about-eyebrow">Daily Challenge</div>
+      <div class="phil-eyebrow">Daily Challenge</div>
       <div class="phil-title">Philosopherdle</div>
-      <div class="phil-subtitle">Guess the philosopher's name — one letter at a time</div>
+      <div class="phil-subtitle">Guess the philosopher — one letter at a time</div>
+      <div class="phil-header-line"></div>
     </div>
-    <div class="phil-mode-btns">
+    <div class="phil-mode-row">
       <button class="phil-mode-btn active" id="phil-daily-btn" onclick="switchPhilMode('daily')">Daily</button>
       <button class="phil-mode-btn" id="phil-practice-btn" onclick="switchPhilMode('practice')">Practice</button>
     </div>
-    <div class="phil-stats" id="phil-stats" style="display:none;">
-      <div><div class="phil-stat-num" id="ps-played">0</div><div class="phil-stat-lbl">Played</div></div>
-      <div><div class="phil-stat-num" id="ps-wins">0</div><div class="phil-stat-lbl">Won</div></div>
-      <div><div class="phil-stat-num" id="ps-streak">0</div><div class="phil-stat-lbl">Streak</div></div>
-      <div><div class="phil-stat-num" id="ps-best">0</div><div class="phil-stat-lbl">Best</div></div>
+    <div class="phil-stats-bar" id="phil-stats-bar" style="display:none;">
+      <div class="phil-stat"><div class="phil-stat-n" id="ps-played">0</div><div class="phil-stat-l">Played</div></div>
+      <div class="phil-stat-div"></div>
+      <div class="phil-stat"><div class="phil-stat-n" id="ps-wins">0</div><div class="phil-stat-l">Won</div></div>
+      <div class="phil-stat-div"></div>
+      <div class="phil-stat"><div class="phil-stat-n" id="ps-streak">0</div><div class="phil-stat-l">Streak</div></div>
+      <div class="phil-stat-div"></div>
+      <div class="phil-stat"><div class="phil-stat-n" id="ps-best">0</div><div class="phil-stat-l">Best</div></div>
     </div>
-    <div class="phil-guess-count" id="phil-guess-count"></div>
-    <div class="phil-grid" id="phil-grid"></div>
-    <div class="phil-msg" id="phil-msg"></div>
-    <div class="phil-keyboard" id="phil-keyboard"></div>
-    <div style="text-align:center;margin-top:0.5rem;" id="phil-action-area"></div>
-    <div class="phil-timer" id="phil-timer"></div>
-    <div class="phil-names-note">Philosophers include thinkers from Plato to the present day, spanning every tradition and era.</div>
+    <div class="phil-hint-row" id="phil-hint-row"></div>
+    <div class="phil-board-wrap">
+      <div class="phil-board" id="phil-board"></div>
+    </div>
+    <div class="phil-toast" id="phil-toast"></div>
+    <div class="phil-kbd-wrap">
+      <div class="phil-kbd" id="phil-kbd"></div>
+    </div>
+    <div class="phil-actions" id="phil-actions"></div>
+    <div class="phil-next-row" id="phil-next-row"></div>
+    <div class="phil-footer-note">Featuring philosophers from every era and tradition.</div>
   </div>
 </div>
 
 <footer>
-  <div class="footer-logo">Animasapient</div>
-  <div class="footer-slogan">Omnia cum anima sapientia sunt.</div>
-  <div class="footer-cats">
-    <span>Philosophy</span><span>Religion &amp; Spirituality</span><span>Geography</span><span>Culture</span>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">Animasapient</div>
+      <div class="footer-slogan">Omnia cum anima sapientia sunt.</div>
+    </div>
+    <div class="footer-cats">
+      <span onclick="filterCat('Philosophy')">Philosophy</span>
+      <span onclick="filterCat('Religion &amp; Spirituality')">Religion &amp; Spirituality</span>
+      <span onclick="filterCat('Geography')">Geography</span>
+      <span onclick="filterCat('Culture')">Culture</span>
+    </div>
   </div>
 </footer>
 
@@ -1412,7 +1587,33 @@
       </div>
       <div class="form-group">
         <label>Body</label>
-        <textarea id="p-body" placeholder="Write your article here. Separate paragraphs with a blank line."></textarea>
+        <div class="editor-toolbar" id="editor-toolbar">
+          <button type="button" class="editor-tool" onclick="editorCmd('bold')" title="Bold (Ctrl+B)" id="tool-bold"><strong>B</strong></button>
+          <button type="button" class="editor-tool" onclick="editorCmd('italic')" title="Italic (Ctrl+I)" id="tool-italic"><em style="font-style:italic;">I</em></button>
+          <button type="button" class="editor-tool" onclick="editorCmd('underline')" title="Underline (Ctrl+U)" id="tool-underline"><span style="text-decoration:underline;">U</span></button>
+          <div class="editor-tool-sep"></div>
+          <button type="button" class="editor-tool editor-tool-text" onclick="editorIndent()" title="Indent paragraph">Indent</button>
+          <button type="button" class="editor-tool editor-tool-text" onclick="editorOutdent()" title="Outdent paragraph">Outdent</button>
+          <div class="editor-tool-sep"></div>
+          <button type="button" class="editor-tool editor-tool-text" onclick="editorLink()" title="Insert hyperlink">Link</button>
+          <button type="button" class="editor-tool editor-tool-text" onclick="editorCmd('removeFormat')" title="Remove all formatting">Clear</button>
+        </div>
+        <div class="editor-body" id="p-body" contenteditable="true" placeholder="Write your article here…" spellcheck="true"></div>
+        <textarea id="p-body-hidden" style="display:none;"></textarea>
+      </div>
+
+      <!-- FILE ATTACHMENTS -->
+      <div class="form-group">
+        <label>Attachments <span style="font-style:italic;text-transform:none;letter-spacing:0;font-size:0.7rem;">PDF, DOCX, PPTX, or SVG</span></label>
+        <div class="attach-area">
+          <input type="file" id="p-attach-input" accept=".pdf,.doc,.docx,.ppt,.pptx,.svg" multiple style="display:none;" onchange="addAttachments(this)">
+          <div class="attach-area-top">
+            <button type="button" class="btn-settings-action" onclick="document.getElementById('p-attach-input').click()">+ Add File</button>
+            <span class="attach-hint">PDF, DOCX, PPTX, or SVG — attach supporting documents</span>
+          </div>
+          <div class="attach-list" id="attach-list"></div>
+        </div>
+        <input type="hidden" id="p-attachments-json" value="[]">
       </div>
 
       <!-- IMAGE SECTION -->
@@ -1467,6 +1668,20 @@
       <input type="hidden" id="p-existing-img">
       <button class="btn-primary" id="submit-btn" onclick="submitPost()">Publish Article</button>
     </div>
+  </div>
+</div>
+
+<!-- LINK POPUP -->
+<div class="link-popup-overlay" id="link-popup-overlay" onclick="closeLinkPopup()"></div>
+<div class="link-popup" id="link-popup">
+  <div class="link-popup-title">Insert Hyperlink</div>
+  <label>Link Text</label>
+  <input type="text" id="link-text-input" placeholder="e.g. Stanford Encyclopedia">
+  <label>URL</label>
+  <input type="text" id="link-url-input" placeholder="https://">
+  <div class="link-popup-btns">
+    <button class="btn-settings-action" onclick="insertLink()">Insert</button>
+    <button class="btn-settings-action" style="background:transparent;border:1px solid var(--cool-grey-light);color:var(--text);" onclick="closeLinkPopup()">Cancel</button>
   </div>
 </div>
 
@@ -1540,32 +1755,32 @@ function handleSessionUser(user) {
 
 function applyAdminUI(user) {
   const bar = document.getElementById('admin-bar');
-  const desktopAdminBtn = document.getElementById('desktop-admin-btn');
+  const btn = document.getElementById('admin-nav-btn');
   const mobileAdminBtn = document.getElementById('mobile-admin-btn');
   if (user) {
-    bar.classList.add('visible');
+    bar.classList.add('visible'); btn.textContent = '+ New Post'; btn.classList.add('logged-in');
     document.body.classList.add('admin-mode');
     document.getElementById('admin-label').textContent = user.email;
     if (mobileAdminBtn) mobileAdminBtn.textContent = '+ New Post';
-    if (desktopAdminBtn) { desktopAdminBtn.textContent = '+ New Post'; desktopAdminBtn.classList.add('logged-in'); }
   } else {
-    bar.classList.remove('visible');
+    bar.classList.remove('visible'); btn.textContent = 'Admin'; btn.classList.remove('logged-in');
     document.body.classList.remove('admin-mode');
     if (mobileAdminBtn) mobileAdminBtn.textContent = 'Admin';
-    if (desktopAdminBtn) { desktopAdminBtn.textContent = 'Admin'; desktopAdminBtn.classList.remove('logged-in'); }
   }
 }
 
 function applyUserUI(user) {
+  const btn = document.getElementById('user-nav-btn');
   const mobileBtn = document.getElementById('mobile-user-btn');
-  const desktopBtn = document.getElementById('desktop-user-btn');
   if (user) {
     const displayName = user.user_metadata?.display_name || user.email.split('@')[0];
+    btn.textContent = displayName;
+    btn.classList.add('signed-in');
     if (mobileBtn) { mobileBtn.textContent = '👤 ' + displayName; }
-    if (desktopBtn) { desktopBtn.textContent = '👤 ' + displayName; desktopBtn.classList.add('signed-in'); }
   } else {
+    btn.textContent = 'Sign In';
+    btn.classList.remove('signed-in');
     if (mobileBtn) { mobileBtn.textContent = 'Sign In'; }
-    if (desktopBtn) { desktopBtn.textContent = 'Sign In'; desktopBtn.classList.remove('signed-in'); }
   }
 }
 
@@ -1781,8 +1996,18 @@ async function openPost(id) {
   if (post.image_url) { img.src = post.image_url; img.style.display = 'block'; bg.style.display = 'none'; }
   else { img.style.display = 'none'; bg.style.display = 'block'; }
 
-  document.getElementById('ph-body').innerHTML = post.body
-    .split(/\n\n+/).map(t => t.trim()).filter(Boolean).map(t => `<p>${x(t)}</p>`).join('');
+  // Render body — support both rich HTML (from new editor) and plain paragraphs
+  const bodyEl = document.getElementById('ph-body');
+  if (post.body && /<[a-z][\s\S]*>/i.test(post.body)) {
+    bodyEl.innerHTML = post.body;
+  } else if (post.body) {
+    bodyEl.innerHTML = post.body.split(/\n\n+/).map(t => t.trim()).filter(Boolean).map(t => `<p>${x(t)}</p>`).join('');
+  } else {
+    bodyEl.innerHTML = '';
+  }
+
+  // Render file attachments
+  renderPostAttachments(post.attachments_json);
 
   renderCitations(post);
 
@@ -1973,7 +2198,10 @@ function resetImageSection() {
 }
 function openNewPost() {
   document.getElementById('post-modal-title').textContent = 'New Article';
-  ['p-title','p-excerpt','p-body','p-byline','p-slug','p-tags'].forEach(id => document.getElementById(id).value = '');
+  ['p-title','p-excerpt','p-byline','p-slug','p-tags'].forEach(id => document.getElementById(id).value = '');
+  setEditorHTML('');
+  pendingAttachments = [];
+  renderAttachList();
   document.getElementById('p-cat').value = 'Philosophy';
   document.getElementById('p-date').value = todayStr();
   document.getElementById('p-edit-id').value = '';
@@ -1993,7 +2221,7 @@ async function openEdit(id) {
   document.getElementById('p-cat').value     = post.category;
   document.getElementById('p-date').value    = post.date;
   document.getElementById('p-excerpt').value = post.excerpt || '';
-  document.getElementById('p-body').value    = post.body;
+  setEditorHTML(post.body || '');
   document.getElementById('p-byline').value  = post.byline || '';
   document.getElementById('p-slug').value    = post.slug || '';
   document.getElementById('p-edit-id').value       = post.id;
@@ -2153,9 +2381,10 @@ async function submitPost() {
   const category = document.getElementById('p-cat').value;
   const date     = document.getElementById('p-date').value;
   const excerpt  = document.getElementById('p-excerpt').value.trim();
-  const body     = document.getElementById('p-body').value.trim();
+  const body     = getEditorHTML();
   const byline   = document.getElementById('p-byline').value.trim();
   const slug     = document.getElementById('p-slug').value.trim();
+  const tagsVal  = document.getElementById('p-tags').value.trim();
   const editId   = document.getElementById('p-edit-id').value;
   const existImg = document.getElementById('p-existing-img').value;
   const errEl = document.getElementById('post-error'), sucEl = document.getElementById('post-success');
@@ -2175,8 +2404,11 @@ async function submitPost() {
       if (upErr) throw new Error('Image upload failed: ' + upErr.message);
       image_url = sb.storage.from('post-images').getPublicUrl(fname).data.publicUrl;
     }
+    // Upload file attachments
+    const uploadedAttachments = await uploadAttachments();
+    const attachments_json = uploadedAttachments.length ? JSON.stringify(uploadedAttachments) : null;
     const poster_email = currentUser ? currentUser.email : null;
-    const payload = { title, category, date, excerpt, body, image_url, byline, slug, poster_email };
+    const payload = { title, category, date, excerpt, body, image_url, byline, slug, poster_email, tags: tagsVal || null, attachments_json };
     if (editId) {
       const { error } = await sb.from('posts').update(payload).eq('id', editId);
       if (error) throw new Error(error.message);
@@ -2187,6 +2419,7 @@ async function submitPost() {
       sucEl.textContent = 'Article published.';
     }
     sucEl.style.display = 'block';
+    pendingAttachments = [];
     setTimeout(() => {
       closeModal('post-modal');
       if (editId && currentPostId === editId) openPost(editId);
@@ -2347,8 +2580,18 @@ async function openPost(id, replaceState = false) {
   if (post.image_url) { img.src = post.image_url; img.style.display = 'block'; bg.style.display = 'none'; }
   else { img.style.display = 'none'; bg.style.display = 'block'; }
 
-  document.getElementById('ph-body').innerHTML = post.body
-    .split(/\n\n+/).map(t => t.trim()).filter(Boolean).map(t => `<p>${x(t)}</p>`).join('');
+  // Render body — support both rich HTML (from new editor) and plain paragraphs
+  const bodyEl = document.getElementById('ph-body');
+  if (post.body && /<[a-z][\s\S]*>/i.test(post.body)) {
+    bodyEl.innerHTML = post.body;
+  } else if (post.body) {
+    bodyEl.innerHTML = post.body.split(/\n\n+/).map(t => t.trim()).filter(Boolean).map(t => `<p>${x(t)}</p>`).join('');
+  } else {
+    bodyEl.innerHTML = '';
+  }
+
+  // Render file attachments
+  renderPostAttachments(post.attachments_json);
 
   renderCitations(post);
   const posterEl = document.getElementById('poster-email-display');
@@ -2612,323 +2855,627 @@ async function likeComment(commentId, btn) {
 }
 
 // ══════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════════
 // ── PHILOSOPHERDLE ────────────────────────────────────────────
 // ══════════════════════════════════════════════════════════════
-const PHIL_WORDS = ['Plato','Aristotle','Socrates','Kant','Nietzsche','Descartes','Locke','Hume','Hobbes','Spinoza','Rousseau','Kierkegaard','Hegel','Marx','Mill','Confucius','Laozi','Zhuangzi','Avicenna','Averroes','Aquinas','Augustine','Machiavelli','Voltaire','Diderot','Sartre','Beauvoir','Camus','Heidegger','Wittgenstein','Russell','Leibniz','Pascal','Montesquieu','Bacon','More','Bruno','Schopenhauer','Husserl','Arendt','Foucault','Derrida','Rawls','Nozick','Kuhn','Quine','Berkeley','Moore','Ayer','Berlin','Rand','Marcuse','Adorno','Habermas','Zizek','Butler','Singer','MacIntyre','Taylor','West','Appiah','Nussbaum','Foot','Anscombe','Rorty','Putnam','Dennett','Chomsky','Ricoeur','Merleau-Ponty','Levinas','Popper','Ryle','Nagel','Williams','Parfit','Weil','Malebranche','Bayle','Plotinus','Pythagoras','Heraclitus','Parmenides','Anaximander','Anaxagoras','Democritus','Epicurus','Epictetus','Aurelius','Seneca','Cicero','Boethius','Maimonides','Ghazali','Nagarjuna','Shankara','Ramanuja','Chanakya','Khaldun','Ockham','Scotus','Abelard','Eckhart','Ficino','Pico','Hutcheson','Reid','Bentham','Engels','Gramsci','Bergson','James','Dewey','Peirce','Tarski','Lyotard','Deleuze','Guattari','Irigaray','Baudrillard','Fanon','Mbembe','hooks','Davis','Murdoch','Sontag','Han','Bostrom','Thomson','Frankfurt','Wollstonecraft','Paine','Spencer','Stirner','Ortega','Unamuno','Jaspers','Marcel','Cassirer','Gadamer','Strauss','Bloom','Gilson','Maritain','Laing','Feigl','Sellars','Goodman','Bloch','Lukacs','Kojeve','Proudhon','Bakunin','Luxemburg','Bodin','Grotius','Pufendorf','Fukuyama','Fineman','Sen','Pogge','Benhabib','Lefebvre','Castoriadis','Kristeva','Feyerabend','Lakatos','Jonas','Stein','Vasconcelos','Dussel','Nishida','Nishitani','Aurobindo','Radhakrishnan','Tagore','Shariati','Rahman','Nasr','Soroush','Wiredu','Hountondji','Oruka','Mbiti','Nyerere','Mozi','Zhu','Wang'];
 
-let philState = {
-  mode: 'daily',         // 'daily' | 'practice'
+const PHIL_WORDS = [
+  'Plato','Aristotle','Socrates','Kant','Nietzsche','Descartes','Locke','Hume',
+  'Hobbes','Spinoza','Rousseau','Kierkegaard','Hegel','Marx','Mill','Confucius',
+  'Laozi','Zhuangzi','Avicenna','Averroes','Aquinas','Augustine','Machiavelli',
+  'Voltaire','Diderot','Sartre','Beauvoir','Camus','Heidegger','Wittgenstein',
+  'Russell','Leibniz','Pascal','Montesquieu','Bacon','More','Bruno','Schopenhauer',
+  'Husserl','Arendt','Foucault','Derrida','Rawls','Nozick','Kuhn','Quine',
+  'Berkeley','Moore','Ayer','Berlin','Rand','Marcuse','Adorno','Habermas',
+  'Zizek','Butler','Singer','MacIntyre','Taylor','West','Appiah','Nussbaum',
+  'Foot','Anscombe','Rorty','Putnam','Dennett','Chomsky','Ricoeur','Popper',
+  'Ryle','Nagel','Williams','Parfit','Weil','Plotinus','Pythagoras','Heraclitus',
+  'Parmenides','Anaximander','Anaxagoras','Democritus','Epicurus','Epictetus',
+  'Aurelius','Seneca','Cicero','Boethius','Maimonides','Ghazali','Nagarjuna',
+  'Shankara','Ramanuja','Chanakya','Khaldun','Ockham','Scotus','Abelard',
+  'Eckhart','Ficino','Pico','Hutcheson','Reid','Bentham','Engels','Gramsci',
+  'Bergson','James','Dewey','Peirce','Tarski','Lyotard','Deleuze','Guattari',
+  'Irigaray','Baudrillard','Fanon','Mbembe','hooks','Davis','Murdoch','Sontag',
+  'Han','Bostrom','Thomson','Frankfurt','Wollstonecraft','Paine','Spencer',
+  'Stirner','Ortega','Unamuno','Jaspers','Marcel','Cassirer','Gadamer','Strauss',
+  'Bloom','Gilson','Maritain','Laing','Feigl','Sellars','Goodman','Bloch',
+  'Lukacs','Kojeve','Proudhon','Bakunin','Luxemburg','Bodin','Grotius','Pufendorf',
+  'Fukuyama','Fineman','Sen','Pogge','Benhabib','Lefebvre','Castoriadis','Kristeva',
+  'Feyerabend','Lakatos','Jonas','Stein','Vasconcelos','Dussel','Nishida',
+  'Nishitani','Aurobindo','Radhakrishnan','Tagore','Shariati','Rahman','Nasr',
+  'Soroush','Wiredu','Hountondji','Oruka','Mbiti','Nyerere','Mozi','Zhu','Wang',
+  'Malebranche','Bayle','Levinas','Merleau'
+];
+
+// ── State ─────────────────────────────────────────────────────
+let PD = {
+  mode: 'daily',
   answer: '',
   maxLen: 0,
   maxGuesses: 6,
-  guesses: [],
-  currentRow: 0,
-  currentInput: [],
+  guesses: [],         // array of strings (completed rows)
+  currentLetters: [],  // current in-progress row
   gameOver: false,
-  stats: { played: 0, wins: 0, streak: 0, best: 0, lastDate: '' }
+  stats: { played:0, wins:0, streak:0, best:0, lastWinDate:'' }
 };
+let philTimerInterval = null;
 
-function getDailyWord() {
-  const epoch = new Date('2025-01-01');
-  const now = new Date();
-  const dayNum = Math.floor((now - epoch) / 86400000);
-  return PHIL_WORDS[dayNum % PHIL_WORDS.length].toUpperCase();
+// ── Helpers ───────────────────────────────────────────────────
+function pdTodayStr() {
+  const d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 
-function getPracticeWord() {
+function pdDailyAnswer() {
+  // Deterministic daily word based on days since epoch
+  const epoch = new Date('2025-01-01T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const day = Math.floor((today - epoch) / 86400000);
+  return PHIL_WORDS[((day % PHIL_WORDS.length) + PHIL_WORDS.length) % PHIL_WORDS.length].toUpperCase();
+}
+
+function pdPracticeAnswer() {
   return PHIL_WORDS[Math.floor(Math.random() * PHIL_WORDS.length)].toUpperCase();
 }
 
-function getTodayStr() {
-  const n = new Date();
-  return n.getFullYear() + '-' + String(n.getMonth()+1).padStart(2,'0') + '-' + String(n.getDate()).padStart(2,'0');
+function pdLoadStats() {
+  const s = localStorage.getItem('pd-stats-v2');
+  if (s) try { PD.stats = JSON.parse(s); } catch(e) {}
 }
 
+function pdSaveStats() {
+  localStorage.setItem('pd-stats-v2', JSON.stringify(PD.stats));
+}
+
+// ── Core coloring algorithm (handles duplicate letters correctly) ──
+function pdScore(guess, answer) {
+  // Returns array of 'correct' | 'present' | 'absent' for each position
+  const result = Array(guess.length).fill('absent');
+  const answerArr = answer.split('');
+  const guessArr = guess.split('');
+  const answerRemaining = [...answerArr];
+
+  // Pass 1: mark correct (green)
+  guessArr.forEach((ch, i) => {
+    if (ch === answerArr[i]) {
+      result[i] = 'correct';
+      answerRemaining[i] = null; // used up
+    }
+  });
+
+  // Pass 2: mark present (yellow) — only if not already correct
+  guessArr.forEach((ch, i) => {
+    if (result[i] === 'correct') return;
+    const idx = answerRemaining.indexOf(ch);
+    if (idx !== -1) {
+      result[i] = 'present';
+      answerRemaining[idx] = null; // consume it
+    }
+  });
+
+  return result;
+}
+
+// ── Open the game ─────────────────────────────────────────────
 function openPhilosopherdle() {
+  pdLoadStats();
   showPage('phil', true, '/philosopherdle');
-  loadPhilStats();
-  initPhil('daily');
+  pdInit('daily');
 }
 
 function switchPhilMode(mode) {
   document.getElementById('phil-daily-btn').classList.toggle('active', mode==='daily');
   document.getElementById('phil-practice-btn').classList.toggle('active', mode==='practice');
-  initPhil(mode);
+  pdInit(mode);
 }
 
-function loadPhilStats() {
-  const saved = JSON.parse(localStorage.getItem('anima-phil-stats') || 'null');
-  if (saved) philState.stats = saved;
-}
-
-function savePhilStats() {
-  localStorage.setItem('anima-phil-stats', JSON.stringify(philState.stats));
-}
-
-function initPhil(mode) {
-  philState.mode = mode;
-  const statsEl = document.getElementById('phil-stats');
+// ── Init/restore ──────────────────────────────────────────────
+function pdInit(mode) {
+  PD.mode = mode;
+  if (philTimerInterval) { clearInterval(philTimerInterval); philTimerInterval = null; }
+  document.getElementById('phil-next-row').textContent = '';
+  document.getElementById('phil-actions').innerHTML = '';
+  document.getElementById('phil-toast').textContent = '';
+  document.getElementById('phil-toast').className = 'phil-toast';
 
   if (mode === 'daily') {
-    const today = getTodayStr();
-    // Check if already played today
-    const savedGame = JSON.parse(localStorage.getItem('anima-phil-daily-' + today) || 'null');
-    philState.answer = getDailyWord();
-    philState.maxLen = philState.answer.length;
-    philState.maxGuesses = Math.min(8, philState.maxLen + 2);
+    PD.answer = pdDailyAnswer();
+    PD.maxLen = PD.answer.length;
+    PD.maxGuesses = Math.min(8, PD.maxLen + 2);
 
-    if (savedGame) {
-      // Restore completed game
-      philState.guesses = savedGame.guesses;
-      philState.currentRow = savedGame.guesses.length;
-      philState.gameOver = savedGame.gameOver;
-      philState.currentInput = [];
-      statsEl.style.display = 'grid';
-      updatePhilStatsDisplay();
-      renderPhilGrid();
-      renderPhilKeyboard();
-      if (philState.gameOver) {
-        const won = philState.guesses[philState.guesses.length-1] === philState.answer;
-        showPhilResult(won);
-      }
+    // Show stats
+    document.getElementById('phil-stats-bar').style.display = 'flex';
+    pdUpdateStats();
+
+    // Try to restore saved game for today
+    const saved = localStorage.getItem('pd-daily-' + pdTodayStr());
+    if (saved) {
+      const g = JSON.parse(saved);
+      PD.guesses = g.guesses;
+      PD.currentLetters = [];
+      PD.gameOver = g.gameOver;
+      pdRenderBoard();
+      pdRenderKeyboard();
+      pdSetHint();
+      if (PD.gameOver) pdShowEndState(PD.guesses[PD.guesses.length-1] === PD.answer, true);
       return;
     }
-    philState.guesses = [];
-    philState.currentRow = 0;
-    philState.currentInput = [];
-    philState.gameOver = false;
-    statsEl.style.display = 'grid';
-    updatePhilStatsDisplay();
+
+    PD.guesses = []; PD.currentLetters = []; PD.gameOver = false;
   } else {
-    philState.answer = getPracticeWord();
-    philState.maxLen = philState.answer.length;
-    philState.maxGuesses = Math.min(8, philState.maxLen + 2);
-    philState.guesses = [];
-    philState.currentRow = 0;
-    philState.currentInput = [];
-    philState.gameOver = false;
-    statsEl.style.display = 'none';
+    PD.answer = pdPracticeAnswer();
+    PD.maxLen = PD.answer.length;
+    PD.maxGuesses = Math.min(8, PD.maxLen + 2);
+    PD.guesses = []; PD.currentLetters = []; PD.gameOver = false;
+    document.getElementById('phil-stats-bar').style.display = 'none';
   }
 
-  document.getElementById('phil-msg').textContent = '';
-  document.getElementById('phil-msg').className = 'phil-msg';
-  document.getElementById('phil-timer').textContent = '';
-  document.getElementById('phil-action-area').innerHTML = '';
-  document.getElementById('phil-guess-count').textContent = `${philState.answer.length} letters · ${philState.maxGuesses} guesses`;
-  renderPhilGrid();
-  renderPhilKeyboard();
-  if (mode === 'daily') startPhilTimer();
+  pdRenderBoard();
+  pdRenderKeyboard();
+  pdSetHint();
 }
 
-function updatePhilStatsDisplay() {
-  document.getElementById('ps-played').textContent = philState.stats.played;
-  document.getElementById('ps-wins').textContent = philState.stats.wins;
-  document.getElementById('ps-streak').textContent = philState.stats.streak;
-  document.getElementById('ps-best').textContent = philState.stats.best || '—';
+function pdSetHint() {
+  document.getElementById('phil-hint-row').textContent =
+    PD.answer.length + ' letters · ' + PD.maxGuesses + ' guesses';
 }
 
-function renderPhilGrid() {
-  const grid = document.getElementById('phil-grid');
-  grid.innerHTML = '';
-  // Dynamically shrink cells for very long names on mobile
-  const isSmall = document.documentElement.classList.contains('is-small');
+// ── Board rendering ───────────────────────────────────────────
+function pdRenderBoard() {
+  const board = document.getElementById('phil-board');
+  board.innerHTML = '';
+
+  // Figure out cell size based on name length and device
   const isTouch = document.documentElement.classList.contains('is-touch');
-  const isTablet = document.documentElement.classList.contains('is-tablet');
-  let cellSize = 44;
-  if (isTouch && !isTablet) cellSize = 36;
-  if (isSmall) cellSize = 30;
-  // For names longer than 10 chars, shrink further
-  if (philState.maxLen > 12 && isTouch && !isTablet) cellSize = Math.max(22, Math.floor(320 / philState.maxLen));
-  else if (philState.maxLen > 10 && isTouch && !isTablet) cellSize = Math.max(26, Math.floor(340 / philState.maxLen));
-  const fontSize = Math.max(0.55, cellSize * 0.022) + 'rem';
+  const isSmall = document.documentElement.classList.contains('is-small');
+  let cellSize = 52;
+  if (isTouch && !document.documentElement.classList.contains('is-tablet')) cellSize = 42;
+  if (isSmall) cellSize = 34;
+  // Shrink for very long names
+  const vw = window.innerWidth;
+  const maxRowWidth = vw - 40;
+  const maxCellFromVW = Math.floor((maxRowWidth - (PD.maxLen-1)*5) / PD.maxLen);
+  cellSize = Math.min(cellSize, maxCellFromVW);
+  cellSize = Math.max(26, cellSize);
+  const fontSize = Math.max(10, cellSize * 0.38) + 'px';
+  const gap = Math.max(3, Math.min(5, cellSize * 0.1)) + 'px';
 
-  for (let r = 0; r < philState.maxGuesses; r++) {
+  for (let r = 0; r < PD.maxGuesses; r++) {
     const row = document.createElement('div');
     row.className = 'phil-row';
-    row.id = 'phil-row-' + r;
-    for (let c = 0; c < philState.maxLen; c++) {
+    row.style.gap = gap;
+    row.id = 'pd-row-' + r;
+    board.appendChild(row);
+
+    for (let c = 0; c < PD.maxLen; c++) {
       const cell = document.createElement('div');
       cell.className = 'phil-cell';
-      cell.id = `phil-cell-${r}-${c}`;
       cell.style.width = cellSize + 'px';
       cell.style.height = cellSize + 'px';
       cell.style.fontSize = fontSize;
-      if (r < philState.guesses.length) {
-        const g = philState.guesses[r];
-        cell.textContent = g[c] || '';
-        cell.classList.add(getLetterClass(g, c, philState.answer));
-      } else if (r === philState.currentRow) {
-        cell.textContent = philState.currentInput[c] || '';
-        if (philState.currentInput[c]) cell.classList.add('current-input');
-      }
+      cell.id = 'pd-' + r + '-' + c;
       row.appendChild(cell);
     }
-    grid.appendChild(row);
+  }
+
+  // Fill in completed guesses with animation stagger
+  PD.guesses.forEach((guess, r) => {
+    const scores = pdScore(guess, PD.answer);
+    scores.forEach((s, c) => {
+      const cell = document.getElementById('pd-' + r + '-' + c);
+      cell.textContent = guess[c];
+      cell.classList.add('revealed', s);
+    });
+  });
+
+  // Fill current input row
+  const row = PD.guesses.length;
+  if (row < PD.maxGuesses && !PD.gameOver) {
+    PD.currentLetters.forEach((ch, c) => {
+      const cell = document.getElementById('pd-' + row + '-' + c);
+      cell.textContent = ch;
+      cell.classList.add('filled');
+    });
   }
 }
 
-function getLetterClass(guess, pos, answer) {
-  if (guess[pos] === answer[pos]) return 'correct';
-  if (answer.includes(guess[pos])) return 'present';
-  return 'absent';
-}
-
-function renderPhilKeyboard() {
-  const kb = document.getElementById('phil-keyboard');
-  kb.innerHTML = '';
-  const rows = ['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
-  const letterStatus = {};
-  philState.guesses.forEach(g => {
-    g.split('').forEach((ch, i) => {
-      const cls = getLetterClass(g, i, philState.answer);
-      const cur = letterStatus[ch];
-      if (cls === 'correct') letterStatus[ch] = 'correct';
-      else if (cls === 'present' && cur !== 'correct') letterStatus[ch] = 'present';
-      else if (!cur) letterStatus[ch] = 'absent';
-    });
-  });
-  rows.forEach((row, ri) => {
-    const rowEl = document.createElement('div');
-    rowEl.className = 'phil-kb-row';
-    if (ri === 2) {
-      const enter = document.createElement('button');
-      enter.className = 'phil-key wide'; enter.textContent = 'Enter';
-      enter.onclick = () => submitPhilGuess();
-      rowEl.appendChild(enter);
-    }
-    row.split('').forEach(ch => {
-      const btn = document.createElement('button');
-      btn.className = 'phil-key' + (letterStatus[ch] ? ' ' + letterStatus[ch] : '');
-      btn.textContent = ch; btn.id = 'pk-' + ch;
-      btn.onclick = () => typePhilLetter(ch);
-      rowEl.appendChild(btn);
-    });
-    if (ri === 2) {
-      const del = document.createElement('button');
-      del.className = 'phil-key wide'; del.textContent = '⌫';
-      del.onclick = () => deletePhilLetter();
-      rowEl.appendChild(del);
-    }
-    kb.appendChild(rowEl);
-  });
-}
-
-function typePhilLetter(ch) {
-  if (philState.gameOver) return;
-  if (philState.currentInput.length >= philState.maxLen) return;
-  philState.currentInput.push(ch);
-  updateCurrentRow();
-}
-
-function deletePhilLetter() {
-  if (philState.gameOver) return;
-  philState.currentInput.pop();
-  updateCurrentRow();
-}
-
-function updateCurrentRow() {
-  for (let c = 0; c < philState.maxLen; c++) {
-    const cell = document.getElementById(`phil-cell-${philState.currentRow}-${c}`);
+function pdUpdateCurrentRow() {
+  const row = PD.guesses.length;
+  for (let c = 0; c < PD.maxLen; c++) {
+    const cell = document.getElementById('pd-' + row + '-' + c);
     if (!cell) continue;
-    cell.textContent = philState.currentInput[c] || '';
-    cell.className = 'phil-cell' + (philState.currentInput[c] ? ' current-input' : '');
+    const ch = PD.currentLetters[c];
+    // Preserve inline size styles when updating class
+    const w = cell.style.width, h = cell.style.height, fs = cell.style.fontSize;
+    cell.textContent = ch || '';
+    cell.className = 'phil-cell' + (ch ? ' filled' : '');
+    cell.style.width = w;
+    cell.style.height = h;
+    cell.style.fontSize = fs;
   }
 }
 
-function submitPhilGuess() {
-  if (philState.gameOver) return;
-  const guess = philState.currentInput.join('');
-  if (guess.length !== philState.maxLen) {
-    showPhilMsg(`Need ${philState.maxLen} letters`, 'error'); return;
-  }
-  // Accept any sequence of letters (we don't restrict to the word list for guesses)
-  philState.guesses.push(guess);
-  philState.currentRow++;
-  philState.currentInput = [];
-  document.getElementById('phil-msg').textContent = '';
+// ── Keyboard rendering ────────────────────────────────────────
+function pdRenderKeyboard() {
+  const kbd = document.getElementById('phil-kbd');
+  kbd.innerHTML = '';
 
-  renderPhilGrid();
-  renderPhilKeyboard();
+  const rows = ['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
 
-  const won = guess === philState.answer;
-  const lost = !won && philState.currentRow >= philState.maxGuesses;
-
-  if (won || lost) {
-    philState.gameOver = true;
-    if (philState.mode === 'daily') {
-      // Save game state
-      const today = getTodayStr();
-      localStorage.setItem('anima-phil-daily-' + today, JSON.stringify({
-        guesses: philState.guesses, gameOver: true
-      }));
-      // Update stats
-      philState.stats.played++;
-      if (won) {
-        philState.stats.wins++;
-        philState.stats.streak++;
-        const guessNum = philState.currentRow;
-        if (!philState.stats.best || guessNum < philState.stats.best) philState.stats.best = guessNum;
-      } else {
-        philState.stats.streak = 0;
+  // Build letter status map from all guesses
+  const status = {};
+  PD.guesses.forEach(guess => {
+    const scores = pdScore(guess, PD.answer);
+    guess.split('').forEach((ch, i) => {
+      const s = scores[i];
+      // Only upgrade: absent < present < correct
+      if (!status[ch] || (s==='correct') || (s==='present' && status[ch]==='absent')) {
+        status[ch] = s;
       }
-      philState.stats.lastDate = today;
-      savePhilStats();
-      updatePhilStatsDisplay();
+    });
+  });
+
+  rows.forEach((rowStr, ri) => {
+    const rowEl = document.createElement('div');
+    rowEl.className = 'phil-kbd-row';
+
+    if (ri === 2) {
+      rowEl.appendChild(pdMakeKey('Enter', true, () => pdSubmit()));
     }
-    showPhilResult(won);
-  }
+
+    rowStr.split('').forEach(ch => {
+      rowEl.appendChild(pdMakeKey(ch, false, () => pdType(ch), status[ch]));
+    });
+
+    if (ri === 2) {
+      rowEl.appendChild(pdMakeKey('⌫', true, () => pdDelete()));
+    }
+
+    kbd.appendChild(rowEl);
+  });
 }
 
-function showPhilResult(won) {
-  const answer = philState.answer;
-  const displayName = PHIL_WORDS.find(w => w.toUpperCase() === answer) || answer;
-  if (won) {
-    showPhilMsg(`✓ ${displayName}!`, 'success');
-  } else {
-    showPhilMsg(`The philosopher was: ${displayName}`, 'error');
-  }
-  const actionArea = document.getElementById('phil-action-area');
-  if (philState.mode === 'daily') {
-    actionArea.innerHTML = `<button class="phil-btn secondary" onclick="switchPhilMode('practice')">Practice Mode</button>`;
-    startPhilTimer();
-  } else {
-    actionArea.innerHTML = `<button class="phil-btn" onclick="initPhil('practice')">New Philosopher</button>
-      <button class="phil-btn secondary" onclick="switchPhilMode('daily')">Daily</button>`;
-  }
+function pdMakeKey(label, wide, action, statusClass) {
+  const btn = document.createElement('button');
+  btn.className = 'phil-key' + (wide ? ' wide' : '') + (statusClass ? ' ' + statusClass : '');
+  btn.textContent = label;
+  btn.id = 'pdkey-' + label;
+  btn.addEventListener('click', action);
+  return btn;
 }
 
-function showPhilMsg(msg, type) {
-  const el = document.getElementById('phil-msg');
+// ── Input handlers ────────────────────────────────────────────
+function pdType(ch) {
+  if (PD.gameOver) return;
+  if (PD.currentLetters.length >= PD.maxLen) return;
+  PD.currentLetters.push(ch.toUpperCase());
+  pdUpdateCurrentRow();
+}
+
+function pdDelete() {
+  if (PD.gameOver) return;
+  if (PD.currentLetters.length === 0) return;
+  PD.currentLetters.pop();
+  pdUpdateCurrentRow();
+}
+
+function pdToast(msg, type, duration) {
+  const el = document.getElementById('phil-toast');
   el.textContent = msg;
-  el.className = 'phil-msg' + (type ? ' ' + type : '');
+  el.className = 'phil-toast visible' + (type ? ' ' + type : '');
+  if (duration !== 0) {
+    setTimeout(() => {
+      el.className = 'phil-toast';
+      el.textContent = '';
+    }, duration || 1800);
+  }
 }
 
-function startPhilTimer() {
-  const timerEl = document.getElementById('phil-timer');
-  function update() {
+function pdShakeRow(rowIdx) {
+  const row = document.getElementById('pd-row-' + rowIdx);
+  if (!row) return;
+  row.querySelectorAll('.phil-cell').forEach(cell => {
+    cell.classList.remove('shake');
+    void cell.offsetWidth; // reflow
+    cell.classList.add('shake');
+  });
+}
+
+function pdSubmit() {
+  if (PD.gameOver) return;
+  const guess = PD.currentLetters.join('');
+
+  if (guess.length < PD.maxLen) {
+    pdToast('Not enough letters');
+    pdShakeRow(PD.guesses.length);
+    return;
+  }
+
+  // Score the guess
+  const rowIdx = PD.guesses.length;
+  const scores = pdScore(guess, PD.answer);
+  PD.guesses.push(guess);
+  PD.currentLetters = [];
+
+  // Reveal each cell — grab size styles BEFORE changing className
+  scores.forEach((s, c) => {
+    const cell = document.getElementById('pd-' + rowIdx + '-' + c);
+    if (!cell) return;
+    const w = cell.style.width, h = cell.style.height, fs = cell.style.fontSize;
+    setTimeout(() => {
+      cell.textContent = guess[c];
+      cell.className = 'phil-cell revealed ' + s;
+      // Restore inline size so cell doesn't collapse
+      cell.style.width = w;
+      cell.style.height = h;
+      cell.style.fontSize = fs;
+    }, c * 120);
+  });
+
+  // After all cells revealed, re-render board so the next empty row appears correctly
+  const totalDelay = PD.maxLen * 120 + 350;
+
+  setTimeout(() => {
+    pdRenderKeyboard(); // update keyboard after reveal
+
+    const won = guess === PD.answer;
+    const lost = !won && PD.guesses.length >= PD.maxGuesses;
+
+    if (won || lost) {
+      PD.gameOver = true;
+      if (PD.mode === 'daily') {
+        localStorage.setItem('pd-daily-' + pdTodayStr(), JSON.stringify({ guesses: PD.guesses, gameOver: true }));
+        PD.stats.played++;
+        if (won) {
+          PD.stats.wins++;
+          PD.stats.streak++;
+          const g = PD.guesses.length;
+          if (!PD.stats.best || g < PD.stats.best) PD.stats.best = g;
+          PD.stats.lastWinDate = pdTodayStr();
+        } else {
+          PD.stats.streak = 0;
+        }
+        pdSaveStats();
+        pdUpdateStats();
+      }
+      pdShowEndState(won, false);
+    }
+  }, totalDelay);
+}
+
+function pdUpdateStats() {
+  document.getElementById('ps-played').textContent = PD.stats.played;
+  document.getElementById('ps-wins').textContent = PD.stats.wins;
+  document.getElementById('ps-streak').textContent = PD.stats.streak;
+  document.getElementById('ps-best').textContent = PD.stats.best || '—';
+}
+
+function pdShowEndState(won, restored) {
+  const displayName = PHIL_WORDS.find(w => w.toUpperCase() === PD.answer) || PD.answer;
+  if (won) {
+    const msgs = ['Magnificent!','Brilliant!','Well done!','Correct!','Excellent!'];
+    pdToast(msgs[Math.min(PD.guesses.length-1, msgs.length-1)] + ' ' + displayName, 'success', 0);
+  } else {
+    pdToast(displayName, 'error', 0);
+  }
+
+  const actions = document.getElementById('phil-actions');
+  if (PD.mode === 'daily') {
+    actions.innerHTML = `<button class="phil-action-btn outline" onclick="switchPhilMode('practice')">Practice Mode</button>`;
+    pdStartTimer();
+  } else {
+    actions.innerHTML = `<button class="phil-action-btn" onclick="pdInit('practice')">New Philosopher</button>
+      <button class="phil-action-btn outline" onclick="switchPhilMode('daily')">Daily</button>`;
+  }
+}
+
+function pdStartTimer() {
+  const el = document.getElementById('phil-next-row');
+  function tick() {
     const now = new Date();
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0,0,0,0);
-    const diff = tomorrow - now;
+    const midnight = new Date(now); midnight.setDate(midnight.getDate()+1); midnight.setHours(0,0,0,0);
+    const diff = midnight - now;
     const h = Math.floor(diff/3600000);
     const m = Math.floor((diff%3600000)/60000);
     const s = Math.floor((diff%60000)/1000);
-    timerEl.textContent = `Next philosopher in ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    el.textContent = 'Next philosopher: ' + String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
   }
-  update();
-  setInterval(update, 1000);
+  tick();
+  philTimerInterval = setInterval(tick, 1000);
 }
 
-// Keyboard support for Philosopherdle
+// Physical keyboard
 document.addEventListener('keydown', e => {
-  const philPage = document.getElementById('phil-page');
-  if (!philPage || !philPage.classList.contains('active')) return;
-  if (philState.gameOver) return;
-  if (e.key === 'Enter') { submitPhilGuess(); return; }
-  if (e.key === 'Backspace') { deletePhilLetter(); return; }
-  if (/^[a-zA-Z]$/.test(e.key)) { typePhilLetter(e.key.toUpperCase()); }
+  const pg = document.getElementById('phil-page');
+  if (!pg || !pg.classList.contains('active')) return;
+  if (e.metaKey || e.ctrlKey) return;
+  if (e.key === 'Enter') { pdSubmit(); return; }
+  if (e.key === 'Backspace') { pdDelete(); return; }
+  if (/^[a-zA-Z]$/.test(e.key)) pdType(e.key.toUpperCase());
 });
+
+
+
+// ── RICH TEXT EDITOR ─────────────────────────────────────────
+let editorSavedRange = null;
+
+function editorCmd(cmd) {
+  document.getElementById('p-body').focus();
+  document.execCommand(cmd, false, null);
+  updateToolbarState();
+}
+
+function editorIndent() {
+  document.getElementById('p-body').focus();
+  document.execCommand('indent', false, null);
+}
+
+function editorOutdent() {
+  document.getElementById('p-body').focus();
+  document.execCommand('outdent', false, null);
+}
+
+function updateToolbarState() {
+  ['bold','italic','underline'].forEach(cmd => {
+    const btn = document.getElementById('tool-' + cmd);
+    if (btn) btn.classList.toggle('active', document.queryCommandState(cmd));
+  });
+}
+
+// Capture selection before focus leaves editor
+document.addEventListener('mouseup', () => {
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount) editorSavedRange = sel.getRangeAt(0).cloneRange();
+  updateToolbarState();
+});
+document.addEventListener('keyup', (e) => {
+  const body = document.getElementById('p-body');
+  if (body && body.contains(e.target)) updateToolbarState();
+});
+
+function editorLink() {
+  const sel = window.getSelection();
+  const selectedText = sel ? sel.toString().trim() : '';
+  document.getElementById('link-text-input').value = selectedText;
+  document.getElementById('link-url-input').value = 'https://';
+  if (sel && sel.rangeCount) editorSavedRange = sel.getRangeAt(0).cloneRange();
+  document.getElementById('link-popup').classList.add('open');
+  document.getElementById('link-popup-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('link-url-input').focus(), 50);
+}
+
+function closeLinkPopup() {
+  document.getElementById('link-popup').classList.remove('open');
+  document.getElementById('link-popup-overlay').classList.remove('open');
+}
+
+function insertLink() {
+  const text = document.getElementById('link-text-input').value.trim();
+  const url = document.getElementById('link-url-input').value.trim();
+  if (!url || url === 'https://') { closeLinkPopup(); return; }
+  const editor = document.getElementById('p-body');
+  editor.focus();
+  if (editorSavedRange) {
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(editorSavedRange);
+  }
+  const a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  a.textContent = text || url;
+  if (editorSavedRange && !editorSavedRange.collapsed) {
+    editorSavedRange.deleteContents();
+    editorSavedRange.insertNode(a);
+  } else {
+    document.execCommand('insertHTML', false, a.outerHTML);
+  }
+  closeLinkPopup();
+}
+
+// Get editor HTML content for saving
+function getEditorHTML() {
+  const el = document.getElementById('p-body');
+  return el ? el.innerHTML.trim() : '';
+}
+
+// Set editor content when editing existing post
+function setEditorHTML(html) {
+  const el = document.getElementById('p-body');
+  if (el) el.innerHTML = html || '';
+}
+
+// ── FILE ATTACHMENTS ──────────────────────────────────────────
+let pendingAttachments = []; // { name, type, file, url (if already uploaded) }
+
+function attachIcon(ext) {
+  const icons = { pdf:'📄', doc:'📝', docx:'📝', ppt:'📊', pptx:'📊', svg:'🖼️' };
+  return icons[ext.toLowerCase()] || '📎';
+}
+
+function addAttachments(input) {
+  const files = Array.from(input.files);
+  files.forEach(f => {
+    const ext = f.name.split('.').pop().toLowerCase();
+    if (!['pdf','doc','docx','ppt','pptx','svg'].includes(ext)) return;
+    // Check not already added
+    if (pendingAttachments.some(a => a.name === f.name)) return;
+    pendingAttachments.push({ name: f.name, type: ext, file: f, url: null });
+  });
+  input.value = '';
+  renderAttachList();
+}
+
+function renderAttachList() {
+  const list = document.getElementById('attach-list');
+  if (!list) return;
+  if (!pendingAttachments.length) { list.innerHTML = ''; return; }
+  list.innerHTML = pendingAttachments.map((a, i) => `
+    <div class="attach-item">
+      <span class="attach-item-icon">${attachIcon(a.type)}</span>
+      <span class="attach-item-name">${x(a.name)}</span>
+      <span class="attach-item-ext">${a.type.toUpperCase()}${a.url ? ' · saved' : ''}</span>
+      <button class="attach-item-remove" onclick="removeAttach(${i})" title="Remove">✕</button>
+    </div>`).join('');
+}
+
+function removeAttach(i) {
+  pendingAttachments.splice(i, 1);
+  renderAttachList();
+}
+
+async function uploadAttachments() {
+  const results = [];
+  for (const a of pendingAttachments) {
+    if (a.url) { results.push({ name: a.name, type: a.type, url: a.url }); continue; }
+    const fname = Date.now() + '_' + a.name.replace(/\s+/g, '_');
+    const { error } = await sb.storage.from('post-attachments').upload(fname, a.file, { contentType: getMimeType(a.type) });
+    if (error) { console.warn('Attachment upload failed:', error.message); continue; }
+    const { data } = sb.storage.from('post-attachments').getPublicUrl(fname);
+    results.push({ name: a.name, type: a.type, url: data.publicUrl });
+  }
+  return results;
+}
+
+function getMimeType(ext) {
+  const m = { pdf:'application/pdf', doc:'application/msword', docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document', ppt:'application/vnd.ms-powerpoint', pptx:'application/vnd.openxmlformats-officedocument.presentationml.presentation', svg:'image/svg+xml' };
+  return m[ext] || 'application/octet-stream';
+}
+
+function renderPostAttachments(attachmentsJson) {
+  const sec = document.getElementById('post-attachments-section');
+  const list = document.getElementById('post-attach-list');
+  if (!attachmentsJson || attachmentsJson === '[]' || attachmentsJson === 'null') { sec.style.display = 'none'; return; }
+  let attachments;
+  try { attachments = typeof attachmentsJson === 'string' ? JSON.parse(attachmentsJson) : attachmentsJson; } catch(e) { sec.style.display = 'none'; return; }
+  if (!attachments || !attachments.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  list.innerHTML = attachments.map(a => {
+    const isPDF = a.type === 'pdf';
+    const isSVG = a.type === 'svg';
+    const embedHtml = (isPDF || isSVG) ? `<div class="post-embed-wrap"><iframe src="${a.url}" title="${x(a.name)}"></iframe></div>` : '';
+    return `<a href="${a.url}" target="_blank" rel="noopener" class="post-attach-item" download="${x(a.name)}">
+      <span class="post-attach-icon">${attachIcon(a.type)}</span>
+      <span class="post-attach-name">${x(a.name)}</span>
+      <span class="post-attach-type">${a.type.toUpperCase()}</span>
+      <span class="post-attach-dl">↓ Download</span>
+    </a>${embedHtml}`;
+  }).join('');
+}
+
+// ── DYSLEXIC FONT ─────────────────────────────────────────────
+function toggleDyslexicFont(on) {
+  document.documentElement.classList.toggle('dyslexic-font', on);
+  localStorage.setItem('anima-dyslexic', on ? '1' : '0');
+}
+
+function loadDyslexicSetting() {
+  const on = localStorage.getItem('anima-dyslexic') === '1';
+  if (on) document.documentElement.classList.add('dyslexic-font');
+  const toggle = document.getElementById('dyslexic-toggle');
+  if (toggle) toggle.checked = on;
+}
 
 // ── TOUCH DEVICE DETECTION (already ran in <head>, this is a safety net) ───
 // Classes are on <html> element, added before first paint
@@ -2961,6 +3508,9 @@ const THEMES = {
 const RANDOM_THEMES = ['darkgrey','navygrey','purple','lightpurple','minimal'];
 
 function openSettings() {
+  // Restore dyslexic toggle state
+  const tog = document.getElementById('dyslexic-toggle');
+  if (tog) tog.checked = localStorage.getItem('anima-dyslexic') === '1';
   showPage('settings', true, '/settings');
   // Show account section if logged in
   const sec = document.getElementById('account-section');
@@ -3067,28 +3617,10 @@ async function sendPasswordReset() {
   msg.style.display = 'block';
 }
 
-// ── DESKTOP DROPDOWN MENU ─────────────────────────────────────
-function toggleDesktopMenu() {
-  const btn = document.getElementById('desktop-hamburger-btn');
-  const dd = document.getElementById('desktop-dropdown');
-  const open = dd.classList.toggle('open');
-  btn.classList.toggle('open', open);
-  if (open) {
-    setTimeout(() => document.addEventListener('click', closeDesktopMenuOutside, { once: true }), 0);
-  }
-}
-function closeDesktopMenu() {
-  document.getElementById('desktop-dropdown').classList.remove('open');
-  document.getElementById('desktop-hamburger-btn').classList.remove('open');
-}
-function closeDesktopMenuOutside(e) {
-  const wrap = document.getElementById('desktop-menu-wrap');
-  if (wrap && !wrap.contains(e.target)) closeDesktopMenu();
-}
-
 // ── INIT ─────────────────────────────────────────────────────
 document.getElementById('p-date').value = todayStr();
 loadSavedTheme();
+loadDyslexicSetting();
 (async () => {
   await initAuth();
   await routeFromURL();
