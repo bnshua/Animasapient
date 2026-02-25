@@ -27,23 +27,25 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
-    --navy: #1a2744; --navy-dark: #0f1a30; --navy-mid: #243558;
+    --navy: #1a2744; --navy-dark: #0d1629; --navy-mid: #1e3050;
     --cool-grey: #8a96a8; --cool-grey-light: #c8cfd8; --cool-grey-pale: #eef0f4;
     --white: #fafbfc; --text: #2a3349; --text-light: #5a6378; --accent: #4a6fa5;
+    --navy-darker: #080f1e;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Crimson Pro', Georgia, serif; background: var(--white); color: var(--text); font-size: 18px; line-height: 1.6; }
 
   /* HEADER */
-  header { background: var(--navy-dark); border-bottom: 1px solid rgba(255,255,255,0.08); position: sticky; top: 0; z-index: 100; }
-  .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 70px; }
-  .logo-group { display: flex; flex-direction: column; gap: 1px; cursor: pointer; }
+  header { background: var(--navy-dark); border-bottom: 1px solid rgba(255,255,255,0.06); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
+  .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 66px; }
+  .logo-group { display: flex; flex-direction: column; gap: 1px; cursor: pointer; flex-shrink: 0; }
   .logo-name { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
-  .logo-slogan { font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; font-weight: 300; font-style: italic; color: var(--cool-grey); letter-spacing: 0.08em; }
+  .logo-slogan { font-family: 'Cormorant Garamond', serif; font-size: 0.68rem; font-weight: 300; font-style: italic; color: var(--cool-grey); letter-spacing: 0.08em; white-space: nowrap; }
   .logo-group img { height: 1.5rem; object-fit: contain; }
-  nav { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
-  nav a { font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey-light); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  nav { display: flex; align-items: center; gap: 1.6rem; flex-wrap: nowrap; }
+  nav a { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.11em; text-transform: uppercase; color: var(--cool-grey-light); text-decoration: none; transition: color 0.2s; cursor: pointer; white-space: nowrap; }
   nav a:hover { color: var(--white); }
+  nav a.active { color: var(--white); border-bottom: 1px solid rgba(255,255,255,0.4); padding-bottom: 2px; }
   .nav-admin-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--cool-grey); padding: 6px 16px; font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; border-radius: 2px; }
   .nav-admin-btn:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
   .nav-admin-btn.logged-in { border-color: var(--accent); color: #80a8d8; }
@@ -52,7 +54,7 @@
   .page.active { display: block; animation: fadeIn 0.4s ease; }
 
   /* ADMIN BAR */
-  .admin-bar { display: none; background: var(--navy); padding: 0.75rem 2.5rem; align-items: center; justify-content: space-between; }
+  .admin-bar { display: none; background: var(--navy-mid); padding: 0.6rem 2.5rem; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); }
   .admin-bar.visible { display: flex; }
   .admin-bar span { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey); }
   .admin-controls { display: flex; gap: 1rem; align-items: center; }
@@ -933,13 +935,13 @@
   /* ══════════════════════════════════════════════════════
      SEARCH BAR
   ══════════════════════════════════════════════════════ */
-  .search-bar-wrap { max-width: 1280px; margin: 0 auto; padding: 2rem 2.5rem 0; }
+  .search-bar-wrap { max-width: 860px; margin: 0 auto; padding: 2.2rem 2.5rem 0; }
   .search-bar { display: flex; align-items: center; background: var(--white); border: 1px solid var(--cool-grey-light); border-radius: 3px; overflow: hidden; transition: border-color 0.2s; }
   .search-bar:focus-within { border-color: var(--accent); }
   .search-bar-icon { display: flex; align-items: center; padding: 0 0.8rem 0 1rem; color: var(--cool-grey); font-size: 0.82rem; font-family: 'Cormorant Garamond', serif; letter-spacing: 0.12em; text-transform: uppercase; }
   .search-bar input { flex: 1; background: none; border: none; outline: none; padding: 0.8rem 1rem 0.8rem 0.2rem; font-family: 'Crimson Pro', serif; font-size: 1rem; color: var(--text); }
   .search-bar input::placeholder { color: var(--cool-grey); font-style: italic; }
-  .search-results-label { max-width: 1280px; margin: 0 auto; padding: 0.8rem 2.5rem 0; font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cool-grey); }
+  .search-results-label { max-width: 860px; margin: 0 auto; padding: 0.6rem 2.5rem 0; font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cool-grey); }
 
   /* ══════════════════════════════════════════════════════
      POST TAGS
@@ -1092,7 +1094,8 @@
 <header>
   <div class="header-inner">
     <div class="logo-group" onclick="goHome()">
-      <img src="image.png" alt="Animasapient">
+      <img src="image.png" alt="" onerror="this.style.display='none';document.getElementById('logo-text-fallback').style.display='block';" style="height:1.6rem;object-fit:contain;">
+      <div id="logo-text-fallback" style="display:none;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);letter-spacing:0.04em;">Animasapient</div>
       <div class="logo-slogan">Omnia cum anima sapientia sunt.</div>
     </div>
     <nav>
@@ -1102,7 +1105,6 @@
       <a onclick="filterCat('Geography')">Geography</a>
       <a onclick="filterCat('Culture')">Culture</a>
       <a onclick="showPage('about', true, '/about')">About</a>
-      <a onclick="openPhilosopherdle()">Philosopherdle</a>
       <button class="nav-settings-btn" id="settings-nav-btn" onclick="openSettings()" title="Settings">⚙</button>
       <button class="nav-user-btn" id="user-nav-btn" onclick="handleUserClick()">Sign In</button>
       <button class="nav-admin-btn" id="admin-nav-btn" onclick="handleAdminClick()">Admin</button>
@@ -1123,7 +1125,6 @@
   <a onclick="filterCat('Geography'); closeMobileNav()">Geography</a>
   <a onclick="filterCat('Culture'); closeMobileNav()">Culture</a>
   <a onclick="showPage('about', true, '/about'); closeMobileNav()">About</a>
-  <a onclick="openPhilosopherdle(); closeMobileNav()">Philosopherdle</a>
   <div class="mobile-nav-divider"></div>
   <button class="mobile-nav-btn" onclick="openSettings(); closeMobileNav()">⚙ Settings</button>
   <button class="mobile-nav-btn" id="mobile-user-btn" onclick="handleUserClick(); closeMobileNav()">Sign In</button>
@@ -1248,6 +1249,18 @@
           <span>Randomize!</span>
           <span class="theme-sub">Surprise me</span>
         </button>
+      </div>
+    </div>
+
+    <!-- GAMES -->
+    <div class="settings-section">
+      <div class="settings-section-label">Games</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--text);font-style:italic;margin-bottom:0.3rem;">Philosopherdle</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--cool-grey);">Guess the philosopher — one letter at a time. Daily &amp; practice modes.</div>
+        </div>
+        <button class="btn-settings-action" onclick="openPhilosopherdle(); closeMobileNav && closeMobileNav();">Play Now</button>
       </div>
     </div>
 
