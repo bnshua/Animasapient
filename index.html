@@ -1120,6 +1120,9 @@
     padding: 1.2rem;
   }
   .cite-upload-top { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 0; }
+  .cite-url-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+  .cite-url-row input { font-family: 'Crimson Pro', serif; font-size: 0.9rem; padding: 0.5rem 0.75rem; border: 1px solid var(--cool-grey-light); border-radius: 3px; background: var(--white); color: var(--text); outline: none; min-width: 140px; }
+  .cite-url-row input:focus { border-color: var(--accent); }
   .cite-upload-hint { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; color: var(--cool-grey); font-style: italic; }
   .cite-file-list { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.9rem; }
   .cite-file-item {
@@ -1911,12 +1914,12 @@
 
       <!-- SOURCES & CITATIONS -->
       <div class="form-group">
-        <label>Sources &amp; Citations <span style="font-style:italic;text-transform:none;letter-spacing:0;font-size:0.7rem;">PDF or DOCX — embedded as scrollable viewers on the post</span></label>
+        <label>Sources &amp; Citations <span style="font-style:italic;text-transform:none;letter-spacing:0;font-size:0.7rem;">Add links to your sources — Google Drive, websites, papers, etc.</span></label>
         <div class="cite-upload-area">
-          <input type="file" id="p-cite-input" accept=".pdf,.doc,.docx" multiple style="display:none;" onchange="addCitations(this)">
-          <div class="cite-upload-top">
-            <button type="button" class="btn-settings-action" onclick="document.getElementById('p-cite-input').click()">+ Add Source</button>
-            <span class="cite-upload-hint">Upload the PDFs or Word documents you used as sources</span>
+          <div class="cite-url-row">
+            <input type="text" id="cite-name-input" placeholder="Source name (e.g. The Republic — Plato)" style="flex:1.2;">
+            <input type="text" id="cite-url-input" placeholder="URL (e.g. https://drive.google.com/...)" style="flex:2;">
+            <button type="button" class="btn-settings-action" onclick="addCitationURL()">+ Add</button>
           </div>
           <div class="cite-file-list" id="cite-file-list"></div>
         </div>
@@ -2360,11 +2363,17 @@ async function openPost(id) {
       const cits = post.citations_json ? JSON.parse(post.citations_json) : null;
       if (cits && cits.length) {
         // If multiple, link to first; show count if more than one
-        citLink.href = cits[0].url;
-        citLink.textContent = cits.length > 1
-          ? `Go to Citations (${cits.length}) →`
-          : 'Go to Citations →';
-        citLink.style.display = 'inline';
+        if (cits.length === 1) {
+          citLink.href = cits[0].url;
+          citLink.textContent = 'Go to Citations →';
+          citLink.style.display = 'inline';
+        } else {
+          // Multiple — link wraps to a dropdown; for now open first, show count
+          citLink.href = cits[0].url;
+          citLink.textContent = `Sources (${cits.length}) →`;
+          citLink.style.display = 'inline';
+          citLink.title = cits.map((c,i) => `${i+1}. ${c.name}`).join('\n');
+        }
       } else {
         citLink.style.display = 'none';
       }
@@ -2607,7 +2616,7 @@ async function openEdit(id) {
   if (post.citations_json) {
     try {
       const existing = JSON.parse(post.citations_json);
-      pendingCitations = existing.map(c => ({ name: c.name, type: c.type, file: null, url: c.url }));
+      pendingCitations = existing.map(c => ({ name: c.name || c.url, url: c.url }));
     } catch(e) {}
   }
   renderCiteFileList();
@@ -2998,11 +3007,17 @@ async function openPost(id, replaceState = false) {
       const cits = post.citations_json ? JSON.parse(post.citations_json) : null;
       if (cits && cits.length) {
         // If multiple, link to first; show count if more than one
-        citLink.href = cits[0].url;
-        citLink.textContent = cits.length > 1
-          ? `Go to Citations (${cits.length}) →`
-          : 'Go to Citations →';
-        citLink.style.display = 'inline';
+        if (cits.length === 1) {
+          citLink.href = cits[0].url;
+          citLink.textContent = 'Go to Citations →';
+          citLink.style.display = 'inline';
+        } else {
+          // Multiple — link wraps to a dropdown; for now open first, show count
+          citLink.href = cits[0].url;
+          citLink.textContent = `Sources (${cits.length}) →`;
+          citLink.style.display = 'inline';
+          citLink.title = cits.map((c,i) => `${i+1}. ${c.name}`).join('\n');
+        }
       } else {
         citLink.style.display = 'none';
       }
@@ -4011,15 +4026,17 @@ const _origShowPage = showPage;
 // ── SOURCES & CITATIONS ──────────────────────────────────────
 let pendingCitations = []; // { name, type, file, url }
 
-function addCitations(input) {
-  const files = Array.from(input.files);
-  files.forEach(f => {
-    const ext = f.name.split('.').pop().toLowerCase();
-    if (!['pdf','doc','docx'].includes(ext)) return;
-    if (pendingCitations.some(c => c.name === f.name)) return;
-    pendingCitations.push({ name: f.name, type: ext, file: f, url: null });
-  });
-  input.value = '';
+function addCitationURL() {
+  const nameEl = document.getElementById('cite-name-input');
+  const urlEl  = document.getElementById('cite-url-input');
+  const name = nameEl.value.trim();
+  const url  = urlEl.value.trim();
+  if (!url) return;
+  const label = name || url;
+  if (pendingCitations.some(c => c.url === url)) return; // no dupes
+  pendingCitations.push({ name: label, url: url });
+  nameEl.value = '';
+  urlEl.value  = '';
   renderCiteFileList();
 }
 
@@ -4027,12 +4044,11 @@ function renderCiteFileList() {
   const list = document.getElementById('cite-file-list');
   if (!list) return;
   if (!pendingCitations.length) { list.innerHTML = ''; return; }
-  const icons = { pdf: '📄', doc: '📝', docx: '📝' };
   list.innerHTML = pendingCitations.map((c, i) => `
     <div class="cite-file-item">
-      <span class="cite-file-icon">${icons[c.type] || '📎'}</span>
+      <span class="cite-file-icon">🔗</span>
       <span class="cite-file-name">${x(c.name)}</span>
-      <span class="cite-file-ext">${c.type.toUpperCase()}${c.url ? ' · saved' : ''}</span>
+      <span class="cite-file-ext" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:0.62rem;color:var(--cool-grey);">${x(c.url)}</span>
       <button class="cite-file-remove" onclick="removeCitation(${i})" title="Remove">✕</button>
     </div>`).join('');
 }
@@ -4043,18 +4059,8 @@ function removeCitation(i) {
 }
 
 async function uploadCitations() {
-  const results = [];
-  for (const c of pendingCitations) {
-    if (c.url) { results.push({ name: c.name, type: c.type, url: c.url }); continue; }
-    // Use the same post-images bucket (already set up and public) with a citations/ prefix
-    const fname = 'citations/' + Date.now() + '_' + c.name.replace(/\s+/g, '_');
-    const mime = c.type === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-    const { error } = await sb.storage.from('post-images').upload(fname, c.file, { contentType: mime, upsert: true });
-    if (error) throw new Error('Citation upload failed: ' + error.message + '. Make sure the post-images bucket exists in Supabase.');
-    const { data } = sb.storage.from('post-images').getPublicUrl(fname);
-    results.push({ name: c.name, type: c.type, url: data.publicUrl });
-  }
-  return results;
+  // No file upload — citations are just {name, url} pairs stored directly in DB
+  return pendingCitations.filter(c => c.url);
 }
 
 function renderSourcesSection(citationsJson) {
