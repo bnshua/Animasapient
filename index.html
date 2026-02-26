@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<base href="/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Animasapient</title>
-<link rel="icon" type="image/png" href="flavicon.png">
-<link rel="apple-touch-icon" href="flavicon.png">
+<link rel="icon" type="image/png" href="/flavicon.png">
+<link rel="apple-touch-icon" href="/flavicon.png">
 <script>
 // ── GITHUB PAGES SPA REDIRECT ─────────────────────────────────
 // When 404.html redirects here, restore the original path via history.replaceState
@@ -1332,7 +1333,9 @@
 <header>
   <div class="header-inner">
     <div class="logo-group" onclick="goHome()">
-      <img src="image.png" alt="" onerror="this.style.display='none';document.getElementById('logo-text-fallback').style.display='block';" style="height:1.6rem;object-fit:contain;">
+      <img src="/image.png" alt="Animasapient" id="logo-img"
+           onerror="this.style.display='none';document.getElementById('logo-text-fallback').style.display='block';"
+           style="height:1.6rem;object-fit:contain;display:block;">
       <div id="logo-text-fallback" style="display:none;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);letter-spacing:0.04em;">Animasapient</div>
       <div class="logo-slogan">Omnia cum anima sapientia sunt.</div>
     </div>
