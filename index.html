@@ -1248,6 +1248,7 @@
     transition: all 0.2s;
   }
   .cite-open-btn:hover { background: var(--accent); color: white; }
+  .cite-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--cool-grey-light); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 0.5rem; vertical-align: middle; }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -2748,12 +2749,12 @@ async function submitPost() {
     const poster_email = currentUser ? currentUser.email : null;
     const payload = { title, category, date, excerpt, body, image_url, byline, slug, poster_email, tags: tagsVal || null, attachments_json, citations_json };
     if (editId) {
-      const { error } = await sb.from('posts').update(payload).eq('id', editId);
-      if (error) throw new Error(error.message);
+      const { data: upData, error } = await sb.from('posts').update(payload).eq('id', editId);
+      if (error) throw new Error('Save failed: ' + error.message + ' | payload keys: ' + Object.keys(payload).join(','));
       sucEl.textContent = 'Article updated.';
     } else {
-      const { error } = await sb.from('posts').insert([payload]);
-      if (error) throw new Error(error.message);
+      const { data: insData, error } = await sb.from('posts').insert([payload]);
+      if (error) throw new Error('Publish failed: ' + error.message + ' | payload keys: ' + Object.keys(payload).join(','));
       sucEl.textContent = 'Article published.';
     }
     sucEl.style.display = 'block';
@@ -3672,9 +3673,14 @@ function updateToolbarState() {
 }
 
 // Capture selection before focus leaves editor
-document.addEventListener('mouseup', () => {
-  const sel = window.getSelection();
-  if (sel && sel.rangeCount) editorSavedRange = sel.getRangeAt(0).cloneRange();
+document.addEventListener('mouseup', (e) => {
+  const body = document.getElementById('p-body');
+  // Only save the selection range when the mouseup happened INSIDE the editor.
+  // Clicking the Link button (outside the editor) must NOT overwrite the saved range.
+  if (body && body.contains(e.target)) {
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount) editorSavedRange = sel.getRangeAt(0).cloneRange();
+  }
   updateToolbarState();
 });
 document.addEventListener('keyup', (e) => {
@@ -3683,11 +3689,14 @@ document.addEventListener('keyup', (e) => {
 });
 
 function editorLink() {
-  const sel = window.getSelection();
-  const selectedText = sel ? sel.toString().trim() : '';
+  // editorSavedRange was already saved by the mouseup handler inside the editor.
+  // Just populate the text field from it and open the popup.
+  let selectedText = '';
+  if (editorSavedRange) {
+    selectedText = editorSavedRange.toString().trim();
+  }
   document.getElementById('link-text-input').value = selectedText;
   document.getElementById('link-url-input').value = 'https://';
-  if (sel && sel.rangeCount) editorSavedRange = sel.getRangeAt(0).cloneRange();
   document.getElementById('link-popup').classList.add('open');
   document.getElementById('link-popup-overlay').classList.add('open');
   setTimeout(() => document.getElementById('link-url-input').focus(), 50);
@@ -3852,37 +3861,39 @@ function loadDyslexicSetting() {
 let navSearchOpen = false;
 let inlineSearchVisible = true;
 
+let smartSearchInitted = false;
 function initSmartSearch() {
   const homePage = document.getElementById('home-page');
-  const inlineBar = document.getElementById('inline-search-bar');
   const navBtn = document.getElementById('nav-search-btn');
-  if (!inlineBar || !navBtn) return;
+  if (!homePage || !navBtn) return;
 
   function checkScroll() {
-    // Only active when home page is visible
     if (!homePage.classList.contains('active')) return;
     const hero = document.querySelector('.headline-post');
     if (!hero) return;
     const rect = hero.getBoundingClientRect();
-    // Trigger only when the ENTIRE hero image has scrolled above the header (66px)
     const barGone = rect.bottom < 66;
+    const inlineBar = document.getElementById('inline-search-bar');
 
     if (barGone && inlineSearchVisible) {
       inlineSearchVisible = false;
-      bar.classList.add('hidden');
+      if (inlineBar) inlineBar.classList.add('hidden');
       navBtn.style.display = 'flex';
       requestAnimationFrame(() => navBtn.classList.add('visible'));
     } else if (!barGone && !inlineSearchVisible) {
       inlineSearchVisible = true;
-      bar.classList.remove('hidden');
+      if (inlineBar) inlineBar.classList.remove('hidden');
       navBtn.classList.remove('visible', 'active');
-      // Close popup and sync search values
       closeNavSearch();
       setTimeout(() => { navBtn.style.display = 'none'; }, 300);
     }
   }
 
-  window.addEventListener('scroll', checkScroll, { passive: true });
+  // Only add the scroll listener ONCE ever
+  if (!smartSearchInitted) {
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    smartSearchInitted = true;
+  }
   checkScroll();
 }
 
@@ -3994,9 +4005,6 @@ function renderSourcesSection(citationsJson) {
 
   list.innerHTML = citations.map((c, idx) => {
     const icon = icons[c.type] || '📎';
-    // Google Docs Viewer — universal, handles PDF + DOCX, bypasses Supabase iframe headers
-    const viewerSrc = `https://docs.google.com/viewer?url=${encodeURIComponent(c.url)}&embedded=true`;
-
     return `<div class="source-viewer">
       <div class="source-viewer-header">
         <span class="source-viewer-icon">${icon}</span>
@@ -4005,19 +4013,46 @@ function renderSourcesSection(citationsJson) {
         <a class="source-viewer-dl" href="${c.url}" target="_blank" rel="noopener noreferrer">↓ Open</a>
       </div>
       <div class="source-viewer-loading" id="cite-loading-${idx}">
-        <span>Loading document…</span>
-        <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cite-open-btn">Open in new tab instead →</a>
+        <span class="cite-spinner"></span><span>Loading…</span>
       </div>
-      <iframe
-        id="cite-frame-${idx}"
-        src="${viewerSrc}"
-        title="${x(c.name)}"
-        loading="lazy"
-        style="display:none;"
-        onload="document.getElementById('cite-loading-${idx}').style.display='none';this.style.display='block';"
-      ></iframe>
+      <iframe id="cite-frame-${idx}" title="${x(c.name)}" style="display:none;"></iframe>
     </div>`;
   }).join('');
+
+  // Load each citation by fetching as blob to bypass X-Frame-Options / CSP headers
+  citations.forEach((c, idx) => {
+    const frame = document.getElementById('cite-frame-' + idx);
+    const loading = document.getElementById('cite-loading-' + idx);
+    if (!frame || !loading) return;
+
+    if (c.type === 'pdf') {
+      // Fetch PDF as blob → object URL → iframe (bypasses all server headers)
+      fetch(c.url)
+        .then(r => {
+          if (!r.ok) throw new Error('fetch failed');
+          return r.blob();
+        })
+        .then(blob => {
+          const objUrl = URL.createObjectURL(blob);
+          frame.src = objUrl;
+          frame.style.display = 'block';
+          loading.style.display = 'none';
+        })
+        .catch(() => {
+          // Fallback: direct link
+          loading.innerHTML = `<span style="font-size:0.85rem;color:var(--cool-grey);">Preview unavailable.</span>
+            <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cite-open-btn">↓ Open PDF in new tab</a>`;
+        });
+    } else {
+      // DOCX: Google Docs Viewer
+      const gdocsUrl = 'https://docs.google.com/viewer?url=' + encodeURIComponent(c.url) + '&embedded=true';
+      frame.src = gdocsUrl;
+      frame.onload = () => { loading.style.display = 'none'; frame.style.display = 'block'; };
+      frame.onerror = () => {
+        loading.innerHTML = `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cite-open-btn">↓ Open document in new tab</a>`;
+      };
+    }
+  });
 }
 
 // ── TOUCH DEVICE DETECTION (already ran in <head>, this is a safety net) ───
