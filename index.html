@@ -3952,19 +3952,16 @@ function renderSourcesSection(citationsJson) {
 
   list.innerHTML = citations.map(c => {
     const icon = icons[c.type] || '📎';
-    const isPDF = c.type === 'pdf';
-    // PDFs: embed directly — browser PDF viewer handles scroll natively
-    // DOCX: Google Docs Viewer renders the doc inside an iframe
-    const viewerSrc = isPDF
-      ? c.url
-      : `https://docs.google.com/gview?url=${encodeURIComponent(c.url)}&embedded=true`;
+    // Use Google Docs Viewer for everything — bypasses any X-Frame-Options or
+    // Content-Security-Policy headers that Supabase storage sends.
+    const viewerSrc = `https://docs.google.com/viewer?url=${encodeURIComponent(c.url)}&embedded=true`;
 
     return `<div class="source-viewer">
       <div class="source-viewer-header">
         <span class="source-viewer-icon">${icon}</span>
         <span class="source-viewer-name">${x(c.name)}</span>
         <span class="source-viewer-type">${c.type.toUpperCase()}</span>
-        <a class="source-viewer-dl" href="${c.url}" download="${x(c.name)}" target="_blank" rel="noopener">↓ Download</a>
+        <a class="source-viewer-dl" href="${c.url}" target="_blank" rel="noopener">↓ Open / Download</a>
       </div>
       <iframe
         src="${viewerSrc}"
