@@ -137,8 +137,11 @@
   .post-body-wrap { max-width: 760px; margin: 4rem auto; padding: 0 2.5rem; }
   .post-content { font-family: 'Crimson Pro', serif; font-size: 1.15rem; line-height: 1.85; color: var(--text); }
   .post-content p { margin-bottom: 1.5rem; }
-  .back-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey); cursor: pointer; margin-bottom: 3rem; background: none; border: none; padding: 0; transition: color 0.2s; }
+  .post-top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; flex-wrap: wrap; gap: 0.5rem; }
+  .back-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey); cursor: pointer; background: none; border: none; padding: 0; transition: color 0.2s; margin-bottom: 0; }
   .back-btn:hover { color: var(--navy); }
+  .citations-link { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+  .citations-link:hover { color: var(--navy); }
 
   /* MODALS */
   .modal-bg { display: none; position: fixed; inset: 0; background: rgba(10,16,35,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem; backdrop-filter: blur(4px); }
@@ -1636,7 +1639,10 @@
     </div>
   </div>
   <div class="post-body-wrap">
-    <button class="back-btn" onclick="goHome()">← Return to All Articles</button>
+    <div class="post-top-bar">
+      <button class="back-btn" onclick="goHome()">← Return to All Articles</button>
+      <a class="citations-link" id="ph-citations-link" style="display:none;" target="_blank" rel="noopener noreferrer">Go to Citations →</a>
+    </div>
     <div class="post-meta-pills" id="ph-meta-pills"></div>
     <div class="font-size-ctrl">
       <button onclick="changeFontSize(-1)" title="Decrease font size">A−</button>
@@ -2347,6 +2353,23 @@ async function openPost(id) {
 
   // Render file attachments
   renderPostAttachments(post.attachments_json);
+  // Citations link next to back button
+  const citLink = document.getElementById('ph-citations-link');
+  if (citLink) {
+    try {
+      const cits = post.citations_json ? JSON.parse(post.citations_json) : null;
+      if (cits && cits.length) {
+        // If multiple, link to first; show count if more than one
+        citLink.href = cits[0].url;
+        citLink.textContent = cits.length > 1
+          ? `Go to Citations (${cits.length}) →`
+          : 'Go to Citations →';
+        citLink.style.display = 'inline';
+      } else {
+        citLink.style.display = 'none';
+      }
+    } catch(e) { citLink.style.display = 'none'; }
+  }
   // Render sources & citations
   renderSourcesSection(post.citations_json);
 
@@ -2968,6 +2991,23 @@ async function openPost(id, replaceState = false) {
 
   // Render file attachments
   renderPostAttachments(post.attachments_json);
+  // Citations link next to back button
+  const citLink = document.getElementById('ph-citations-link');
+  if (citLink) {
+    try {
+      const cits = post.citations_json ? JSON.parse(post.citations_json) : null;
+      if (cits && cits.length) {
+        // If multiple, link to first; show count if more than one
+        citLink.href = cits[0].url;
+        citLink.textContent = cits.length > 1
+          ? `Go to Citations (${cits.length}) →`
+          : 'Go to Citations →';
+        citLink.style.display = 'inline';
+      } else {
+        citLink.style.display = 'none';
+      }
+    } catch(e) { citLink.style.display = 'none'; }
+  }
   // Render sources & citations
   renderSourcesSection(post.citations_json);
 
@@ -4029,7 +4069,7 @@ function renderSourcesSection(citationsJson) {
   catch(e) { sec.style.display = 'none'; return; }
   if (!citations || !citations.length) { sec.style.display = 'none'; return; }
 
-  sec.style.display = 'block';
+  sec.style.display = 'none'; return; // replaced by citations link in top bar
   const icons = { pdf: '📄', doc: '📝', docx: '📝' };
 
   list.innerHTML = citations.map((c, idx) => {
