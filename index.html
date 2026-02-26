@@ -7,7 +7,24 @@
 <link rel="icon" type="image/png" href="flavicon.png">
 <link rel="apple-touch-icon" href="flavicon.png">
 <script>
-// Runs BEFORE any CSS paint — prevents flash of desktop layout on phones
+// ── GITHUB PAGES SPA REDIRECT ─────────────────────────────────
+// When 404.html redirects here, restore the original path via history.replaceState
+// so routeFromURL() sees the correct URL instead of /?p=/philosophy/example
+(function() {
+  var search = window.location.search;
+  if (search) {
+    var match = search.match(/[?&]p=([^&]*)/);
+    if (match) {
+      var path = decodeURIComponent(match[1]);
+      var newSearch = search.replace(/[?&]p=[^&]*/, '').replace(/^\?/, '');
+      var newUrl = window.location.pathname.replace(/\/[^\/]*$/, '') + path
+        + (newSearch ? '?' + newSearch : '') + window.location.hash;
+      history.replaceState(null, null, newUrl);
+    }
+  }
+})();
+
+// ── DEVICE DETECTION (runs before CSS paint to prevent layout flash) ──
 (function() {
   var isTouch = (
     'ontouchstart' in window ||
@@ -865,6 +882,8 @@
   .editor-body p { margin-bottom: 0.9em; }
   .editor-body blockquote { border-left: 3px solid var(--cool-grey-light); padding-left: 1.2em; margin: 0.6em 0; color: var(--text-light); font-style: italic; }
   .editor-body:empty::before { content: attr(placeholder); color: var(--cool-grey); pointer-events: none; font-style: italic; }
+  .editor-body a { color: #2563a8; text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; cursor: pointer; }
+  .editor-body a:hover { color: #1a4a8a; }
 
   /* Link popup */
   .link-popup-overlay { display: none; position: fixed; inset: 0; background: rgba(10,16,35,0.7); z-index: 9998; backdrop-filter: blur(2px); }
@@ -922,8 +941,8 @@
   .toggle-sublabel { font-family: 'Cormorant Garamond', serif; font-size: 0.76rem; color: var(--cool-grey); margin-top: 2px; }
 
   /* ── POLISH: post content rich text ── */
-  .post-content a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
-  .post-content a:hover { color: var(--text); }
+  .post-content a { color: #2563a8; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .post-content a:hover { color: #1a4a8a; text-decoration-thickness: 2px; }
   .post-content strong, .post-content b { font-weight: 700; color: var(--text); }
   .post-content em, .post-content i { font-style: italic; }
   .post-content u { text-decoration: underline; text-underline-offset: 2px; }
@@ -2272,6 +2291,13 @@ async function openPost(id) {
   } else {
     bodyEl.innerHTML = '';
   }
+  // Ensure all links open in a new tab
+  bodyEl.querySelectorAll('a').forEach(a => {
+    if (a.href && !a.href.startsWith('javascript')) {
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+    }
+  });
 
   // Render file attachments
   renderPostAttachments(post.attachments_json);
@@ -2873,6 +2899,13 @@ async function openPost(id, replaceState = false) {
   } else {
     bodyEl.innerHTML = '';
   }
+  // Ensure all links open in a new tab
+  bodyEl.querySelectorAll('a').forEach(a => {
+    if (a.href && !a.href.startsWith('javascript')) {
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+    }
+  });
 
   // Render file attachments
   renderPostAttachments(post.attachments_json);
@@ -3637,26 +3670,42 @@ function closeLinkPopup() {
 
 function insertLink() {
   const text = document.getElementById('link-text-input').value.trim();
-  const url = document.getElementById('link-url-input').value.trim();
+  let url = document.getElementById('link-url-input').value.trim();
   if (!url || url === 'https://') { closeLinkPopup(); return; }
+  // Auto-prepend https:// if user forgot it
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
   const editor = document.getElementById('p-body');
   editor.focus();
+
+  // Restore the saved selection
   if (editorSavedRange) {
     const sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(editorSavedRange);
   }
-  const a = document.createElement('a');
-  a.href = url;
-  a.target = '_blank';
-  a.rel = 'noopener noreferrer';
-  a.textContent = text || url;
-  if (editorSavedRange && !editorSavedRange.collapsed) {
-    editorSavedRange.deleteContents();
-    editorSavedRange.insertNode(a);
+
+  const sel = window.getSelection();
+  const hasSelection = sel && sel.rangeCount && !sel.getRangeAt(0).collapsed;
+
+  if (hasSelection) {
+    // Wrap selected text — execCommand('createLink') is the most reliable way
+    document.execCommand('createLink', false, url);
+    // Set target="_blank" on every matching new link
+    editor.querySelectorAll('a').forEach(a => {
+      if (a.getAttribute('href') === url) {
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      }
+    });
   } else {
-    document.execCommand('insertHTML', false, a.outerHTML);
+    // No selection — insert link with provided text at cursor
+    const linkText = text || url;
+    const safeUrl = url.replace(/"/g, '&quot;');
+    document.execCommand('insertHTML', false,
+      `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`);
   }
+
   closeLinkPopup();
 }
 
