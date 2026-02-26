@@ -363,6 +363,8 @@
     letter-spacing: 0.04em;
     font-style: italic;
   }
+  .post-hero-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .post-hero-tag { font-family: 'Cormorant Garamond', serif; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; color: rgba(255,255,255,0.7); }
 
   /* CITATION BOX */
   .citation-section {
@@ -1629,6 +1631,7 @@
       <h1 class="post-hero-title" id="ph-title"></h1>
       <div class="post-hero-meta" id="ph-meta"></div>
       <div class="post-byline" id="ph-byline"></div>
+      <div class="post-hero-tags" id="ph-hero-tags"></div>
     </div>
   </div>
   <div class="post-body-wrap">
@@ -1636,7 +1639,7 @@
     <div class="post-meta-pills" id="ph-meta-pills"></div>
     <div class="font-size-ctrl">
       <button onclick="changeFontSize(-1)" title="Decrease font size">A−</button>
-      <span class="font-size-label">Text Size</span>
+      <span class="font-size-label">Text Spacing</span>
       <button onclick="changeFontSize(1)" title="Increase font size">A+</button>
     </div>
     <div class="post-content" id="ph-body"></div>
@@ -2235,9 +2238,11 @@ async function renderHome() {
     cachedPosts = posts;
     if (!posts.length) { empty.style.display = 'block'; return; }
     await fetchRatingsForPosts(posts.map(p => p.id));
-    hwrap.innerHTML = heroHTML(posts[0]);
-    // Re-inject inline search bar into the hero (hwrap.innerHTML clears it each time)
+    // Save the search bar element BEFORE innerHTML wipes it
     const inlineBar = document.getElementById('inline-search-bar');
+    if (inlineBar) inlineBar.remove(); // detach from DOM so innerHTML='' doesn't destroy it
+    hwrap.innerHTML = heroHTML(posts[0]);
+    // Re-attach into the new hero
     if (inlineBar) hwrap.querySelector('.headline-post').appendChild(inlineBar);
     const rest = posts.slice(1);
     if (rest.length) { divider.style.display = 'flex'; grid.innerHTML = rest.map(cardHTML).join(''); }
@@ -2305,6 +2310,17 @@ async function openPost(id) {
   document.getElementById('ph-meta').textContent  = fmtDate(post.date);
   const bylineEl = document.getElementById('ph-byline');
   bylineEl.textContent = post.byline ? 'By ' + post.byline : '';
+  const heroTagsEl = document.getElementById('ph-hero-tags');
+  if (heroTagsEl) {
+    if (post.tags) {
+      const tagArr = post.tags.split(',').map(t => t.trim()).filter(Boolean);
+      heroTagsEl.innerHTML = tagArr.map(t => `<span class="post-hero-tag">${x(t)}</span>`).join('');
+      heroTagsEl.style.display = 'flex';
+    } else {
+      heroTagsEl.innerHTML = '';
+      heroTagsEl.style.display = 'none';
+    }
+  }
 
   const img = document.getElementById('ph-img'), bg = document.getElementById('ph-bg');
   if (post.image_url) { img.src = post.image_url; img.style.display = 'block'; bg.style.display = 'none'; }
@@ -2915,6 +2931,17 @@ async function openPost(id, replaceState = false) {
   document.getElementById('ph-meta').textContent  = fmtDate(post.date);
   const bylineEl = document.getElementById('ph-byline');
   bylineEl.textContent = post.byline ? 'By ' + post.byline : '';
+  const heroTagsEl = document.getElementById('ph-hero-tags');
+  if (heroTagsEl) {
+    if (post.tags) {
+      const tagArr = post.tags.split(',').map(t => t.trim()).filter(Boolean);
+      heroTagsEl.innerHTML = tagArr.map(t => `<span class="post-hero-tag">${x(t)}</span>`).join('');
+      heroTagsEl.style.display = 'flex';
+    } else {
+      heroTagsEl.innerHTML = '';
+      heroTagsEl.style.display = 'none';
+    }
+  }
 
   const img = document.getElementById('ph-img'), bg = document.getElementById('ph-bg');
   if (post.image_url) { img.src = post.image_url; img.style.display = 'block'; bg.style.display = 'none'; }
