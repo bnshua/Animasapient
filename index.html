@@ -1223,6 +1223,31 @@
     text-underline-offset: 2px;
   }
   html.is-touch .source-viewer iframe { height: 420px; }
+  .source-viewer-loading {
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--cool-grey);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background: #f8f9fa;
+  }
+  .cite-open-btn {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 6px 16px;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .cite-open-btn:hover { background: var(--accent); color: white; }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -2524,6 +2549,7 @@ async function openEdit(id) {
   setEditorHTML(post.body || '');
   document.getElementById('p-byline').value  = post.byline || '';
   document.getElementById('p-slug').value    = post.slug || '';
+  document.getElementById('p-tags').value    = post.tags || '';
   document.getElementById('p-edit-id').value       = post.id;
   document.getElementById('p-existing-img').value  = post.image_url || '';
   document.getElementById('post-error').style.display   = 'none';
@@ -3676,29 +3702,44 @@ function insertLink() {
   const text = document.getElementById('link-text-input').value.trim();
   let url = document.getElementById('link-url-input').value.trim();
   if (!url || url === 'https://') { closeLinkPopup(); return; }
-  // Auto-prepend https:// if user forgot it
   if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
 
   const editor = document.getElementById('p-body');
   editor.focus();
 
-  // Restore the saved selection
+  // Build the <a> element directly — no execCommand, no insertHTML
+  const a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+
   if (editorSavedRange) {
     const sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(editorSavedRange);
+    const range = sel.getRangeAt(0);
+    const selectedText = range.toString();
+
+    if (selectedText) {
+      // Wrap selected text in the link
+      a.textContent = selectedText;
+      range.deleteContents();
+      range.insertNode(a);
+    } else {
+      // No selection — insert link with provided text
+      a.textContent = text || url;
+      range.insertNode(a);
+    }
+    // Move cursor after the link
+    range.setStartAfter(a);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  } else {
+    // Fallback: append to end of editor
+    a.textContent = text || url;
+    editor.appendChild(a);
   }
-
-  const sel = window.getSelection();
-  const selectedText = (sel && !sel.isCollapsed) ? sel.toString() : '';
-  const linkLabel = text || selectedText || url;
-  const safeUrl = url.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
-  const safeLabel = linkLabel.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-
-  // Always use insertHTML — this bakes target="_blank" directly into the stored HTML
-  // so the link works correctly on the published post without any JS post-processing.
-  document.execCommand('insertHTML', false,
-    `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>`);
 
   closeLinkPopup();
 }
@@ -3820,10 +3861,11 @@ function initSmartSearch() {
   function checkScroll() {
     // Only active when home page is visible
     if (!homePage.classList.contains('active')) return;
-    const bar = document.getElementById('inline-search-bar');
-    if (!bar) return;
-    const rect = bar.getBoundingClientRect();
-    const barGone = rect.bottom < 0; // bar has scrolled off screen
+    const hero = document.querySelector('.headline-post');
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    // Trigger only when the ENTIRE hero image has scrolled above the header (66px)
+    const barGone = rect.bottom < 66;
 
     if (barGone && inlineSearchVisible) {
       inlineSearchVisible = false;
@@ -3950,10 +3992,9 @@ function renderSourcesSection(citationsJson) {
   sec.style.display = 'block';
   const icons = { pdf: '📄', doc: '📝', docx: '📝' };
 
-  list.innerHTML = citations.map(c => {
+  list.innerHTML = citations.map((c, idx) => {
     const icon = icons[c.type] || '📎';
-    // Use Google Docs Viewer for everything — bypasses any X-Frame-Options or
-    // Content-Security-Policy headers that Supabase storage sends.
+    // Google Docs Viewer — universal, handles PDF + DOCX, bypasses Supabase iframe headers
     const viewerSrc = `https://docs.google.com/viewer?url=${encodeURIComponent(c.url)}&embedded=true`;
 
     return `<div class="source-viewer">
@@ -3961,12 +4002,19 @@ function renderSourcesSection(citationsJson) {
         <span class="source-viewer-icon">${icon}</span>
         <span class="source-viewer-name">${x(c.name)}</span>
         <span class="source-viewer-type">${c.type.toUpperCase()}</span>
-        <a class="source-viewer-dl" href="${c.url}" target="_blank" rel="noopener">↓ Open / Download</a>
+        <a class="source-viewer-dl" href="${c.url}" target="_blank" rel="noopener noreferrer">↓ Open</a>
+      </div>
+      <div class="source-viewer-loading" id="cite-loading-${idx}">
+        <span>Loading document…</span>
+        <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cite-open-btn">Open in new tab instead →</a>
       </div>
       <iframe
+        id="cite-frame-${idx}"
         src="${viewerSrc}"
         title="${x(c.name)}"
         loading="lazy"
+        style="display:none;"
+        onload="document.getElementById('cite-loading-${idx}').style.display='none';this.style.display='block';"
       ></iframe>
     </div>`;
   }).join('');
