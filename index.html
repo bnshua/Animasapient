@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<base href="/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Animasapient</title>
@@ -2294,9 +2293,10 @@ async function openPost(id) {
   } else {
     bodyEl.innerHTML = '';
   }
-  // Ensure all links open in a new tab
-  bodyEl.querySelectorAll('a').forEach(a => {
-    if (a.href && !a.href.startsWith('javascript')) {
+  // Ensure all links open in a new tab regardless of how they were saved
+  bodyEl.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href') || '';
+    if (!href.startsWith('javascript')) {
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
     }
@@ -2902,9 +2902,10 @@ async function openPost(id, replaceState = false) {
   } else {
     bodyEl.innerHTML = '';
   }
-  // Ensure all links open in a new tab
-  bodyEl.querySelectorAll('a').forEach(a => {
-    if (a.href && !a.href.startsWith('javascript')) {
+  // Ensure all links open in a new tab regardless of how they were saved
+  bodyEl.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href') || '';
+    if (!href.startsWith('javascript')) {
       a.target = '_blank';
       a.rel = 'noopener noreferrer';
     }
@@ -3689,25 +3690,15 @@ function insertLink() {
   }
 
   const sel = window.getSelection();
-  const hasSelection = sel && sel.rangeCount && !sel.getRangeAt(0).collapsed;
+  const selectedText = (sel && !sel.isCollapsed) ? sel.toString() : '';
+  const linkLabel = text || selectedText || url;
+  const safeUrl = url.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+  const safeLabel = linkLabel.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-  if (hasSelection) {
-    // Wrap selected text — execCommand('createLink') is the most reliable way
-    document.execCommand('createLink', false, url);
-    // Set target="_blank" on every matching new link
-    editor.querySelectorAll('a').forEach(a => {
-      if (a.getAttribute('href') === url) {
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-      }
-    });
-  } else {
-    // No selection — insert link with provided text at cursor
-    const linkText = text || url;
-    const safeUrl = url.replace(/"/g, '&quot;');
-    document.execCommand('insertHTML', false,
-      `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${linkText}</a>`);
-  }
+  // Always use insertHTML — this bakes target="_blank" directly into the stored HTML
+  // so the link works correctly on the published post without any JS post-processing.
+  document.execCommand('insertHTML', false,
+    `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${safeLabel}</a>`);
 
   closeLinkPopup();
 }
@@ -3979,7 +3970,6 @@ function renderSourcesSection(citationsJson) {
         src="${viewerSrc}"
         title="${x(c.name)}"
         loading="lazy"
-        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
       ></iframe>
     </div>`;
   }).join('');
