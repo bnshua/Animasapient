@@ -1,9 +1,20 @@
-cp index.html 404.html
-```
-
----
-
-**If hosted on Netlify:**
-Create a `_redirects` file in your repo root:
-```
-/*  /index.html  200
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animasapient</title>
+<script>
+(function() {
+  var path = window.location.pathname;
+  var search = window.location.search;
+  var hash = window.location.hash;
+  var redirect = '/?p=' + encodeURIComponent(path)
+    + (search ? '&' + search.slice(1) : '')
+    + hash;
+  window.location.replace(redirect);
+})();
+</script>
+</head>
+<body></body>
+</html>
