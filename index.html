@@ -933,15 +933,113 @@
 
 
   /* ══════════════════════════════════════════════════════
-     SEARCH BAR
+     INLINE HERO SEARCH (overlaid on headline)
   ══════════════════════════════════════════════════════ */
-  .search-bar-wrap { max-width: 860px; margin: 0 auto; padding: 2.2rem 2.5rem 0; }
-  .search-bar { display: flex; align-items: center; background: var(--white); border: 1px solid var(--cool-grey-light); border-radius: 3px; overflow: hidden; transition: border-color 0.2s; }
-  .search-bar:focus-within { border-color: var(--accent); }
-  .search-bar-icon { display: flex; align-items: center; padding: 0 0.8rem 0 1rem; color: var(--cool-grey); font-size: 0.82rem; font-family: 'Cormorant Garamond', serif; letter-spacing: 0.12em; text-transform: uppercase; }
-  .search-bar input { flex: 1; background: none; border: none; outline: none; padding: 0.8rem 1rem 0.8rem 0.2rem; font-family: 'Crimson Pro', serif; font-size: 1rem; color: var(--text); }
-  .search-bar input::placeholder { color: var(--cool-grey); font-style: italic; }
-  .search-results-label { max-width: 860px; margin: 0 auto; padding: 0.6rem 2.5rem 0; font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cool-grey); }
+  .inline-search-bar {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(640px, calc(100% - 5rem));
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 3px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 10;
+  }
+  .inline-search-bar.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(-6px);
+  }
+  .inline-search-icon {
+    flex-shrink: 0;
+    margin: 0 0.6rem 0 1rem;
+    color: rgba(255,255,255,0.55);
+    width: 16px; height: 16px;
+  }
+  .inline-search-bar input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0.75rem 1rem 0.75rem 0.2rem;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: var(--white);
+    min-width: 0;
+  }
+  .inline-search-bar input::placeholder { color: rgba(255,255,255,0.45); font-style: italic; }
+
+  /* ── NAV SEARCH ICON BUTTON ── */
+  .nav-search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--cool-grey-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 6px;
+    border-radius: 2px;
+    transition: color 0.2s;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, color 0.2s;
+  }
+  .nav-search-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-search-btn:hover { color: var(--white); }
+  .nav-search-btn.active { color: var(--white); }
+
+  /* ── NAV SEARCH POPUP DROPDOWN ── */
+  .nav-search-popup {
+    position: fixed;
+    top: 66px;
+    right: 0;
+    left: 0;
+    background: var(--navy-dark);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    padding: 0 2.5rem;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: height 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.2s;
+    z-index: 99;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  }
+  .nav-search-popup.open {
+    height: 54px;
+    opacity: 1;
+  }
+  .nav-search-popup-icon {
+    flex-shrink: 0;
+    color: var(--cool-grey);
+    width: 15px; height: 15px;
+    margin-right: 0.8rem;
+  }
+  .nav-search-popup input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    color: var(--white);
+    max-width: 600px;
+  }
+  .nav-search-popup input::placeholder { color: var(--cool-grey); font-style: italic; }
+
+  /* ── SEARCH RESULTS LABEL ── */
+  .search-results-label { max-width: 1280px; margin: 0 auto; padding: 1rem 2.5rem 0; font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cool-grey); }
 
   /* ══════════════════════════════════════════════════════
      POST TAGS
@@ -1040,9 +1138,9 @@
   html.is-touch .empty-state { padding: 3rem 1.2rem; }
 
   /* ── ALL TOUCH DEVICES: new features ── */
-  html.is-touch .search-bar-wrap { padding: 1rem 1.2rem 0; }
-  html.is-touch .search-bar input { font-size: 0.95rem; padding: 0.65rem 0.8rem; }
-  html.is-touch .search-results-label { padding: 0.6rem 1.2rem 0; }
+  html.is-touch .inline-search-bar { width: calc(100% - 2.4rem); top: 1.2rem; }
+  html.is-touch .nav-search-popup { padding: 0 1.2rem; }
+  html.is-touch .search-results-label { padding: 0.8rem 1.2rem 0; }
   html.is-touch .post-meta-pills { gap: 0.6rem; margin-top: 0.5rem; }
   html.is-touch .font-size-ctrl { margin-bottom: 1rem; }
   html.is-touch .font-size-ctrl button { width: 36px; height: 36px; font-size: 1rem; }
@@ -1105,6 +1203,9 @@
       <a onclick="filterCat('Geography')">Geography</a>
       <a onclick="filterCat('Culture')">Culture</a>
       <a onclick="showPage('about', true, '/about')">About</a>
+      <button class="nav-search-btn" id="nav-search-btn" onclick="toggleNavSearch()" title="Search" style="display:none;" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      </button>
       <button class="nav-settings-btn" id="settings-nav-btn" onclick="openSettings()" title="Settings">⚙</button>
       <button class="nav-user-btn" id="user-nav-btn" onclick="handleUserClick()">Sign In</button>
       <button class="nav-admin-btn" id="admin-nav-btn" onclick="handleAdminClick()">Admin</button>
@@ -1131,6 +1232,12 @@
   <button class="mobile-nav-btn" id="mobile-admin-btn" onclick="handleAdminClick(); closeMobileNav()">Admin</button>
 </div>
 
+<!-- NAV SEARCH POPUP -->
+<div class="nav-search-popup" id="nav-search-popup">
+  <svg class="nav-search-popup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+  <input type="text" id="nav-search-input" placeholder="Search articles…" oninput="handleNavSearch(this.value)" autocomplete="off">
+</div>
+
 <div class="admin-bar" id="admin-bar">
   <span id="admin-label">Administrator</span>
   <div class="admin-controls">
@@ -1141,14 +1248,12 @@
 
 <!-- HOME -->
 <div id="home-page" class="page active">
-  <div class="search-bar-wrap">
-    <div class="search-bar">
-      <span class="search-bar-icon" style="font-family:'Cormorant Garamond',serif;font-size:0.75rem;letter-spacing:0.12em;color:var(--cool-grey);text-transform:uppercase;padding-left:0.5rem;">Search</span>
-      <input type="text" id="search-input" placeholder="Search articles by keyword, tag, or title…" oninput="handleSearch(this.value)">
-    </div>
+  <div id="inline-search-bar" class="inline-search-bar" onclick="event.stopPropagation()">
+    <svg class="inline-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+    <input type="text" id="search-input" placeholder="Search articles…" oninput="handleSearch(this.value)" autocomplete="off">
   </div>
   <div id="search-results-label" class="search-results-label" style="display:none;"></div>
-  <div id="headline-wrap"></div>
+  <div id="headline-wrap" style="position:relative;"></div>
   <div class="section-divider" id="grid-divider" style="display:none;">
     <div class="divider-line"></div>
     <span id="section-label">Recent Articles</span>
@@ -1939,12 +2044,16 @@ async function renderHome() {
     if (!posts.length) { empty.style.display = 'block'; return; }
     await fetchRatingsForPosts(posts.map(p => p.id));
     hwrap.innerHTML = heroHTML(posts[0]);
+    // Re-inject inline search bar into the hero (hwrap.innerHTML clears it each time)
+    const inlineBar = document.getElementById('inline-search-bar');
+    if (inlineBar) hwrap.querySelector('.headline-post').appendChild(inlineBar);
     const rest = posts.slice(1);
     if (rest.length) { divider.style.display = 'flex'; grid.innerHTML = rest.map(cardHTML).join(''); }
   } catch(e) {
     console.error(e); empty.style.display = 'block';
   } finally {
     loader.style.display = 'none';
+    setTimeout(initSmartSearch, 80);
   }
 }
 
@@ -3489,6 +3598,86 @@ function loadDyslexicSetting() {
   const toggle = document.getElementById('dyslexic-toggle');
   if (toggle) toggle.checked = on;
 }
+
+
+// ── SMART SEARCH ─────────────────────────────────────────────
+let navSearchOpen = false;
+let inlineSearchVisible = true;
+
+function initSmartSearch() {
+  const homePage = document.getElementById('home-page');
+  const inlineBar = document.getElementById('inline-search-bar');
+  const navBtn = document.getElementById('nav-search-btn');
+  if (!inlineBar || !navBtn) return;
+
+  function checkScroll() {
+    // Only active when home page is visible
+    if (!homePage.classList.contains('active')) return;
+    const bar = document.getElementById('inline-search-bar');
+    if (!bar) return;
+    const rect = bar.getBoundingClientRect();
+    const barGone = rect.bottom < 0; // bar has scrolled off screen
+
+    if (barGone && inlineSearchVisible) {
+      inlineSearchVisible = false;
+      bar.classList.add('hidden');
+      navBtn.style.display = 'flex';
+      requestAnimationFrame(() => navBtn.classList.add('visible'));
+    } else if (!barGone && !inlineSearchVisible) {
+      inlineSearchVisible = true;
+      bar.classList.remove('hidden');
+      navBtn.classList.remove('visible', 'active');
+      // Close popup and sync search values
+      closeNavSearch();
+      setTimeout(() => { navBtn.style.display = 'none'; }, 300);
+    }
+  }
+
+  window.addEventListener('scroll', checkScroll, { passive: true });
+  checkScroll();
+}
+
+function toggleNavSearch() {
+  navSearchOpen = !navSearchOpen;
+  const popup = document.getElementById('nav-search-popup');
+  const btn = document.getElementById('nav-search-btn');
+  const navInput = document.getElementById('nav-search-input');
+  popup.classList.toggle('open', navSearchOpen);
+  btn.classList.toggle('active', navSearchOpen);
+  if (navSearchOpen) {
+    // Sync query from inline search
+    const inlineVal = document.getElementById('search-input').value;
+    navInput.value = inlineVal;
+    setTimeout(() => navInput.focus(), 50);
+  }
+}
+
+function closeNavSearch() {
+  navSearchOpen = false;
+  const popup = document.getElementById('nav-search-popup');
+  const btn = document.getElementById('nav-search-btn');
+  popup.classList.remove('open');
+  btn && btn.classList.remove('active');
+}
+
+function handleNavSearch(val) {
+  // Mirror to main search input so results are consistent
+  const mainInput = document.getElementById('search-input');
+  if (mainInput) mainInput.value = val;
+  handleSearch(val);
+}
+
+// Close nav search popup when clicking outside
+document.addEventListener('click', e => {
+  const popup = document.getElementById('nav-search-popup');
+  const btn = document.getElementById('nav-search-btn');
+  if (navSearchOpen && popup && btn && !popup.contains(e.target) && !btn.contains(e.target)) {
+    closeNavSearch();
+  }
+}, true);
+
+// When home page is shown, reinit smart search
+const _origShowPage = showPage;
 
 // ── TOUCH DEVICE DETECTION (already ran in <head>, this is a safety net) ───
 // Classes are on <html> element, added before first paint
