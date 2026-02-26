@@ -42,6 +42,7 @@
 <link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
   :root {
     --navy: #1a2744; --navy-dark: #0d1629; --navy-mid: #1e3050;
@@ -4005,11 +4006,12 @@ async function uploadCitations() {
   const results = [];
   for (const c of pendingCitations) {
     if (c.url) { results.push({ name: c.name, type: c.type, url: c.url }); continue; }
-    const fname = Date.now() + '_' + c.name.replace(/\s+/g, '_');
+    // Use the same post-images bucket (already set up and public) with a citations/ prefix
+    const fname = 'citations/' + Date.now() + '_' + c.name.replace(/\s+/g, '_');
     const mime = c.type === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-    const { error } = await sb.storage.from('post-citations').upload(fname, c.file, { contentType: mime });
-    if (error) { console.warn('Citation upload failed:', error.message); continue; }
-    const { data } = sb.storage.from('post-citations').getPublicUrl(fname);
+    const { error } = await sb.storage.from('post-images').upload(fname, c.file, { contentType: mime, upsert: true });
+    if (error) throw new Error('Citation upload failed: ' + error.message + '. Make sure the post-images bucket exists in Supabase.');
+    const { data } = sb.storage.from('post-images').getPublicUrl(fname);
     results.push({ name: c.name, type: c.type, url: data.publicUrl });
   }
   return results;
@@ -4040,44 +4042,69 @@ function renderSourcesSection(citationsJson) {
         <a class="source-viewer-dl" href="${c.url}" target="_blank" rel="noopener noreferrer">↓ Open</a>
       </div>
       <div class="source-viewer-loading" id="cite-loading-${idx}">
-        <span class="cite-spinner"></span><span>Loading…</span>
+        <span class="cite-spinner"></span><span>Loading document…</span>
       </div>
-      <iframe id="cite-frame-${idx}" title="${x(c.name)}" style="display:none;"></iframe>
+      <div class="pdf-canvas-wrap" id="cite-canvas-wrap-${idx}" style="display:none; overflow-y:auto; max-height:680px; background:#525659; padding:16px; box-sizing:border-box;"></div>
     </div>`;
   }).join('');
 
-  // Load each citation by fetching as blob to bypass X-Frame-Options / CSP headers
+  // Configure PDF.js worker
+  if (window.pdfjsLib) {
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
   citations.forEach((c, idx) => {
-    const frame = document.getElementById('cite-frame-' + idx);
     const loading = document.getElementById('cite-loading-' + idx);
-    if (!frame || !loading) return;
+    const canvasWrap = document.getElementById('cite-canvas-wrap-' + idx);
+    if (!loading || !canvasWrap) return;
 
     if (c.type === 'pdf') {
-      // Fetch PDF as blob → object URL → iframe (bypasses all server headers)
-      fetch(c.url)
-        .then(r => {
-          if (!r.ok) throw new Error('fetch failed');
-          return r.blob();
-        })
-        .then(blob => {
-          const objUrl = URL.createObjectURL(blob);
-          frame.src = objUrl;
-          frame.style.display = 'block';
+      if (!window.pdfjsLib) {
+        loading.innerHTML = `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cite-open-btn">↓ Open PDF in new tab</a>`;
+        return;
+      }
+      // PDF.js renders each page to a <canvas> — no iframes, no CORS headers matter
+      window.pdfjsLib.getDocument({ url: c.url, withCredentials: false }).promise
+        .then(pdfDoc => {
           loading.style.display = 'none';
+          canvasWrap.style.display = 'block';
+          const totalPages = pdfDoc.numPages;
+          // Render all pages sequentially
+          const renderPage = (pageNum) => {
+            pdfDoc.getPage(pageNum).then(page => {
+              const viewport = page.getViewport({ scale: 1.4 });
+              const canvas = document.createElement('canvas');
+              canvas.style.display = 'block';
+              canvas.style.marginBottom = '8px';
+              canvas.style.maxWidth = '100%';
+              canvas.width = viewport.width;
+              canvas.height = viewport.height;
+              canvasWrap.appendChild(canvas);
+              page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise.then(() => {
+                if (pageNum < totalPages) renderPage(pageNum + 1);
+              });
+            });
+          };
+          renderPage(1);
         })
-        .catch(() => {
-          // Fallback: direct link
-          loading.innerHTML = `<span style="font-size:0.85rem;color:var(--cool-grey);">Preview unavailable.</span>
+        .catch(err => {
+          loading.innerHTML = `
+            <span style="font-size:0.85rem;color:var(--cool-grey);margin-bottom:0.5rem;">Could not load preview (${err.message}).</span>
             <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cite-open-btn">↓ Open PDF in new tab</a>`;
         });
     } else {
-      // DOCX: Google Docs Viewer
+      // DOCX: Google Docs Viewer in iframe (best available option for Word docs)
       const gdocsUrl = 'https://docs.google.com/viewer?url=' + encodeURIComponent(c.url) + '&embedded=true';
-      frame.src = gdocsUrl;
-      frame.onload = () => { loading.style.display = 'none'; frame.style.display = 'block'; };
-      frame.onerror = () => {
-        loading.innerHTML = `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cite-open-btn">↓ Open document in new tab</a>`;
-      };
+      const iframe = document.createElement('iframe');
+      iframe.style.cssText = 'width:100%;height:680px;border:none;display:block;';
+      iframe.title = c.name;
+      iframe.src = gdocsUrl;
+      iframe.onload = () => { loading.style.display = 'none'; };
+      canvasWrap.appendChild(iframe);
+      canvasWrap.style.display = 'block';
+      canvasWrap.style.padding = '0';
+      canvasWrap.style.background = 'none';
     }
   });
 }
