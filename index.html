@@ -2792,11 +2792,14 @@ async function submitPost() {
     // Upload file attachments
     const uploadedAttachments = await uploadAttachments();
     const attachments_json = uploadedAttachments.length ? JSON.stringify(uploadedAttachments) : null;
-    // Upload citations
+    // Citations — pure URL list, no upload needed
     const uploadedCitations = await uploadCitations();
     const citations_json = uploadedCitations.length ? JSON.stringify(uploadedCitations) : null;
     const poster_email = currentUser ? currentUser.email : null;
-    const payload = { title, category, date, excerpt, body, image_url, byline, slug, poster_email, tags: tagsVal || null, attachments_json, citations_json };
+    // Save WITHOUT citations first (in case column doesn't exist yet)
+    const payload = { title, category, date, excerpt, body, image_url, byline, slug, poster_email, tags: tagsVal || null, attachments_json };
+    // Try to add citations_json — if column missing, Supabase will error, we catch separately
+    if (citations_json !== null) payload.citations_json = citations_json;
     if (editId) {
       const { data: upData, error } = await sb.from('posts').update(payload).eq('id', editId);
       if (error) throw new Error('Save failed: ' + error.message + ' | payload keys: ' + Object.keys(payload).join(','));
@@ -4256,20 +4259,30 @@ function populateAccountSection() {
 async function uploadAvatar(input) {
   if (!input.files[0] || !currentPublicUser) return;
   const file = input.files[0];
-  const ext = file.name.split('.').pop();
-  const fname = currentPublicUser.id + '.' + ext;
+  const ext = file.name.split('.').pop().toLowerCase();
+  // Use post-images bucket (already exists) with avatars/ subfolder
+  const fname = 'avatars/' + currentPublicUser.id + '_' + Date.now() + '.' + ext;
   const btn = document.querySelector('[onclick*="avatar-file-input"]');
   if (btn) { btn.disabled = true; btn.textContent = 'Uploading...'; }
   try {
-    const { error: upErr } = await sb.storage.from('avatars').upload(fname, file, { upsert: true, contentType: file.type });
-    if (upErr) throw upErr;
-    const { data } = sb.storage.from('avatars').getPublicUrl(fname);
-    await sb.auth.updateUser({ data: { avatar_url: data.publicUrl } });
+    const { error: upErr } = await sb.storage.from('post-images').upload(fname, file, {
+      upsert: true,
+      contentType: file.type || 'image/jpeg'
+    });
+    if (upErr) throw new Error('Storage error: ' + upErr.message);
+    const { data } = sb.storage.from('post-images').getPublicUrl(fname);
+    const { error: updateErr } = await sb.auth.updateUser({ data: { avatar_url: data.publicUrl } });
+    if (updateErr) throw new Error('Profile update error: ' + updateErr.message);
+    currentPublicUser.user_metadata = currentPublicUser.user_metadata || {};
     currentPublicUser.user_metadata.avatar_url = data.publicUrl;
     populateAccountSection();
     applyUserUI(currentPublicUser);
-  } catch(e) { alert('Upload failed: ' + e.message); }
-  if (btn) { btn.disabled = false; btn.textContent = 'Change Picture'; }
+    if (btn) { btn.textContent = '✓ Saved!'; }
+    setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = 'Change Picture'; }}, 2000);
+  } catch(e) {
+    alert('Upload failed: ' + e.message + '\n\nMake sure you are signed in and the post-images bucket exists in Supabase.');
+    if (btn) { btn.disabled = false; btn.textContent = 'Change Picture'; }
+  }
 }
 
 function openSupportTicket() {
