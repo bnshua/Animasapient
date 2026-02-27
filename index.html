@@ -1412,7 +1412,7 @@
 <!-- NAV SEARCH POPUP -->
 <div class="nav-search-popup" id="nav-search-popup">
   <svg class="nav-search-popup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-  <input type="text" id="nav-search-input" placeholder="Search articles…" oninput="handleNavSearch(this.value)" autocomplete="off">
+  <input type="text" id="nav-search-input" placeholder="Search articles…" onkeydown="if(event.key==='Enter'){handleNavSearch(this.value);doSearch(this.value.trim());}" autocomplete="off">
 </div>
 
 <div class="admin-bar" id="admin-bar">
@@ -1427,7 +1427,7 @@
 <div id="home-page" class="page active">
   <div id="inline-search-bar" class="inline-search-bar" onclick="event.stopPropagation()">
     <svg class="inline-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-    <input type="text" id="search-input" placeholder="Search articles…" oninput="handleSearch(this.value)" autocomplete="off">
+    <input type="text" id="search-input" placeholder="Search articles…" onkeydown="if(event.key==='Enter')doSearch(this.value.trim())" autocomplete="off">
   </div>
   <div id="search-results-label" class="search-results-label" style="display:none;"></div>
   <div id="headline-wrap" style="position:relative;"></div>
@@ -1437,6 +1437,12 @@
     <div class="divider-line"></div>
   </div>
   <div class="post-grid" id="post-grid"></div>
+  <div class="section-divider" id="author-divider" style="display:none;">
+    <div class="divider-line"></div>
+    <span>Matching Authors</span>
+    <div class="divider-line"></div>
+  </div>
+  <div class="post-grid" id="author-grid"></div>
   <div class="empty-state" id="empty-state" style="display:none;">
     <h2>A space for wisdom, awaiting its voice.</h2>
     <p>No posts yet. The journey begins with a single thought.</p>
@@ -3148,42 +3154,66 @@ function changeFontSize(delta) {
 let searchTimeout = null;
 function handleSearch(val) {
   clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => doSearch(val.trim()), 250);
+  searchTimeout = setTimeout(() => doSearch(val.trim()), 600);
 }
 async function doSearch(q) {
   const hw = document.getElementById('headline-wrap');
   const grid = document.getElementById('post-grid');
+  const authorGrid = document.getElementById('author-grid');
+  const authorDivider = document.getElementById('author-divider');
   const divider = document.getElementById('grid-divider');
   const lbl = document.getElementById('search-results-label');
   const loader = document.getElementById('home-loader');
   if (!q) {
     lbl.style.display = 'none';
+    authorGrid.innerHTML = ''; authorDivider.style.display = 'none';
     renderHome();
     return;
   }
   loader.style.display = 'block';
-  hw.innerHTML = ''; grid.innerHTML = ''; divider.style.display = 'none';
+  hw.innerHTML = ''; grid.innerHTML = ''; authorGrid.innerHTML = '';
+  divider.style.display = 'none'; authorDivider.style.display = 'none';
+
+  // Ensure cache is populated
+  if (cachedPosts.length === 0) {
+    const { data } = await sb.from('posts').select('*').order('date', { ascending: false });
+    if (data) cachedPosts = data;
+  }
+
   try {
     const ql = q.toLowerCase();
-    const results = cachedPosts.filter(p =>
+
+    // Content matches — title, excerpt, body, tags, category
+    const contentMatches = cachedPosts.filter(p =>
       (p.title||'').toLowerCase().includes(ql) ||
       (p.excerpt||'').toLowerCase().includes(ql) ||
       (p.body||'').toLowerCase().includes(ql) ||
       (p.tags||'').toLowerCase().includes(ql) ||
       (p.category||'').toLowerCase().includes(ql)
     );
-    // Also search DB if no cached results
-    let all = results;
-    if (cachedPosts.length === 0) {
-      const { data } = await sb.from('posts').select('*').order('date', { ascending: false });
-      if (data) { cachedPosts = data; all = data.filter(p => (p.title||'').toLowerCase().includes(ql) || (p.excerpt||'').toLowerCase().includes(ql) || (p.tags||'').toLowerCase().includes(ql)); }
-    }
+
+    // Author matches — byline contains query, but NOT already in content matches
+    const contentIds = new Set(contentMatches.map(p => p.id));
+    const authorMatches = cachedPosts.filter(p =>
+      !contentIds.has(p.id) &&
+      (p.byline||'').toLowerCase().includes(ql)
+    );
+
+    const total = contentMatches.length + authorMatches.length;
     lbl.style.display = 'block';
-    lbl.textContent = all.length ? `${all.length} result${all.length!==1?'s':''} for "${q}"` : `No results for "${q}"`;
-    if (all.length) {
-      grid.innerHTML = all.map(cardHTML).join('');
-      divider.style.display = 'none';
+    lbl.textContent = total
+      ? `${total} result${total !== 1 ? 's' : ''} for "${q}"`
+      : `No results for "${q}"`;
+
+    if (contentMatches.length) {
+      grid.innerHTML = contentMatches.map(cardHTML).join('');
     }
+
+    if (authorMatches.length) {
+      authorDivider.style.display = 'flex';
+      authorGrid.innerHTML = authorMatches.map(cardHTML).join('');
+    }
+
   } catch(e) { console.warn('Search error:', e); }
   loader.style.display = 'none';
 }
