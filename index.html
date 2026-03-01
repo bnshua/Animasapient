@@ -3,7 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animasapient</title>
+<title>Animasapient — Philosophy, Religion, Geography & Culture</title>
+<meta name="description" content="Animasapient — explorations of philosophy, religion, geography and culture. A space for wisdom and reflection.">
+<meta name="author" content="Animasapient">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://animasapient.xyz">
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="Animasapient">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Animasapient">
+<meta property="og:description" content="Explorations of philosophy, religion, geography and culture.">
+<meta property="og:url" content="https://animasapient.xyz">
+<meta property="og:image" content="https://animasapient.xyz/image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Animasapient">
+<meta name="twitter:description" content="Explorations of philosophy, religion, geography and culture.">
+<meta name="twitter:image" content="https://animasapient.xyz/image.png">
+
+<!-- JSON-LD: Website structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Animasapient",
+  "url": "https://animasapient.xyz",
+  "description": "Explorations of philosophy, religion, geography and culture.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://animasapient.xyz/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json" id="article-jsonld"></script>
 <link rel="icon" type="image/png" href="/flavicon.png">
 <link rel="apple-touch-icon" href="/flavicon.png">
 <script>
@@ -39,7 +74,22 @@
   }
 })();
 </script>
-<link href="https://fonts.cdnfonts.com/css/opendyslexic" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/fonts/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/fonts/OpenDyslexic-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -2065,14 +2115,14 @@ function handleSessionUser(user) {
   }
   if (isAdminUser(user)) {
     currentUser = user;
-    currentPublicUser = user; // admin is also a public user
+    currentPublicUser = user;
     applyAdminUI(user);
-    applyUserUI(user);
+    loadAvatarFromProfile(user).then(() => applyUserUI(user));
   } else {
     currentUser = null;
     currentPublicUser = user;
     applyAdminUI(null);
-    applyUserUI(user);
+    loadAvatarFromProfile(user).then(() => applyUserUI(user));
   }
   if (document.getElementById('home-page').classList.contains('active')) renderHome();
   if (currentPostId) {
@@ -2096,6 +2146,17 @@ function applyAdminUI(user) {
     document.body.classList.remove('admin-mode');
     if (mobileAdminBtn) mobileAdminBtn.textContent = 'Admin';
   }
+}
+
+async function loadAvatarFromProfile(user) {
+  if (!user) return;
+  try {
+    const { data } = await sb.from('profiles').select('avatar_url').eq('id', user.id).single();
+    if (data && data.avatar_url) {
+      user.user_metadata = user.user_metadata || {};
+      user.user_metadata.avatar_url = data.avatar_url;
+    }
+  } catch(e) {} // silent if profiles table doesn't exist
 }
 
 function applyUserUI(user) {
@@ -2398,7 +2459,45 @@ async function openPost(id) {
   await renderRatingSection(id);
   await renderComments(id);
   renderCommentForm();
+  recordReadingHistory(post); // track that this user read this article
   showPage('post');
+}
+
+function updateSEOMeta(post) {
+  const title = post.title + ' — Animasapient';
+  const desc = post.excerpt || post.body?.replace(/<[^>]+>/g,'').slice(0,160) || '';
+  const url = 'https://animasapient.xyz/' + (post.category ? post.category.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'') : '') + '/' + (post.slug || post.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''));
+  const img = post.image_url || 'https://animasapient.xyz/image.png';
+
+  document.title = title;
+  const setMeta = (sel, val) => { const el = document.querySelector(sel); if (el) el.setAttribute('content', val); };
+  setMeta('meta[name="description"]', desc);
+  setMeta('meta[property="og:title"]', title);
+  setMeta('meta[property="og:description"]', desc);
+  setMeta('meta[property="og:url"]', url);
+  setMeta('meta[property="og:image"]', img);
+  setMeta('meta[name="twitter:title"]', title);
+  setMeta('meta[name="twitter:description"]', desc);
+  setMeta('meta[name="twitter:image"]', img);
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = url;
+
+  // JSON-LD Article structured data for Google
+  const jsonld = document.getElementById('article-jsonld');
+  if (jsonld) {
+    jsonld.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": post.title,
+      "description": desc,
+      "url": url,
+      "image": img,
+      "datePublished": post.date,
+      "author": { "@type": "Person", "name": post.byline || "Animasapient" },
+      "publisher": { "@type": "Organization", "name": "Animasapient", "url": "https://animasapient.xyz" },
+      "keywords": post.tags || post.category
+    });
+  }
 }
 
 function renderPostAdmin(id) {
@@ -3039,10 +3138,12 @@ async function openPost(id, replaceState = false) {
   const posterEl = document.getElementById('poster-email-display');
   posterEl.textContent = post.poster_email || '(no email recorded)';
 
+  updateSEOMeta(post);
   renderPostAdmin(id);
   await renderRatingSection(id);
   await renderComments(id);
   renderCommentForm();
+  recordReadingHistory(post); // track that this user read this article
 
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('post-page').classList.add('active');
@@ -3064,7 +3165,11 @@ async function routeFromURL(push = true) {
   try {
     const path = window.location.pathname.replace(/\/$/, '') || '/';
     const parts = path.split('/').filter(Boolean);
-    document.title = 'Animasapient';
+    document.title = 'Animasapient — Philosophy, Religion, Geography & Culture';
+  const jsonld = document.getElementById('article-jsonld');
+  if (jsonld) jsonld.textContent = '';
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = 'https://animasapient.xyz';
 
     if (parts.length === 0) {
       currentFilter = null;
@@ -4290,27 +4395,37 @@ async function uploadAvatar(input) {
   if (!input.files[0] || !currentPublicUser) return;
   const file = input.files[0];
   const ext = file.name.split('.').pop().toLowerCase();
-  // Use post-images bucket (already exists) with avatars/ subfolder
-  const fname = 'avatars/' + currentPublicUser.id + '_' + Date.now() + '.' + ext;
+  const fname = 'avatars/' + currentPublicUser.id + '.' + ext; // fixed name so it overwrites old avatar
   const btn = document.querySelector('[onclick*="avatar-file-input"]');
   if (btn) { btn.disabled = true; btn.textContent = 'Uploading...'; }
   try {
+    // 1. Upload image to post-images bucket
     const { error: upErr } = await sb.storage.from('post-images').upload(fname, file, {
-      upsert: true,
-      contentType: file.type || 'image/jpeg'
+      upsert: true, contentType: file.type || 'image/jpeg'
     });
     if (upErr) throw new Error('Storage error: ' + upErr.message);
     const { data } = sb.storage.from('post-images').getPublicUrl(fname);
-    const { error: updateErr } = await sb.auth.updateUser({ data: { avatar_url: data.publicUrl } });
-    if (updateErr) throw new Error('Profile update error: ' + updateErr.message);
+    const avatarUrl = data.publicUrl;
+
+    // 2. Update Supabase Auth metadata
+    await sb.auth.updateUser({ data: { avatar_url: avatarUrl } });
+
+    // 3. Also upsert into profiles table (persistent across sessions)
+    await sb.from('profiles').upsert({
+      id: currentPublicUser.id,
+      avatar_url: avatarUrl,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'id' }).catch(() => {}); // silent if table doesn't exist
+
+    // 4. Update local state and UI
     currentPublicUser.user_metadata = currentPublicUser.user_metadata || {};
-    currentPublicUser.user_metadata.avatar_url = data.publicUrl;
+    currentPublicUser.user_metadata.avatar_url = avatarUrl;
     populateAccountSection();
     applyUserUI(currentPublicUser);
     if (btn) { btn.textContent = '✓ Saved!'; }
     setTimeout(() => { if (btn) { btn.disabled = false; btn.textContent = 'Change Picture'; }}, 2000);
   } catch(e) {
-    alert('Upload failed: ' + e.message + '\n\nMake sure you are signed in and the post-images bucket exists in Supabase.');
+    alert('Upload failed: ' + e.message);
     if (btn) { btn.disabled = false; btn.textContent = 'Change Picture'; }
   }
 }
