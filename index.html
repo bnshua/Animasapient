@@ -56,6 +56,12 @@
         + (newSearch ? '?' + newSearch : '') + window.location.hash;
       history.replaceState(null, null, newUrl);
     }
+    // Handle ?post=ID redirects from static article pages
+    var postMatch = search.match(/[?&]post=([^&]*)/);
+    if (postMatch) {
+      window._directPostId = postMatch[1];
+      history.replaceState(null, null, window.location.pathname.replace(/\/[^\/]*$/, '') + '/');
+    }
   }
 })();
 
@@ -2328,6 +2334,7 @@ async function renderHome() {
   } finally {
     loader.style.display = 'none';
     setTimeout(initSmartSearch, 80);
+    window.dispatchEvent(new Event('anima-ready'));
   }
 }
 
@@ -4457,6 +4464,10 @@ async function sendPasswordReset() {
 document.getElementById('p-date').value = todayStr();
 loadSavedTheme();
 loadDyslexicSetting();
+// If arrived from a static article page redirect, open that article after load
+if (window._directPostId) {
+  window.addEventListener('anima-ready', () => openPost(window._directPostId), { once: true });
+}
 (async () => {
   await initAuth();
   await routeFromURL();
