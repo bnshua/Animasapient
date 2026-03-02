@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://animasapient.xyz/</loc>
+    <loc>https://www.animasapient.xyz/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://animasapient.xyz/about</loc>
+    <loc>https://www.animasapient.xyz/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://animasapient.xyz/philosophy</loc>
+    <loc>https://www.animasapient.xyz/philosophy</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://animasapient.xyz/religion-spirituality</loc>
+    <loc>https://www.animasapient.xyz/religion-spirituality</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://animasapient.xyz/geography</loc>
+    <loc>https://www.animasapient.xyz/geography</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://animasapient.xyz/culture</loc>
+    <loc>https://www.animasapient.xyz/culture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

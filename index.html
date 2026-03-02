@@ -7,21 +7,21 @@
 <meta name="description" content="Animasapient — explorations of philosophy, religion, geography and culture. A space for wisdom and reflection.">
 <meta name="author" content="Animasapient">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://animasapient.xyz">
+<link rel="canonical" href="https://www.animasapient.xyz">
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="Animasapient">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Animasapient">
 <meta property="og:description" content="Explorations of philosophy, religion, geography and culture.">
-<meta property="og:url" content="https://animasapient.xyz">
-<meta property="og:image" content="https://animasapient.xyz/image.png">
+<meta property="og:url" content="https://www.animasapient.xyz">
+<meta property="og:image" content="https://www.animasapient.xyz/image.png">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Animasapient">
 <meta name="twitter:description" content="Explorations of philosophy, religion, geography and culture.">
-<meta name="twitter:image" content="https://animasapient.xyz/image.png">
+<meta name="twitter:image" content="https://www.animasapient.xyz/image.png">
 
 <!-- JSON-LD: Website structured data -->
 <script type="application/ld+json">
@@ -29,11 +29,11 @@
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Animasapient",
-  "url": "https://animasapient.xyz",
+  "url": "https://www.animasapient.xyz",
   "description": "Explorations of philosophy, religion, geography and culture.",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://animasapient.xyz/?q={search_term_string}",
+    "target": "https://www.animasapient.xyz/?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
 }
@@ -2466,8 +2466,8 @@ async function openPost(id) {
 function updateSEOMeta(post) {
   const title = post.title + ' — Animasapient';
   const desc = post.excerpt || post.body?.replace(/<[^>]+>/g,'').slice(0,160) || '';
-  const url = 'https://animasapient.xyz/' + (post.category ? post.category.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'') : '') + '/' + (post.slug || post.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''));
-  const img = post.image_url || 'https://animasapient.xyz/image.png';
+  const url = 'https://www.animasapient.xyz/' + (post.category ? post.category.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'') : '') + '/' + (post.slug || post.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''));
+  const img = post.image_url || 'https://www.animasapient.xyz/image.png';
 
   document.title = title;
   const setMeta = (sel, val) => { const el = document.querySelector(sel); if (el) el.setAttribute('content', val); };
@@ -2494,7 +2494,7 @@ function updateSEOMeta(post) {
       "image": img,
       "datePublished": post.date,
       "author": { "@type": "Person", "name": post.byline || "Animasapient" },
-      "publisher": { "@type": "Organization", "name": "Animasapient", "url": "https://animasapient.xyz" },
+      "publisher": { "@type": "Organization", "name": "Animasapient", "url": "https://www.animasapient.xyz" },
       "keywords": post.tags || post.category
     });
   }
@@ -2932,8 +2932,8 @@ async function submitPost() {
 // ── CITATIONS ────────────────────────────────────────────────
 function renderCitations(post) {
   const pageUrl = post.slug
-    ? `https://animasapient.xyz/${catToSlug(post.category)}/${post.slug}`
-    : `https://animasapient.xyz/${catToSlug(post.category)}/${titleToSlug(post.title)}`;
+    ? `https://www.animasapient.xyz/${catToSlug(post.category)}/${post.slug}`
+    : `https://www.animasapient.xyz/${catToSlug(post.category)}/${titleToSlug(post.title)}`;
   const d = new Date(post.date + 'T12:00:00');
   const year = d.getFullYear(), monthLong = d.toLocaleDateString('en-US', { month: 'long' }), day = d.getDate();
   const accessDate = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
@@ -3169,7 +3169,7 @@ async function routeFromURL(push = true) {
   const jsonld = document.getElementById('article-jsonld');
   if (jsonld) jsonld.textContent = '';
   const canonical = document.querySelector('link[rel="canonical"]');
-  if (canonical) canonical.href = 'https://animasapient.xyz';
+  if (canonical) canonical.href = 'https://www.animasapient.xyz';
 
     if (parts.length === 0) {
       currentFilter = null;
@@ -4445,7 +4445,7 @@ async function sendPasswordReset() {
   const msg = document.getElementById('pw-reset-msg');
   btn.disabled = true; btn.textContent = 'Sending...';
   const { error } = await sb.auth.resetPasswordForEmail(currentPublicUser.email, {
-    redirectTo: 'https://animasapient.xyz'
+    redirectTo: 'https://www.animasapient.xyz'
   });
   btn.disabled = false; btn.textContent = 'Reset Password';
   if (error) { msg.textContent = 'Error: ' + error.message; msg.style.color = '#8b2635'; }
