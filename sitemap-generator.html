@@ -1,72 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Generating sitemap...</title>
+<meta charset="UTF-8">
+<title>Sitemap Generator</title>
+<style>
+  body { font-family: monospace; padding: 2rem; background: #1a1a2e; color: #e0e0e0; }
+  #status { color: #90ee90; margin-bottom: 1rem; font-size: 1rem; min-height: 1.5rem; }
+  #status.err { color: #ff6b6b; }
+  pre { background: #0d0d1a; padding: 1.5rem; border-radius: 6px; white-space: pre-wrap; font-size: 0.75rem; border: 1px solid #333; max-height: 80vh; overflow-y: auto; }
+  button { background: #4a6fa5; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer; font-size: 0.9rem; margin-bottom: 1rem; }
+</style>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<p id="status">Click Generate to fetch all articles.</p>
+<button onclick="generate()">Generate Sitemap</button>
+<pre id="out"></pre>
 <script>
-// This page fetches all posts from Supabase and outputs a sitemap XML.
-// Visit https://www.animasapient.xyz/sitemap-articles.html to get the XML,
-// then copy it into sitemap.xml in your repo.
-
 const SUPA_URL = 'https://clfpzfualnormrgjmujb.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsZnB6ZnVhbG5vcm1yZ2ptdWpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA2MDI5NzAsImV4cCI6MjA1NjE3ODk3MH0.5kPPRuYGBQgLkuDjN6DPy3jcVxgCZvUL4U3yAhaqHwE';
-const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 
-function catToSlug(cat) {
-  return (cat||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
-}
-function titleToSlug(t) {
-  return (t||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+function slug(s) {
+  return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
 }
 
 async function generate() {
-  const pre = document.getElementById('out');
-  pre.textContent = 'Fetching posts from Supabase...';
-  
-  const { data, error } = await sb.from('posts').select('id,title,slug,category,date').order('date', { ascending: false }).limit(10000);
-  if (error) { pre.textContent = 'Error: ' + error.message; return; }
-  
-  const staticUrls = [
-    { loc: 'https://www.animasapient.xyz/', changefreq: 'weekly', priority: '1.0' },
-    { loc: 'https://www.animasapient.xyz/about', changefreq: 'monthly', priority: '0.6' },
-    { loc: 'https://www.animasapient.xyz/philosophy', changefreq: 'weekly', priority: '0.8' },
-    { loc: 'https://www.animasapient.xyz/religion-spirituality', changefreq: 'weekly', priority: '0.8' },
-    { loc: 'https://www.animasapient.xyz/geography', changefreq: 'weekly', priority: '0.8' },
-    { loc: 'https://www.animasapient.xyz/culture', changefreq: 'weekly', priority: '0.8' },
-  ];
+  const status = document.getElementById('status');
+  const out = document.getElementById('out');
+  status.className = '';
+  status.textContent = 'Fetching from Supabase...';
+  out.textContent = '';
+  try {
+    const res = await fetch(
+      SUPA_URL + '/rest/v1/posts?select=title,slug,category,date&order=date.desc&limit=10000',
+      { headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY } }
+    );
+    if (!res.ok) throw new Error('HTTP ' + res.status + ': ' + await res.text());
+    const posts = await res.json();
 
-  const articleUrls = (data || []).map(p => ({
-    loc: `https://www.animasapient.xyz/${catToSlug(p.category)}/${p.slug || titleToSlug(p.title)}`,
-    lastmod: p.date,
-    changefreq: 'monthly',
-    priority: '0.9'
-  }));
+    const statics = [
+      ['https://www.animasapient.xyz/', 'weekly', '1.0', ''],
+      ['https://www.animasapient.xyz/about', 'monthly', '0.6', ''],
+      ['https://www.animasapient.xyz/philosophy', 'weekly', '0.8', ''],
+      ['https://www.animasapient.xyz/religion-spirituality', 'weekly', '0.8', ''],
+      ['https://www.animasapient.xyz/geography', 'weekly', '0.8', ''],
+      ['https://www.animasapient.xyz/culture', 'weekly', '0.8', ''],
+    ];
 
-  const allUrls = [...staticUrls, ...articleUrls];
+    const articles = posts.map(p => [
+      'https://www.animasapient.xyz/' + slug(p.category) + '/' + (p.slug || slug(p.title)),
+      'monthly', '0.9', p.date || ''
+    ]);
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allUrls.map(u => `  <url>
-    <loc>${u.loc}</loc>
-    ${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>\n    ` : ''}<changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`).join('\n')}
-</urlset>`;
+    const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+      + [...statics, ...articles].map(([loc, freq, pri, lastmod]) =>
+          '  <url>\n    <loc>' + loc + '</loc>' +
+          (lastmod ? '\n    <lastmod>' + lastmod + '</lastmod>' : '') +
+          '\n    <changefreq>' + freq + '</changefreq>\n    <priority>' + pri + '</priority>\n  </url>'
+        ).join('\n')
+      + '\n</urlset>';
 
-  pre.textContent = xml;
-  document.getElementById('count').textContent = `✓ ${articleUrls.length} articles found. Copy the XML below into your sitemap.xml file.`;
+    out.textContent = xml;
+    status.textContent = '✓ ' + posts.length + ' articles. Copy XML above into sitemap.xml on GitHub.';
+  } catch(e) {
+    status.className = 'err';
+    status.textContent = 'Error: ' + e.message;
+  }
 }
-
-generate();
 </script>
-<style>
-  body { font-family: monospace; padding: 2rem; background: #1a1a2e; color: #e0e0e0; }
-  #count { color: #90ee90; margin-bottom: 1rem; font-size: 1rem; }
-  pre { background: #0d0d1a; padding: 1.5rem; border-radius: 6px; white-space: pre-wrap; font-size: 0.8rem; border: 1px solid #333; }
-</style>
-<p id="count"></p>
-<pre id="out">Loading...</pre>
 </body>
 </html>
