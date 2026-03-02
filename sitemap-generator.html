@@ -25,7 +25,7 @@ async function generate() {
   const pre = document.getElementById('out');
   pre.textContent = 'Fetching posts from Supabase...';
   
-  const { data, error } = await sb.from('posts').select('id,title,slug,category,date').order('date', { ascending: false });
+  const { data, error } = await sb.from('posts').select('id,title,slug,category,date').order('date', { ascending: false }).limit(10000);
   if (error) { pre.textContent = 'Error: ' + error.message; return; }
   
   const staticUrls = [
