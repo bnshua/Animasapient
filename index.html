@@ -83,14 +83,14 @@
 <style>
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/fonts/OpenDyslexic-Regular.otf') format('opentype');
+  src: url('https://unpkg.com/open-dyslexic@1.0.3/fonts/OpenDyslexic-Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'OpenDyslexic';
-  src: url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/fonts/OpenDyslexic-Bold.otf') format('opentype');
+  src: url('https://unpkg.com/open-dyslexic@1.0.3/fonts/OpenDyslexic-Bold.otf') format('opentype');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -3046,6 +3046,13 @@ function showPage(name, pushState = false, url = null) {
 
 function goHome() {
   currentFilter = null;
+  // Clear search state so the home page is fresh
+  const searchInput = document.getElementById('search-input');
+  const navSearchInput = document.getElementById('nav-search-input');
+  const lbl = document.getElementById('search-results-label');
+  if (searchInput) searchInput.value = '';
+  if (navSearchInput) navSearchInput.value = '';
+  if (lbl) { lbl.style.display = 'none'; lbl.textContent = ''; }
   showPage('home', true, '/');
   renderHome();
 }
@@ -4416,7 +4423,7 @@ async function uploadAvatar(input) {
     });
     if (upErr) throw new Error('Storage error: ' + upErr.message);
     const { data } = sb.storage.from('post-images').getPublicUrl(fname);
-    const avatarUrl = data.publicUrl;
+    const avatarUrl = data.publicUrl + '?v=' + Date.now();
 
     // 2. Update Supabase Auth metadata
     await sb.auth.updateUser({ data: { avatar_url: avatarUrl } });
