@@ -52,13 +52,10 @@
 (function() {
   var search = window.location.search;
   if (search) {
-    var match = search.match(/[?&]p=([^&]*)/);
-    if (match) {
-      var path = decodeURIComponent(match[1]);
-      var newSearch = search.replace(/[?&]p=[^&]*/, '').replace(/^\?/, '');
-      var newUrl = window.location.pathname.replace(/\/[^\/]*$/, '') + path
-        + (newSearch ? '?' + newSearch : '') + window.location.hash;
-      history.replaceState(null, null, newUrl);
+    var postMatch = search.match(/[?&]p=([^&]*)/);
+    if (postMatch) {
+      window._directPostId = postMatch[1];
+      history.replaceState(null, null, window.location.pathname.replace(/\/[^\/]*$/, '') + '/');
     }
     
     var postMatch = search.match(/[?&]post=([^&]*)/);
