@@ -9,7 +9,7 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://www.animasapient.xyz">
 
-<!-- Open Graph -->
+
 <meta property="og:site_name" content="Animasapient">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Animasapient">
@@ -17,13 +17,13 @@
 <meta property="og:url" content="https://www.animasapient.xyz">
 <meta property="og:image" content="https://www.animasapient.xyz/image.png">
 
-<!-- Twitter Card -->
+
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Animasapient">
 <meta name="twitter:description" content="Explorations of philosophy, religion, geography and culture.">
 <meta name="twitter:image" content="https://www.animasapient.xyz/image.png">
 
-<!-- JSON-LD: Website structured data -->
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -39,12 +39,16 @@
 }
 </script>
 <script type="application/ld+json" id="article-jsonld"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://unpkg.com">
 <link rel="icon" type="image/png" href="/flavicon.png">
 <link rel="apple-touch-icon" href="/flavicon.png">
 <script>
-// ── GITHUB PAGES SPA REDIRECT ─────────────────────────────────
-// When 404.html redirects here, restore the original path via history.replaceState
-// so routeFromURL() sees the correct URL instead of /?p=/philosophy/example
+
+
+
 (function() {
   var search = window.location.search;
   if (search) {
@@ -56,7 +60,7 @@
         + (newSearch ? '?' + newSearch : '') + window.location.hash;
       history.replaceState(null, null, newUrl);
     }
-    // Handle ?post=ID redirects from static article pages
+    
     var postMatch = search.match(/[?&]post=([^&]*)/);
     if (postMatch) {
       window._directPostId = postMatch[1];
@@ -65,7 +69,7 @@
   }
 })();
 
-// ── DEVICE DETECTION (runs before CSS paint to prevent layout flash) ──
+
 (function() {
   var isTouch = (
     'ontouchstart' in window ||
@@ -109,7 +113,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Crimson Pro', Georgia, serif; background: var(--white); color: var(--text); font-size: 18px; line-height: 1.6; }
 
-  /* HEADER */
+  
   header { background: var(--navy-dark); border-bottom: 1px solid rgba(255,255,255,0.06); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.3); }
   .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; display: flex; align-items: center; justify-content: space-between; height: 66px; }
   .logo-group { display: flex; flex-direction: column; gap: 1px; cursor: pointer; flex-shrink: 0; }
@@ -127,7 +131,7 @@
   .page { display: none; }
   .page.active { display: block; animation: fadeIn 0.4s ease; }
 
-  /* ADMIN BAR */
+  
   .admin-bar { display: none; background: var(--navy-mid); padding: 0.6rem 2.5rem; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); }
   .admin-bar.visible { display: flex; }
   .admin-bar span { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey); }
@@ -137,7 +141,7 @@
   .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--cool-grey); padding: 6px 16px; font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
   .btn-logout:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
 
-  /* HEADLINE */
+  
   .headline-post { position: relative; background: var(--navy-dark); min-height: 520px; display: flex; align-items: flex-end; overflow: hidden; cursor: pointer; }
   .headline-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.38; }
   .headline-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-mid) 50%, #2c4a7a 100%); }
@@ -152,7 +156,7 @@
   .section-divider span { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cool-grey); white-space: nowrap; }
   .divider-line { flex: 1; height: 1px; background: var(--cool-grey-light); }
 
-  /* GRID */
+  
   .post-grid { max-width: 1280px; margin: 0 auto 5rem; padding: 0 2.5rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem 2rem; }
   .post-card { cursor: pointer; border-bottom: 1px solid var(--cool-grey-light); padding-bottom: 1.5rem; transition: transform 0.2s; }
   .post-card:hover { transform: translateY(-3px); }
@@ -172,7 +176,7 @@
   .empty-state h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--navy); margin-bottom: 1rem; font-style: italic; }
   .empty-state p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--cool-grey); }
 
-  /* ABOUT */
+  
   #about-page { max-width: 760px; margin: 0 auto; padding: 5rem 2.5rem; }
   .about-header { border-bottom: 1px solid var(--cool-grey-light); padding-bottom: 2.5rem; margin-bottom: 3rem; }
   .about-eyebrow { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 1rem; }
@@ -181,7 +185,7 @@
   .about-body p { margin-bottom: 1.5rem; }
   .about-body strong { font-weight: 500; color: var(--navy); }
 
-  /* POST PAGE */
+  
   .post-hero { background: var(--navy-dark); position: relative; min-height: 400px; display: flex; align-items: flex-end; overflow: hidden; }
   .post-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.35; }
   .post-hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--navy-dark), var(--navy-mid)); }
@@ -199,7 +203,7 @@
   .citations-link { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
   .citations-link:hover { color: var(--navy); }
 
-  /* MODALS */
+  
   .modal-bg { display: none; position: fixed; inset: 0; background: rgba(10,16,35,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem; backdrop-filter: blur(4px); }
   .modal-bg.open { display: flex; }
   .modal { background: var(--white); width: 100%; max-width: 680px; max-height: 92vh; overflow-y: auto; border-radius: 4px; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
@@ -209,7 +213,7 @@
   .modal-close:hover { color: var(--white); }
   .modal-body { padding: 2rem; }
 
-  /* FORMS */
+  
   .form-group { margin-bottom: 1.4rem; }
   .form-group label { display: block; font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 0.4rem; }
   .form-group input, .form-group select, .form-group textarea { width: 100%; border: 1px solid var(--cool-grey-light); background: var(--white); padding: 10px 14px; font-family: 'Crimson Pro', serif; font-size: 1rem; color: var(--text); border-radius: 2px; outline: none; transition: border-color 0.2s; }
@@ -227,7 +231,7 @@
   .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
   .page-loader { max-width: 1280px; margin: 5rem auto; padding: 0 2.5rem; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey); }
 
-  /* ── IMAGE UPLOAD & CROP ── */
+  
   .upload-area {
     border: 2px dashed var(--cool-grey-light);
     border-radius: 3px;
@@ -242,7 +246,7 @@
   .upload-area-text { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; color: var(--cool-grey); pointer-events: none; }
   .upload-area-text strong { display: block; font-size: 1rem; color: var(--text); margin-bottom: 0.2rem; }
 
-  /* Cropper container */
+  
   .crop-container {
     display: none;
     margin-top: 1rem;
@@ -291,10 +295,10 @@
     pointer-events: none;
   }
 
-  /* Dim overlay — four rects, not a hole punch */
+  
   .crop-dim { position: absolute; background: rgba(0,0,0,0.55); pointer-events: none; }
 
-  /* The crop box itself */
+  
   #crop-box {
     position: absolute;
     border: 2px solid #fff;
@@ -303,7 +307,7 @@
     box-sizing: border-box;
   }
 
-  /* Corner handles */
+  
   .crop-handle {
     position: absolute;
     width: 12px; height: 12px;
@@ -316,7 +320,7 @@
   .crop-handle.sw { bottom: -6px; left: -6px; cursor: sw-resize; }
   .crop-handle.se { bottom: -6px; right: -6px; cursor: se-resize; }
 
-  /* Rule-of-thirds grid inside crop box */
+  
   .crop-grid {
     position: absolute;
     inset: 0;
@@ -372,7 +376,7 @@
   }
   .btn-crop-reset:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
 
-  /* Cropped preview badge */
+  
   .crop-result-wrap {
     display: none;
     margin-top: 0.8rem;
@@ -414,7 +418,7 @@
   }
   .btn-recrop:hover { border-color: var(--accent); color: var(--navy); }
 
-  /* BYLINE on post page */
+  
   .post-byline {
     font-family: 'Cormorant Garamond', serif;
     font-size: 0.85rem;
@@ -426,7 +430,7 @@
   .post-hero-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
   .post-hero-tag { font-family: 'Cormorant Garamond', serif; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; color: rgba(255,255,255,0.7); }
 
-  /* CITATION BOX */
+  
   .citation-section {
     margin-top: 3.5rem;
     border-top: 1px solid var(--cool-grey-light);
@@ -494,31 +498,31 @@
   .btn-copy-cite:hover { background: var(--navy-mid); }
   .btn-copy-cite.copied { background: #1a5c2e; }
 
-  /* FOOTER */
+  
   footer { background: var(--navy-dark); padding: 2.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.06); }
   .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--white); letter-spacing: 0.04em; }
   .footer-slogan { font-family: 'Cormorant Garamond', serif; font-size: 0.76rem; font-style: italic; color: var(--cool-grey); letter-spacing: 0.08em; }
   .footer-cats span { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey); }
 
 
-  /* USER AUTH in nav */
+  
   .nav-user-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--cool-grey); padding: 6px 16px; font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; border-radius: 2px; margin-left: 0.5rem; }
   .nav-user-btn:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
   .nav-user-btn.signed-in { border-color: #4a7a5a; color: #80c8a0; }
 
-  /* STAR RATINGS on cards */
+  
   .card-stars { display: flex; align-items: center; gap: 5px; margin-top: 0.4rem; }
   .stars-display { display: flex; gap: 2px; }
   .star-icon { font-size: 0.85rem; color: var(--cool-grey-light); line-height: 1; }
   .star-icon.filled { color: #c9a84c; }
   .star-count { font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; color: var(--cool-grey); letter-spacing: 0.05em; }
 
-  /* HEADLINE star rating */
+  
   .headline-stars { display: flex; align-items: center; gap: 6px; margin-top: 0.6rem; }
   .headline-stars .stars-display .star-icon { font-size: 1rem; }
   .headline-stars .star-count { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; color: var(--cool-grey-light); }
 
-  /* STAR RATING WIDGET on post page */
+  
   .rating-section {
     margin-top: 3rem;
     border-top: 1px solid var(--cool-grey-light);
@@ -618,7 +622,7 @@
     margin-top: 0.4rem;
   }
 
-  /* COMMENTS SECTION */
+  
   .comments-section {
     margin-top: 3rem;
     border-top: 1px solid var(--cool-grey-light);
@@ -740,7 +744,7 @@
     font-style: italic;
   }
 
-  /* POSTER EMAIL (admin only) */
+  
   .post-poster-info {
     margin-top: 3rem;
     border-top: 1px solid var(--cool-grey-light);
@@ -762,7 +766,7 @@
     color: var(--text-light);
   }
 
-  /* USER LOGIN MODAL specifics */
+  
   .auth-tabs { display: flex; border-bottom: 1px solid var(--cool-grey-light); margin-bottom: 1.5rem; }
   .auth-tab { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey); padding: 8px 22px; cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s; }
   .auth-tab.active { color: var(--navy); border-bottom-color: var(--navy); }
@@ -770,18 +774,18 @@
   .auth-panel.active { display: block; }
 
 
-  /* SETTINGS NAV BUTTON */
+  
   .nav-settings-btn { background: transparent; border: none; color: var(--cool-grey-light); font-size: 1.1rem; cursor: pointer; padding: 4px 8px; transition: color 0.2s; line-height: 1; }
   .nav-settings-btn:hover { color: var(--white); }
 
-  /* SETTINGS PAGE */
+  
   .settings-wrap { max-width: 760px; margin: 0 auto; padding: 5rem 2.5rem; }
   .settings-header { border-bottom: 1px solid var(--cool-grey-light); padding-bottom: 2.5rem; margin-bottom: 3rem; }
   .settings-section { margin-bottom: 3rem; padding-bottom: 3rem; border-bottom: 1px solid var(--cool-grey-light); }
   .settings-section:last-child { border-bottom: none; }
   .settings-section-label { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 1.5rem; }
 
-  /* THEME GRID */
+  
   .theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
   .theme-btn { background: var(--cool-grey-pale); border: 2px solid var(--cool-grey-light); border-radius: 6px; padding: 1rem 0.8rem; cursor: pointer; text-align: center; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
   .theme-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
@@ -793,7 +797,7 @@
   .tp-sub { flex: 1.5; }
   .tp-text { flex: 1; }
 
-  /* ACCOUNT ROWS */
+  
   .account-row { display: flex; align-items: flex-start; gap: 2rem; padding: 1.2rem 0; border-bottom: 1px solid var(--cool-grey-pale); }
   .account-row:last-child { border-bottom: none; }
   .account-row-label { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cool-grey); min-width: 130px; padding-top: 4px; }
@@ -804,19 +808,19 @@
   .btn-settings-danger { background: #7a2030; color: var(--white); border: none; padding: 8px 20px; font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: background 0.2s; width: fit-content; }
   .btn-settings-danger:hover { background: #9a2840; }
 
-  /* AVATAR */
+  
   .avatar-wrap { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
   .settings-avatar-img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--cool-grey-light); }
   .settings-avatar-ph { width: 64px; height: 64px; border-radius: 50%; background: var(--navy-mid); color: var(--cool-grey-light); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 1.4rem; border: 2px solid var(--cool-grey-light); }
   .account-row-content { flex-direction: row; align-items: center; flex-wrap: wrap; }
 
-  /* COMMENT AVATAR */
+  
   .comment-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--cool-grey-light); flex-shrink: 0; }
   .comment-avatar-ph { width: 32px; height: 32px; border-radius: 50%; background: var(--navy-mid); color: var(--cool-grey-light); display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 0.85rem; border: 1px solid var(--cool-grey-light); flex-shrink: 0; }
   .comment-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem; }
 
-  /* THEME VARIABLES — applied via JS */
-  /* CHARCOAL: dark grey page, black header, white text */
+  
+  
   body.theme-darkgrey {
     --navy-dark: #111111; --navy: #1a1a1a; --navy-mid: #2a2a2a;
     --white: #f0f0f0; --text: #e8e8e8; --text-light: #aaaaaa;
@@ -824,7 +828,7 @@
     --accent: #888888;
   }
 
-  /* NAVY & SLATE: dark navy page, dark grey header, white text */
+  
   body.theme-navygrey {
     --navy-dark: #2d2d2d; --navy: #1a2744; --navy-mid: #243558;
     --white: #f0f4f8; --text: #e0e8f0; --text-light: #8a9ab0;
@@ -832,7 +836,7 @@
     --accent: #5a7fa8;
   }
 
-  /* AMETHYST: dark purple page, dark gold header/footer, white text */
+  
   body.theme-purple {
     --navy-dark: #8b6914; --navy: #2d1b4e; --navy-mid: #3d2660;
     --white: #fdf8ff; --text: #f0e8ff; --text-light: #c4b0d8;
@@ -840,7 +844,7 @@
     --accent: #c9a84c;
   }
 
-  /* LAVENDER: white page, dark purple header/footer, black text */
+  
   body.theme-lightpurple {
     --navy-dark: #2d1b4e; --navy: #f0ebff; --navy-mid: #e4d8ff;
     --white: #f8f8ff; --text: #1a0d2e; --text-light: #5a4070;
@@ -851,7 +855,7 @@
   body.theme-lightpurple .admin-bar { background: #3d2660; }
   body.theme-lightpurple footer, body.theme-lightpurple .site-footer { background: #2d1b4e !important; }
 
-  /* MINIMAL: white page, light grey header/footer, black text */
+  
   body.theme-minimal {
     --navy-dark: #cccccc; --navy: #f0f0f0; --navy-mid: #e8e8e8;
     --white: #ffffff; --text: #111111; --text-light: #555555;
@@ -870,7 +874,7 @@
   body.theme-minimal .admin-bar span { color: #333333; }
   body.theme-minimal footer, body.theme-minimal .site-footer { background: #cccccc !important; color: #333333 !important; }
 
-  /* Light theme nav fixes for lightpurple */
+  
   body.theme-lightpurple header nav a { color: #d0b8f0; }
   body.theme-lightpurple header nav a:hover { color: #ffffff; }
   body.theme-lightpurple .logo-slogan { color: #b0a0c8; }
@@ -881,7 +885,7 @@
   body.theme-lightpurple .admin-bar span { color: #c4b0d8; }
 
 
-  /* ── PHILOSOPHERDLE ── */
+  
   .phil-outer { max-width: 520px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; display: flex; flex-direction: column; align-items: center; }
   .phil-header { text-align: center; width: 100%; margin-bottom: 1.5rem; }
   .phil-eyebrow { font-family: 'Cormorant Garamond', serif; font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 0.4rem; }
@@ -932,7 +936,7 @@
   .phil-footer-note { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; color: var(--cool-grey); text-align: center; margin-top: 1.5rem; font-style: italic; border-top: 1px solid var(--cool-grey-light); padding-top: 1rem; width: 100%; }
 
 
-  /* ── RICH TEXT EDITOR ── */
+  
   .editor-toolbar { display: flex; flex-wrap: wrap; gap: 2px; padding: 6px 10px; background: var(--navy-dark); border: 1px solid rgba(255,255,255,0.1); border-bottom: none; border-radius: 3px 3px 0 0; align-items: center; }
   .editor-tool { background: none; border: 1px solid transparent; border-radius: 2px; height: 26px; min-width: 26px; padding: 0 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.82rem; color: var(--cool-grey-light); transition: all 0.15s; font-family: 'Playfair Display', serif; font-weight: 700; }
   .editor-tool:hover { background: rgba(255,255,255,0.1); color: var(--white); border-color: rgba(255,255,255,0.15); }
@@ -947,7 +951,7 @@
   .editor-body a { color: #2563a8; text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; cursor: pointer; }
   .editor-body a:hover { color: #1a4a8a; }
 
-  /* Link popup */
+  
   .link-popup-overlay { display: none; position: fixed; inset: 0; background: rgba(10,16,35,0.7); z-index: 9998; backdrop-filter: blur(2px); }
   .link-popup-overlay.open { display: block; }
   .link-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--white); border: 1px solid var(--cool-grey-light); border-radius: 4px; padding: 1.8rem; z-index: 9999; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 360px; max-width: 95vw; display: none; }
@@ -958,7 +962,7 @@
   .link-popup input:focus { border-color: var(--accent); }
   .link-popup-btns { display: flex; gap: 0.6rem; }
 
-  /* ── FILE ATTACHMENTS ── */
+  
   .attach-area { border: 1px solid var(--cool-grey-light); border-radius: 3px; padding: 1.2rem; background: var(--cool-grey-pale); }
   .attach-area-top { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
   .attach-hint { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; color: var(--cool-grey); font-style: italic; }
@@ -970,7 +974,7 @@
   .attach-item-remove { background: none; border: none; color: var(--cool-grey); cursor: pointer; font-size: 0.9rem; padding: 2px 5px; line-height: 1; border-radius: 2px; transition: all 0.15s; }
   .attach-item-remove:hover { background: #8b2635; color: white; }
 
-  /* Post page file attachments */
+  
   .post-attachments { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--cool-grey-light); }
   .post-attach-label { font-family: 'Cormorant Garamond', serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 1.2rem; }
   .post-attach-list { display: flex; flex-direction: column; gap: 0; }
@@ -986,7 +990,7 @@
   .post-embed-wrap iframe { display: block; width: 100%; height: 640px; border: none; }
   html.is-touch .post-embed-wrap iframe { height: 380px; }
 
-  /* ── DYSLEXIC FONT ── */
+  
   html.dyslexic-font .post-content,
   html.dyslexic-font .post-content *,
   html.dyslexic-font .about-body p,
@@ -1006,7 +1010,7 @@
   .toggle-label { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--text); font-style: italic; }
   .toggle-sublabel { font-family: 'Cormorant Garamond', serif; font-size: 0.76rem; color: var(--cool-grey); margin-top: 2px; }
 
-  /* ── POLISH: post content rich text ── */
+  
   .post-content a { color: #2563a8; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
   .post-content a:hover { color: #1a4a8a; text-decoration-thickness: 2px; }
   .post-content strong, .post-content b { font-weight: 700; color: var(--text); }
@@ -1017,9 +1021,7 @@
   .post-content li { margin-bottom: 0.3em; }
 
 
-  /* ══════════════════════════════════════════════════════
-     INLINE HERO SEARCH (overlaid on headline)
-  ══════════════════════════════════════════════════════ */
+  
   .inline-search-bar {
     position: absolute;
     top: 2rem;
@@ -1060,7 +1062,7 @@
   }
   .inline-search-bar input::placeholder { color: rgba(255,255,255,0.45); font-style: italic; }
 
-  /* ── NAV SEARCH ICON BUTTON ── */
+  
   .nav-search-btn {
     background: none;
     border: none;
@@ -1083,7 +1085,7 @@
   .nav-search-btn:hover { color: var(--white); }
   .nav-search-btn.active { color: var(--white); }
 
-  /* ── NAV SEARCH POPUP DROPDOWN ── */
+  
   .nav-search-popup {
     position: fixed;
     top: 66px;
@@ -1123,19 +1125,15 @@
   }
   .nav-search-popup input::placeholder { color: var(--cool-grey); font-style: italic; }
 
-  /* ── SEARCH RESULTS LABEL ── */
+  
   .search-results-label { max-width: 1280px; margin: 0 auto; padding: 1rem 2.5rem 0; font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cool-grey); }
 
-  /* ══════════════════════════════════════════════════════
-     POST TAGS
-  ══════════════════════════════════════════════════════ */
+  
   .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .tag { font-family: 'Cormorant Garamond', serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 14px; border: 1px solid var(--cool-grey-light); border-radius: 20px; color: var(--text-light); cursor: pointer; transition: all 0.2s; }
   .tag:hover, .tag.active-tag { background: var(--navy); color: var(--white); border-color: var(--navy); }
 
-  /* ══════════════════════════════════════════════════════
-     RELATED ARTICLES
-  ══════════════════════════════════════════════════════ */
+  
   .related-section { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--cool-grey-light); }
   .related-label { font-family: 'Cormorant Garamond', serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cool-grey); margin-bottom: 1.5rem; }
   .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
@@ -1147,9 +1145,7 @@
   .related-title { font-family: 'Playfair Display', serif; font-size: 0.92rem; color: var(--text); line-height: 1.4; transition: color 0.2s; }
   .related-date { font-family: 'Cormorant Garamond', serif; font-size: 0.65rem; color: var(--cool-grey); margin-top: 0.5rem; }
 
-  /* ══════════════════════════════════════════════════════
-     READING HISTORY
-  ══════════════════════════════════════════════════════ */
+  
   .history-list { display: flex; flex-direction: column; }
   .history-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--cool-grey-pale); cursor: pointer; transition: padding-left 0.18s; }
   .history-item:last-child { border-bottom: none; }
@@ -1160,9 +1156,7 @@
   .history-date { font-family: 'Cormorant Garamond', serif; font-size: 0.66rem; color: var(--cool-grey); flex-shrink: 0; }
   .history-empty { font-family: 'Cormorant Garamond', serif; font-size: 0.88rem; color: var(--cool-grey); font-style: italic; padding: 0.5rem 0; }
 
-  /* ══════════════════════════════════════════════════════
-     FOOTER (updated layout)
-  ══════════════════════════════════════════════════════ */
+  
   .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 2rem; }
   .footer-left { display: flex; flex-direction: column; gap: 0.3rem; }
   .footer-cats { display: flex; flex-direction: column; gap: 0.5rem; text-align: right; }
@@ -1170,9 +1164,7 @@
   .footer-cats span:hover { color: var(--white); }
 
 
-  /* ══════════════════════════════════════════════════════
-     SOURCES & CITATIONS — ADMIN FORM
-  ══════════════════════════════════════════════════════ */
+  
   .cite-upload-area {
     border: 1px solid var(--cool-grey-light);
     border-radius: 3px;
@@ -1198,9 +1190,7 @@
   .cite-file-remove { background: none; border: none; color: var(--cool-grey); cursor: pointer; font-size: 0.9rem; padding: 2px 5px; line-height: 1; border-radius: 2px; transition: all 0.15s; flex-shrink: 0; }
   .cite-file-remove:hover { background: #8b2635; color: white; }
 
-  /* ══════════════════════════════════════════════════════
-     SOURCES & CITATIONS — POST PAGE READER VIEW
-  ══════════════════════════════════════════════════════ */
+  
   .sources-section {
     margin-top: 3.5rem;
     padding-top: 2.5rem;
@@ -1277,7 +1267,7 @@
     width: 100%;
     height: 680px;
     border: none;
-    /* Cursor enters iframe → scroll is captured by the PDF/doc, not the page */
+    
   }
   .source-viewer-fallback {
     padding: 2rem;
@@ -1321,7 +1311,7 @@
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes spin { to { transform: rotate(360deg); } }
-  /* ── HAMBURGER (hidden by default, shown on touch devices via JS) ── */
+  
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
   .hamburger span { display: block; width: 22px; height: 2px; background: var(--cool-grey-light); border-radius: 2px; transition: all 0.3s; }
   .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -1336,7 +1326,7 @@
   .mobile-nav-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 1rem 0; }
   .mobile-nav-btn { font-family: 'Cormorant Garamond', serif; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.8rem 0; color: var(--cool-grey-light); background: none; border: none; border-bottom: 1px solid rgba(255,255,255,0.06); cursor: pointer; text-align: left; width: 100%; }
 
-  /* Applied by JS when touch device detected */
+  
   html.is-touch nav { display: none; }
   html.is-touch .hamburger { display: flex; }
   html.is-touch .header-inner { height: 60px; padding: 0 1.2rem; }
@@ -1372,7 +1362,7 @@
   html.is-touch .sp-star { font-size: 1.6rem; }
   html.is-touch .empty-state { padding: 3rem 1.2rem; }
 
-  /* ── ALL TOUCH DEVICES: new features ── */
+  
   html.is-touch .inline-search-bar { width: calc(100% - 2.4rem); top: 1.2rem; }
   html.is-touch .nav-search-popup { padding: 0 1.2rem; }
   html.is-touch .search-results-label { padding: 0.8rem 1.2rem 0; }
@@ -1387,7 +1377,7 @@
   html.is-touch .comment-header { flex-wrap: wrap; gap: 0.4rem; }
   html.is-touch .comment-like-btn { margin-left: 0; }
 
-  /* ── PHILOSOPHERDLE MOBILE ── */
+  
   html.is-touch .phil-outer { padding: 1.5rem 0.8rem 2rem; }
   html.is-touch .phil-title { font-size: 2rem; }
   html.is-touch .phil-cell { width: 42px; height: 42px; font-size: 1rem; }
@@ -1397,20 +1387,20 @@
   html.is-touch .phil-kbd { gap: 5px; }
   html.is-touch .phil-stat-n { font-size: 1.3rem; }
 
-  /* Extra small phones */
+  
   html.is-touch.is-small .phil-outer { padding: 1rem 0.5rem 1.5rem; }
   html.is-touch.is-small .phil-title { font-size: 1.6rem; }
   html.is-touch.is-small .phil-cell { width: 34px; height: 34px; font-size: 0.82rem; }
   html.is-touch.is-small .phil-key { min-width: 26px; height: 42px; font-size: 0.72rem; padding: 0 2px; }
   html.is-touch.is-small .phil-key.wide { min-width: 44px; font-size: 0.62rem; }
 
-  /* Small phones — general */
+  
   html.is-touch.is-small .headline-title { font-size: 1.3rem; }
   html.is-touch.is-small .post-hero-title { font-size: 1.35rem; }
   html.is-touch.is-small .theme-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
   html.is-touch.is-small .theme-btn { padding: 0.7rem 0.5rem; }
 
-  /* Tablet: 2-col grid, bigger game cells */
+  
   html.is-touch.is-tablet .post-grid { grid-template-columns: repeat(2, 1fr); }
   html.is-touch.is-tablet .card { flex-direction: column; }
   html.is-touch.is-tablet .card-img-wrap { width: 100%; height: auto; }
@@ -1453,7 +1443,7 @@
   </div>
 </header>
 
-<!-- MOBILE NAV -->
+
 <div class="mobile-nav-overlay" id="mobile-nav-overlay" onclick="closeMobileNav()"></div>
 <div class="mobile-nav" id="mobile-nav">
   <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
@@ -1469,7 +1459,7 @@
   <button class="mobile-nav-btn" id="mobile-admin-btn" onclick="handleAdminClick(); closeMobileNav()">Admin</button>
 </div>
 
-<!-- NAV SEARCH POPUP -->
+
 <div class="nav-search-popup" id="nav-search-popup">
   <svg class="nav-search-popup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
   <input type="text" id="nav-search-input" placeholder="Search articles…" onkeydown="if(event.key==='Enter'){handleNavSearch(this.value);doSearch(this.value.trim());}" autocomplete="off">
@@ -1483,8 +1473,8 @@
   </div>
 </div>
 
-<!-- HOME -->
-<div id="home-page" class="page active">
+
+<div id="home-page" class="page active"><main id="main-content" aria-label="Article listing">
   <div id="inline-search-bar" class="inline-search-bar" onclick="event.stopPropagation()">
     <svg class="inline-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
     <input type="text" id="search-input" placeholder="Search articles…" onkeydown="if(event.key==='Enter')doSearch(this.value.trim())" autocomplete="off">
@@ -1510,7 +1500,7 @@
   <div class="page-loader" id="home-loader">Loading…</div>
 </div>
 
-<!-- ABOUT -->
+
 <div id="about-page" class="page">
   <div class="about-header">
     <div class="about-eyebrow">About This Space</div>
@@ -1525,7 +1515,7 @@
 </div>
 
 
-<!-- SETTINGS -->
+
 <div id="settings-page" class="page">
   <div class="settings-wrap">
     <div class="settings-header">
@@ -1533,7 +1523,7 @@
       <h1 class="about-title">Settings</h1>
     </div>
 
-    <!-- COLOR THEMES -->
+    
     <div class="settings-section">
       <div class="settings-section-label">Color Theme</div>
       <div class="theme-grid" id="theme-grid">
@@ -1600,7 +1590,7 @@
       </div>
     </div>
 
-    <!-- GAMES -->
+    
     <div class="settings-section">
       <div class="settings-section-label">Games</div>
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
@@ -1612,7 +1602,7 @@
       </div>
     </div>
 
-    <!-- ACCESSIBILITY -->
+    
     <div class="settings-section">
       <div class="settings-section-label">Accessibility</div>
       <div class="dyslexic-toggle">
@@ -1627,11 +1617,11 @@
       </div>
     </div>
 
-    <!-- MY ACCOUNT (only shown when logged in) -->
+    
     <div class="settings-section" id="account-section" style="display:none;">
       <div class="settings-section-label">My Account</div>
 
-      <!-- Profile Picture -->
+      
       <div class="account-row">
         <div class="account-row-label">Profile Picture</div>
         <div class="account-row-content">
@@ -1647,7 +1637,7 @@
         </div>
       </div>
 
-      <!-- Member Since -->
+      
       <div class="account-row">
         <div class="account-row-label">Member Since</div>
         <div class="account-row-content">
@@ -1655,7 +1645,7 @@
         </div>
       </div>
 
-      <!-- Support Ticket -->
+      
       <div class="account-row">
         <div class="account-row-label">Support</div>
         <div class="account-row-content">
@@ -1664,7 +1654,7 @@
         </div>
       </div>
 
-      <!-- Reset Password -->
+      
       <div class="account-row">
         <div class="account-row-label">Password</div>
         <div class="account-row-content">
@@ -1673,7 +1663,7 @@
         </div>
       </div>
 
-      <!-- Reading History -->
+      
       <div class="account-row" style="flex-direction:column;gap:0.8rem;">
         <div class="account-row-label">Reading History</div>
         <div id="reading-history-list" class="history-list">
@@ -1681,7 +1671,7 @@
         </div>
       </div>
 
-      <!-- Log Out -->
+      
       <div class="account-row">
         <div class="account-row-label">Session</div>
         <div class="account-row-content">
@@ -1693,17 +1683,17 @@
   </div>
 </div>
 
-<!-- POST -->
-<div id="post-page" class="page">
+
+<div id="post-page" class="page"><article itemscope itemtype="https://schema.org/Article">
   <div class="post-hero">
-    <img class="post-hero-img" id="ph-img" src="" alt="" style="display:none;">
+    <img class="post-hero-img" id="ph-img" src="" alt="" style="display:none;" loading="eager">
     <div class="post-hero-bg" id="ph-bg"></div>
     <div class="post-hero-overlay"></div>
     <div class="post-hero-content">
       <div class="post-hero-cat" id="ph-cat"></div>
-      <h1 class="post-hero-title" id="ph-title"></h1>
-      <div class="post-hero-meta" id="ph-meta"></div>
-      <div class="post-byline" id="ph-byline"></div>
+      <h1 class="post-hero-title" id="ph-title" itemprop="headline"></h1>
+      <div class="post-hero-meta" id="ph-meta" itemprop="datePublished"></div>
+      <div class="post-byline" id="ph-byline" itemprop="author" itemscope itemtype="https://schema.org/Person"></div>
       <div class="post-hero-tags" id="ph-hero-tags"></div>
     </div>
   </div>
@@ -1718,7 +1708,7 @@
       <span class="font-size-label">Text Spacing</span>
       <button onclick="changeFontSize(1)" title="Increase font size">A+</button>
     </div>
-    <div class="post-content" id="ph-body"></div>
+    <main id="post-main" itemprop="articleBody"><div class="post-content" id="ph-body"></div></main>
     <div class="post-tags" id="post-tags-section" style="display:none;">
       <div class="post-tags-label">Tags</div>
       <div class="tag-list" id="post-tags-list"></div>
@@ -1732,10 +1722,10 @@
       <div class="related-grid" id="related-grid"></div>
     </div>
 
-    <!-- ARTICLE DISCLAIMER -->
+    
     <p style="font-family:'Cormorant Garamond',serif;font-size:0.88rem;font-style:italic;color:var(--cool-grey);line-height:1.7;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--cool-grey-light);">The topic deals with an informational topic; therefore, some sections are direct references. I acknowledge that the direct references belong to their original writers. This article has been published for education and informational purposes only.</p>
 
-    <!-- SOURCES & CITATIONS (uploaded by admin) -->
+    
     <div class="sources-section" id="sources-section" style="display:none;">
       <div class="sources-eyebrow">Research</div>
       <div class="sources-title">Sources &amp; Citations</div>
@@ -1743,7 +1733,7 @@
       <div id="sources-viewer-list"></div>
     </div>
 
-    <!-- CITATION SECTION -->
+    
     <div class="citation-section" id="citation-section">
       <div class="citation-section-label">Cite This Article</div>
       <div class="citation-tabs">
@@ -1760,7 +1750,7 @@
       </div>
     </div>
 
-    <!-- RATINGS -->
+    
     <div class="rating-section" id="rating-section">
       <div class="rating-label">Reader Rating</div>
       <div class="rating-current">
@@ -1768,21 +1758,21 @@
         <div class="rating-summary" id="post-rating-summary"></div>
       </div>
       <div id="rating-input-area">
-        <!-- filled by JS based on auth state -->
+        
       </div>
       <div class="rating-thanks" id="rating-thanks">Thank you for your rating!</div>
     </div>
 
-    <!-- COMMENTS -->
+    
     <div class="comments-section">
       <div class="comments-label" id="comments-label">Comments</div>
       <div id="comment-form-area">
-        <!-- filled by JS based on auth state -->
+        
       </div>
       <div class="comment-list" id="comment-list"></div>
     </div>
 
-    <!-- POSTER INFO (admin only) -->
+    
     <div class="post-poster-info" id="post-poster-info">
       <div class="poster-label">Posted By</div>
       <div class="poster-email" id="poster-email-display"></div>
@@ -1792,7 +1782,7 @@
   </div>
 </div>
 
-<!-- PHILOSOPHERDLE -->
+
 <div id="phil-page" class="page">
   <div class="phil-outer">
     <div class="phil-header">
@@ -1844,7 +1834,7 @@
 </footer>
 
 
-<!-- USER AUTH MODAL -->
+
 <div class="modal-bg" id="user-modal">
   <div class="modal" style="max-width:420px;">
     <div class="modal-header">
@@ -1856,7 +1846,7 @@
         <button class="auth-tab active" onclick="switchAuthTab('signin', this)">Sign In</button>
         <button class="auth-tab" onclick="switchAuthTab('signup', this)">Create Account</button>
       </div>
-      <!-- SIGN IN -->
+      
       <div class="auth-panel active" id="auth-signin">
         <div class="form-msg form-error" id="user-signin-error"></div>
         <div class="form-group">
@@ -1869,7 +1859,7 @@
         </div>
         <button class="btn-primary" id="user-signin-btn" onclick="doUserSignin()">Sign In</button>
       </div>
-      <!-- SIGN UP -->
+      
       <div class="auth-panel" id="auth-signup">
         <div class="form-msg form-error" id="user-signup-error"></div>
         <div class="form-msg form-success" id="user-signup-success"></div>
@@ -1891,7 +1881,7 @@
   </div>
 </div>
 
-<!-- LOGIN MODAL -->
+
 <div class="modal-bg" id="login-modal">
   <div class="modal" style="max-width:420px;">
     <div class="modal-header">
@@ -1913,7 +1903,7 @@
   </div>
 </div>
 
-<!-- POST MODAL -->
+
 <div class="modal-bg" id="post-modal">
   <div class="modal">
     <div class="modal-header">
@@ -1978,7 +1968,7 @@
         <textarea id="p-body-hidden" style="display:none;"></textarea>
       </div>
 
-      <!-- SOURCES & CITATIONS -->
+      
       <div class="form-group">
         <label>Sources &amp; Citations <span style="font-style:italic;text-transform:none;letter-spacing:0;font-size:0.7rem;">Add links to your sources — Google Drive, websites, papers, etc.</span></label>
         <div class="cite-upload-area">
@@ -1991,7 +1981,7 @@
         </div>
       </div>
 
-      <!-- FILE ATTACHMENTS -->
+      
       <div class="form-group">
         <label>Attachments <span style="font-style:italic;text-transform:none;letter-spacing:0;font-size:0.7rem;">PDF, DOCX, PPTX, or SVG</span></label>
         <div class="attach-area">
@@ -2005,7 +1995,7 @@
         <input type="hidden" id="p-attachments-json" value="[]">
       </div>
 
-      <!-- IMAGE SECTION -->
+      
       <div class="form-group">
         <label>Cover Image <span style="font-style:italic;text-transform:none;letter-spacing:0;font-size:0.7rem;">(16:9, drag to reposition crop)</span></label>
 
@@ -2017,7 +2007,7 @@
           </div>
         </div>
 
-        <!-- CROPPER -->
+        
         <div class="crop-container" id="crop-container">
           <div class="crop-header">
             <span>Crop to 16:9</span>
@@ -2044,7 +2034,7 @@
           </div>
         </div>
 
-        <!-- RESULT -->
+        
         <div class="crop-result-wrap" id="crop-result-wrap">
           <img class="crop-result-img" id="crop-result-img" src="" alt="Cropped preview">
           <div class="crop-result-badge">16:9 ✓</div>
@@ -2060,7 +2050,7 @@
   </div>
 </div>
 
-<!-- LINK POPUP -->
+
 <div class="link-popup-overlay" id="link-popup-overlay" onclick="closeLinkPopup()"></div>
 <div class="link-popup" id="link-popup">
   <div class="link-popup-title">Insert Hyperlink</div>
@@ -2074,24 +2064,24 @@
   </div>
 </div>
 
-<!-- Hidden canvas for cropping -->
+
 <canvas id="crop-canvas" style="display:none;"></canvas>
 
 <script>
-// ── SUPABASE ─────────────────────────────────────────────────
+
 const SUPA_URL = 'https://clfpzfualnormrgjmujb.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNsZnB6ZnVhbG5vcm1yZ2ptdWpiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE1ODk5MjcsImV4cCI6MjA4NzE2NTkyN30.eq66TP4GNT5kbOfanARkW9rLoGZQWnvhTC-xx-_vuKw';
-const ADMIN_EMAIL = 'admin'; // partial match — any user whose email contains this is admin
+const ADMIN_EMAIL = 'admin'; 
 const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
 
-// ── GLOBAL STATE ─────────────────────────────────────────────
-let currentUser = null;       // admin user (via admin login)
-let currentPublicUser = null; // regular signed-in user
+
+let currentUser = null;       
+let currentPublicUser = null; 
 let currentFilter = null, currentPostId = null, cachedPosts = [];
-let ratingsCache = {};        // postId -> { avg, count }
+let ratingsCache = {};        
 let ratingPromptDismissed = false;
 
-// ── CROPPER STATE ────────────────────────────────────────────
+
 const CROP_ASPECT = 16 / 9;
 let cropSourceNaturalW = 0, cropSourceNaturalH = 0;
 let cropDisplayW = 0, cropDisplayH = 0;
@@ -2100,7 +2090,7 @@ let cropBox = { x: 0, y: 0, w: 0, h: 0 };
 let croppedBlob = null;
 let dragState = null;
 
-// ── ADMIN AUTH ────────────────────────────────────────────────
+
 async function initAuth() {
   try {
     const { data: { session } } = await sb.auth.getSession();
@@ -2166,7 +2156,7 @@ async function loadAvatarFromProfile(user) {
       user.user_metadata = user.user_metadata || {};
       user.user_metadata.avatar_url = data.avatar_url;
     }
-  } catch(e) {} // silent if profiles table doesn't exist
+  } catch(e) {} 
 }
 
 function applyUserUI(user) {
@@ -2193,7 +2183,7 @@ function handleUserClick() {
   }
 }
 
-// Admin login (same modal, same Supabase signIn)
+
 async function doLogin() {
   const email = document.getElementById('login-email').value.trim();
   const pass = document.getElementById('login-pass').value;
@@ -2219,7 +2209,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Enter' && document.getElementById('login-modal').classList.contains('open')) doLogin();
 });
 
-// Public user auth
+
 function switchAuthTab(tab, btnEl) {
   document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
@@ -2251,7 +2241,7 @@ async function doUserSignup() {
   if (pass.length < 6) { err.textContent = 'Password must be at least 6 characters.'; err.style.display = 'block'; return; }
   btn.disabled = true; btn.innerHTML = '<span class="spinner"></span>Creating account…';
 
-  // Check if display name is already taken
+  
   const { data: existing } = await sb.from('display_names').select('name').eq('name', name.toLowerCase()).maybeSingle();
   if (existing) {
     btn.disabled = false; btn.textContent = 'Create Account';
@@ -2270,14 +2260,14 @@ async function doUserSignup() {
     }
     err.style.display = 'block';
   } else {
-    // Reserve the display name
+    
     await sb.from('display_names').insert({ name: name.toLowerCase(), display: name });
     suc.textContent = 'Account created! Check your email to confirm, then sign in.';
     suc.style.display = 'block';
   }
 }
 
-// ── DATA ─────────────────────────────────────────────────────
+
 async function fetchPosts(cat) {
   try {
     let q = sb.from('posts').select('*').order('date', { ascending: false });
@@ -2312,7 +2302,7 @@ async function fetchRatingsForPosts(postIds) {
   } catch(e) { console.warn('ratings not ready'); }
 }
 
-// ── HOME RENDER ──────────────────────────────────────────────
+
 async function renderHome() {
   const loader = document.getElementById('home-loader');
   const hwrap = document.getElementById('headline-wrap'), grid = document.getElementById('post-grid');
@@ -2325,11 +2315,11 @@ async function renderHome() {
     cachedPosts = posts;
     if (!posts.length) { empty.style.display = 'block'; return; }
     await fetchRatingsForPosts(posts.map(p => p.id));
-    // Save the search bar element BEFORE innerHTML wipes it
+    
     const inlineBar = document.getElementById('inline-search-bar');
-    if (inlineBar) inlineBar.remove(); // detach from DOM so innerHTML='' doesn't destroy it
+    if (inlineBar) inlineBar.remove(); 
     hwrap.innerHTML = heroHTML(posts[0]);
-    // Re-attach into the new hero
+    
     if (inlineBar) hwrap.querySelector('.headline-post').appendChild(inlineBar);
     const rest = posts.slice(1);
     if (rest.length) { divider.style.display = 'flex'; grid.innerHTML = rest.map(cardHTML).join(''); }
@@ -2358,7 +2348,7 @@ function heroHTML(p) {
     <button class="btn-danger" onclick="event.stopPropagation();openEdit('${p.id}')">Edit</button>
     <button class="btn-danger" onclick="event.stopPropagation();confirmDel('${p.id}')">Delete</button></div>` : '';
   return `<div class="headline-post" onclick="openPost('${p.id}')">
-    ${p.image_url ? `<img class="headline-img" src="${p.image_url}" alt="${x(p.title)}">` : `<div class="headline-bg"></div>`}
+    ${p.image_url ? `<img class="headline-img" src="${p.image_url}" alt="${x(p.title)}" loading="eager" fetchpriority="high">` : `<div class="headline-bg"></div>`}
     <div class="headline-overlay"></div>
     <div class="headline-content">
       <div class="headline-category">${x(p.category)}</div>
@@ -2385,7 +2375,7 @@ function cardHTML(p) {
     ${ab}</div>`;
 }
 
-// ── SINGLE POST ──────────────────────────────────────────────
+
 async function openPost(id) {
   currentPostId = id;
   ratingPromptDismissed = false;
@@ -2414,7 +2404,7 @@ async function openPost(id) {
   if (post.image_url) { img.src = post.image_url; img.style.display = 'block'; bg.style.display = 'none'; }
   else { img.style.display = 'none'; bg.style.display = 'block'; }
 
-  // Render body — support both rich HTML (from new editor) and plain paragraphs
+  
   const bodyEl = document.getElementById('ph-body');
   if (post.body && /<[a-z][\s\S]*>/i.test(post.body)) {
     bodyEl.innerHTML = post.body;
@@ -2423,7 +2413,7 @@ async function openPost(id) {
   } else {
     bodyEl.innerHTML = '';
   }
-  // Ensure all links open in a new tab regardless of how they were saved
+  
   bodyEl.querySelectorAll('a[href]').forEach(a => {
     const href = a.getAttribute('href') || '';
     if (!href.startsWith('javascript')) {
@@ -2432,21 +2422,21 @@ async function openPost(id) {
     }
   });
 
-  // Render file attachments
+  
   renderPostAttachments(post.attachments_json);
-  // Citations link next to back button
+  
   const citLink = document.getElementById('ph-citations-link');
   if (citLink) {
     try {
       const cits = post.citations_json ? JSON.parse(post.citations_json) : null;
       if (cits && cits.length) {
-        // If multiple, link to first; show count if more than one
+        
         if (cits.length === 1) {
           citLink.href = cits[0].url;
           citLink.textContent = 'Go to Citations →';
           citLink.style.display = 'inline';
         } else {
-          // Multiple — link wraps to a dropdown; for now open first, show count
+          
           citLink.href = cits[0].url;
           citLink.textContent = `Sources (${cits.length}) →`;
           citLink.style.display = 'inline';
@@ -2457,12 +2447,12 @@ async function openPost(id) {
       }
     } catch(e) { citLink.style.display = 'none'; }
   }
-  // Render sources & citations
+  
   renderSourcesSection(post.citations_json);
 
   renderCitations(post);
 
-  // Poster email (admin only)
+  
   const posterEl = document.getElementById('poster-email-display');
   posterEl.textContent = post.poster_email || '(no email recorded)';
 
@@ -2470,32 +2460,60 @@ async function openPost(id) {
   await renderRatingSection(id);
   await renderComments(id);
   renderCommentForm();
-  recordReadingHistory(post); // track that this user read this article
+  recordReadingHistory(post); 
   showPage('post');
-  // Apply dyslexic font to article body if setting is on
+  
   if (localStorage.getItem('anima-dyslexic') === '1') applyDyslexicToBody(true);
 }
 
 function updateSEOMeta(post) {
   const title = post.title + ' — Animasapient';
-  const desc = post.excerpt || post.body?.replace(/<[^>]+>/g,'').slice(0,160) || '';
-  const url = 'https://www.animasapient.xyz/' + (post.category ? post.category.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'') : '') + '/' + (post.slug || post.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''));
+  const rawDesc = post.excerpt || (post.body || '').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
+  const desc = rawDesc.length > 160 ? rawDesc.slice(0, 157) + '...' : rawDesc;
+  const catSlug = post.category ? post.category.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'') : '';
+  const titleSlug = (post.slug || post.title).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+  const url = 'https://www.animasapient.xyz/' + (catSlug ? catSlug + '/' : '') + titleSlug;
   const img = post.image_url || 'https://www.animasapient.xyz/image.png';
+  const author = post.byline || 'Animasapient';
+  const datePublished = post.date || '';
+  const keywords = [post.category, ...(post.tags ? post.tags.split(',').map(t=>t.trim()) : [])].filter(Boolean).join(', ');
+  const wordCount = (post.body || '').replace(/<[^>]+>/g,'').split(/\s+/).filter(Boolean).length;
 
   document.title = title;
-  const setMeta = (sel, val) => { const el = document.querySelector(sel); if (el) el.setAttribute('content', val); };
-  setMeta('meta[name="description"]', desc);
-  setMeta('meta[property="og:title"]', title);
-  setMeta('meta[property="og:description"]', desc);
-  setMeta('meta[property="og:url"]', url);
-  setMeta('meta[property="og:image"]', img);
-  setMeta('meta[name="twitter:title"]', title);
-  setMeta('meta[name="twitter:description"]', desc);
-  setMeta('meta[name="twitter:image"]', img);
+
+  const setMeta = (sel, attr, val) => { const el = document.querySelector(sel); if (el) el.setAttribute(attr, val); };
+  setMeta('meta[name="description"]', 'content', desc);
+  setMeta('meta[name="author"]', 'content', author);
+  setMeta('meta[name="keywords"]', 'content', keywords);
+
+  setMeta('meta[property="og:title"]', 'content', title);
+  setMeta('meta[property="og:description"]', 'content', desc);
+  setMeta('meta[property="og:url"]', 'content', url);
+  setMeta('meta[property="og:image"]', 'content', img);
+  setMeta('meta[property="og:type"]', 'content', 'article');
+
+  let ogPubTime = document.querySelector('meta[property="article:published_time"]');
+  if (!ogPubTime) { ogPubTime = document.createElement('meta'); ogPubTime.setAttribute('property','article:published_time'); document.head.appendChild(ogPubTime); }
+  ogPubTime.setAttribute('content', datePublished);
+
+  let ogAuthor = document.querySelector('meta[property="article:author"]');
+  if (!ogAuthor) { ogAuthor = document.createElement('meta'); ogAuthor.setAttribute('property','article:author'); document.head.appendChild(ogAuthor); }
+  ogAuthor.setAttribute('content', author);
+
+  let ogSection = document.querySelector('meta[property="article:section"]');
+  if (!ogSection) { ogSection = document.createElement('meta'); ogSection.setAttribute('property','article:section'); document.head.appendChild(ogSection); }
+  ogSection.setAttribute('content', post.category || '');
+
+  setMeta('meta[name="twitter:title"]', 'content', title);
+  setMeta('meta[name="twitter:description"]', 'content', desc);
+  setMeta('meta[name="twitter:image"]', 'content', img);
+  setMeta('meta[name="twitter:card"]', 'content', 'summary_large_image');
+
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical) canonical.href = url;
 
-  // JSON-LD Article structured data for Google
+  document.getElementById('ph-img').alt = post.title || '';
+
   const jsonld = document.getElementById('article-jsonld');
   if (jsonld) {
     jsonld.textContent = JSON.stringify({
@@ -2504,11 +2522,29 @@ function updateSEOMeta(post) {
       "headline": post.title,
       "description": desc,
       "url": url,
-      "image": img,
-      "datePublished": post.date,
-      "author": { "@type": "Person", "name": post.byline || "Animasapient" },
-      "publisher": { "@type": "Organization", "name": "Animasapient", "url": "https://www.animasapient.xyz" },
-      "keywords": post.tags || post.category
+      "image": { "@type": "ImageObject", "url": img, "width": 1200, "height": 630 },
+      "datePublished": datePublished,
+      "dateModified": post.updated_at || datePublished,
+      "author": { "@type": "Person", "name": author, "url": "https://www.animasapient.xyz" },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Animasapient",
+        "url": "https://www.animasapient.xyz",
+        "logo": { "@type": "ImageObject", "url": "https://www.animasapient.xyz/flavicon.png" }
+      },
+      "keywords": keywords,
+      "wordCount": wordCount,
+      "articleSection": post.category || '',
+      "inLanguage": "en-US",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": url },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.animasapient.xyz" },
+          { "@type": "ListItem", "position": 2, "name": post.category || "Articles", "item": "https://www.animasapient.xyz/" + catSlug },
+          { "@type": "ListItem", "position": 3, "name": post.title, "item": url }
+        ]
+      }
     });
   }
 }
@@ -2520,7 +2556,7 @@ function renderPostAdmin(id) {
     <button class="btn-danger" onclick="confirmDel('${id}')">Delete Article</button></div>` : '';
 }
 
-// ── RATINGS ──────────────────────────────────────────────────
+
 async function renderRatingSection(postId) {
   const section = document.getElementById('rating-section');
   const starsDisp = document.getElementById('post-stars-display');
@@ -2529,26 +2565,26 @@ async function renderRatingSection(postId) {
   const thanks = document.getElementById('rating-thanks');
   thanks.style.display = 'none';
 
-  // Fetch current ratings
+  
   const { data: ratings } = await sb.from('ratings').select('score, user_id').eq('post_id', postId);
   const count = ratings ? ratings.length : 0;
   const avg = count ? ratings.reduce((a, r) => a + r.score, 0) / count : 0;
 
-  // Stars display
+  
   const filled = Math.round(avg);
   let starsH = '';
   for (let i = 1; i <= 5; i++) starsH += `<span class="star-icon${i <= filled ? ' filled' : ''}">★</span>`;
   starsDisp.innerHTML = starsH;
   summary.textContent = count ? `${avg.toFixed(1)} out of 5 · ${count} rating${count !== 1 ? 's' : ''}` : 'No ratings yet — be the first!';
 
-  // Check if current user has rated
+  
   let userRating = null;
   if (currentPublicUser && ratings) {
     const mine = ratings.find(r => r.user_id === currentPublicUser.id);
     if (mine) userRating = mine.score;
   }
 
-  // Input area
+  
   if (!currentPublicUser) {
     if (ratingPromptDismissed) {
       inputArea.innerHTML = '';
@@ -2600,7 +2636,7 @@ async function submitRating(score) {
   await renderRatingSection(currentPostId);
 }
 
-// ── COMMENTS ─────────────────────────────────────────────────
+
 function renderCommentForm() {
   const area = document.getElementById('comment-form-area');
   if (!currentPublicUser) {
@@ -2679,7 +2715,7 @@ async function deleteComment(id) {
   await renderComments(currentPostId);
 }
 
-// ── POST FORM ────────────────────────────────────────────────
+
 function resetImageSection() {
   croppedBlob = null;
   document.getElementById('p-img').value = '';
@@ -2729,7 +2765,7 @@ async function openEdit(id) {
     document.getElementById('crop-result-wrap').classList.add('visible');
     document.getElementById('upload-area').style.display = 'none';
   }
-  // Load existing citations
+  
   pendingCitations = [];
   if (post.citations_json) {
     try {
@@ -2741,7 +2777,7 @@ async function openEdit(id) {
   openModal('post-modal');
 }
 
-// ── CROPPER ──────────────────────────────────────────────────
+
 function onFileSelected(input) {
   const file = input.files[0]; if (!file) return;
   croppedBlob = null;
@@ -2806,7 +2842,7 @@ function previewImg(input) {
   r.readAsDataURL(file);
 }
 
-// Drag & resize
+
 const cropStageEl = document.getElementById('crop-stage');
 const cropBoxEl = document.getElementById('crop-box');
 function clampBox(box) {
@@ -2878,7 +2914,7 @@ window.addEventListener('resize', () => {
   if (document.getElementById('crop-container').classList.contains('visible')) { initCropBox(); renderCropBox(); }
 });
 
-// ── SUBMIT POST ──────────────────────────────────────────────
+
 async function submitPost() {
   const title    = document.getElementById('p-title').value.trim();
   const category = document.getElementById('p-cat').value;
@@ -2907,16 +2943,16 @@ async function submitPost() {
       if (upErr) throw new Error('Image upload failed: ' + upErr.message);
       image_url = sb.storage.from('post-images').getPublicUrl(fname).data.publicUrl;
     }
-    // Upload file attachments
+    
     const uploadedAttachments = await uploadAttachments();
     const attachments_json = uploadedAttachments.length ? JSON.stringify(uploadedAttachments) : null;
-    // Citations — pure URL list, no upload needed
+    
     const uploadedCitations = await uploadCitations();
     const citations_json = uploadedCitations.length ? JSON.stringify(uploadedCitations) : null;
     const poster_email = currentUser ? currentUser.email : null;
-    // Save WITHOUT citations first (in case column doesn't exist yet)
+    
     const payload = { title, category, date, excerpt, body, image_url, byline, slug, poster_email, tags: tagsVal || null, attachments_json };
-    // Try to add citations_json — if column missing, Supabase will error, we catch separately
+    
     if (citations_json !== null) payload.citations_json = citations_json;
     if (editId) {
       const { data: upData, error } = await sb.from('posts').update(payload).eq('id', editId);
@@ -2942,7 +2978,7 @@ async function submitPost() {
   }
 }
 
-// ── CITATIONS ────────────────────────────────────────────────
+
 function renderCitations(post) {
   const pageUrl = post.slug
     ? `https://www.animasapient.xyz/${catToSlug(post.category)}/${post.slug}`
@@ -2985,7 +3021,7 @@ function copyCite(boxId) {
   });
 }
 
-// ── DELETE POST ───────────────────────────────────────────────
+
 async function confirmDel(id) {
   if (!confirm('Permanently delete this article?')) return;
   const post = cachedPosts.find(p => p.id === id);
@@ -2998,17 +3034,17 @@ async function confirmDel(id) {
   if (currentPostId === id) goHome(); else renderHome();
 }
 
-// ── NAVIGATION ───────────────────────────────────────────────
-// ── URL ROUTER ───────────────────────────────────────────────
-// URL scheme:
-//   /                              → home
-//   /about                         → about
-//   /philosophy                    → home filtered by Philosophy
-//   /religion-spirituality         → home filtered by Religion & Spirituality
-//   /geography                     → home filtered by Geography
-//   /culture                       → home filtered by Culture
-//   /philosophy/my-article-slug    → post page
-//   /geography/green-house-carbon-emissions → post page
+
+
+
+
+
+
+
+
+
+
+
 
 const CATEGORY_SLUGS = {
   'philosophy':            'Philosophy',
@@ -3048,14 +3084,14 @@ function showPage(name, pushState = false, url = null) {
 
 function goHome() {
   currentFilter = null;
-  // Clear search state so the home page is fresh
+  
   const searchInput = document.getElementById('search-input');
   const navSearchInput = document.getElementById('nav-search-input');
   const lbl = document.getElementById('search-results-label');
   if (searchInput) searchInput.value = '';
   if (navSearchInput) navSearchInput.value = '';
   if (lbl) { lbl.style.display = 'none'; lbl.textContent = ''; }
-  // Restore inline search bar visibility
+  
   const inlineBar = document.getElementById('inline-search-bar');
   if (inlineBar) inlineBar.classList.remove('hidden');
   inlineSearchVisible = true;
@@ -3083,12 +3119,12 @@ async function openPost(id, replaceState = false) {
   }
   if (!post) { navigate404(); return; }
 
-  // Push URL
+  
   const url = postUrl(post);
   if (replaceState) history.replaceState({ page: 'post', id }, '', url);
   else history.pushState({ page: 'post', id }, '', url);
 
-  // Update page title
+  
   document.title = `${post.title} — Animasapient`;
 
   document.getElementById('ph-cat').textContent   = post.category;
@@ -3112,7 +3148,7 @@ async function openPost(id, replaceState = false) {
   if (post.image_url) { img.src = post.image_url; img.style.display = 'block'; bg.style.display = 'none'; }
   else { img.style.display = 'none'; bg.style.display = 'block'; }
 
-  // Render body — support both rich HTML (from new editor) and plain paragraphs
+  
   const bodyEl = document.getElementById('ph-body');
   if (post.body && /<[a-z][\s\S]*>/i.test(post.body)) {
     bodyEl.innerHTML = post.body;
@@ -3121,7 +3157,7 @@ async function openPost(id, replaceState = false) {
   } else {
     bodyEl.innerHTML = '';
   }
-  // Ensure all links open in a new tab regardless of how they were saved
+  
   bodyEl.querySelectorAll('a[href]').forEach(a => {
     const href = a.getAttribute('href') || '';
     if (!href.startsWith('javascript')) {
@@ -3130,21 +3166,21 @@ async function openPost(id, replaceState = false) {
     }
   });
 
-  // Render file attachments
+  
   renderPostAttachments(post.attachments_json);
-  // Citations link next to back button
+  
   const citLink = document.getElementById('ph-citations-link');
   if (citLink) {
     try {
       const cits = post.citations_json ? JSON.parse(post.citations_json) : null;
       if (cits && cits.length) {
-        // If multiple, link to first; show count if more than one
+        
         if (cits.length === 1) {
           citLink.href = cits[0].url;
           citLink.textContent = 'Go to Citations →';
           citLink.style.display = 'inline';
         } else {
-          // Multiple — link wraps to a dropdown; for now open first, show count
+          
           citLink.href = cits[0].url;
           citLink.textContent = `Sources (${cits.length}) →`;
           citLink.style.display = 'inline';
@@ -3155,7 +3191,7 @@ async function openPost(id, replaceState = false) {
       }
     } catch(e) { citLink.style.display = 'none'; }
   }
-  // Render sources & citations
+  
   renderSourcesSection(post.citations_json);
 
   renderCitations(post);
@@ -3167,7 +3203,7 @@ async function openPost(id, replaceState = false) {
   await renderRatingSection(id);
   await renderComments(id);
   renderCommentForm();
-  recordReadingHistory(post); // track that this user read this article
+  recordReadingHistory(post); 
 
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('post-page').classList.add('active');
@@ -3179,12 +3215,12 @@ function navigate404() {
   goHome();
 }
 
-// ── HANDLE BROWSER BACK/FORWARD ──────────────────────────────
+
 window.addEventListener('popstate', () => {
   routeFromURL(false);
 });
 
-// ── ROUTE FROM CURRENT URL ───────────────────────────────────
+
 async function routeFromURL(push = true) {
   try {
     const path = window.location.pathname.replace(/\/$/, '') || '/';
@@ -3215,7 +3251,7 @@ async function routeFromURL(push = true) {
       const cat = CATEGORY_SLUGS[parts[0]];
       const artSlug = parts[1];
       try {
-        // Fetch all posts in category and match by slug
+        
         const { data: allInCat } = await sb.from('posts').select('*')
           .eq('category', cat || parts[0]);
         const posts = (allInCat || []).filter(p => {
@@ -3228,14 +3264,14 @@ async function routeFromURL(push = true) {
           return;
         }
       } catch(e) { console.warn('Post lookup failed:', e); }
-      // Not found - go home
+      
       currentFilter = null;
       showPage('home');
       renderHome();
       return;
     }
 
-    // Fallback
+    
     currentFilter = null;
     showPage('home');
     renderHome();
@@ -3247,13 +3283,13 @@ async function routeFromURL(push = true) {
   }
 }
 
-// ── MODALS ───────────────────────────────────────────────────
+
 function openModal(id)  { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-bg').forEach(bg =>
   bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open'); }));
 
-// ── UTILS ────────────────────────────────────────────────────
+
 function fmtDate(s) { return new Date(s + 'T12:00:00').toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' }); }
 function fmtDatetime(s) { return new Date(s).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }
 function todayStr() { return new Date().toISOString().split('T')[0]; }
@@ -3261,14 +3297,14 @@ function x(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 
 
 
-// ── READING TIME ─────────────────────────────────────────────
+
 function readingTime(text) {
   const words = (text || '').split(/\s+/).filter(Boolean).length;
   const mins = Math.max(1, Math.round(words / 200));
   return mins + ' min read';
 }
 
-// ── FONT SIZE CONTROL ─────────────────────────────────────────
+
 let currentFontSize = parseInt(localStorage.getItem('anima-fontsize') || '18');
 function applyFontSize() {
   document.getElementById('ph-body').style.fontSize = currentFontSize + 'px';
@@ -3279,7 +3315,7 @@ function changeFontSize(delta) {
   applyFontSize();
 }
 
-// ── SEARCH ───────────────────────────────────────────────────
+
 let searchTimeout = null;
 function handleSearch(val) {
   clearTimeout(searchTimeout);
@@ -3303,7 +3339,7 @@ async function doSearch(q) {
   hw.innerHTML = ''; grid.innerHTML = ''; authorGrid.innerHTML = '';
   divider.style.display = 'none'; authorDivider.style.display = 'none';
 
-  // Ensure cache is populated
+  
   if (cachedPosts.length === 0) {
     const { data } = await sb.from('posts').select('*').order('date', { ascending: false });
     if (data) cachedPosts = data;
@@ -3312,7 +3348,7 @@ async function doSearch(q) {
   try {
     const ql = q.toLowerCase();
 
-    // Content matches — title, excerpt, body, tags, category
+    
     const contentMatches = cachedPosts.filter(p =>
       (p.title||'').toLowerCase().includes(ql) ||
       (p.excerpt||'').toLowerCase().includes(ql) ||
@@ -3321,7 +3357,7 @@ async function doSearch(q) {
       (p.category||'').toLowerCase().includes(ql)
     );
 
-    // Author matches — byline contains query, but NOT already in content matches
+    
     const contentIds = new Set(contentMatches.map(p => p.id));
     const authorMatches = cachedPosts.filter(p =>
       !contentIds.has(p.id) &&
@@ -3347,7 +3383,7 @@ async function doSearch(q) {
   loader.style.display = 'none';
 }
 
-// ── VIEW COUNTER ──────────────────────────────────────────────
+
 async function incrementViewCount(postId) {
   try {
     const viewed = JSON.parse(sessionStorage.getItem('anima-viewed') || '[]');
@@ -3358,7 +3394,7 @@ async function incrementViewCount(postId) {
   } catch(e) {}
 }
 
-// ── READING HISTORY ───────────────────────────────────────────
+
 async function recordReadingHistory(post) {
   if (!currentPublicUser) return;
   try {
@@ -3383,7 +3419,7 @@ async function loadReadingHistory() {
     el.innerHTML = data.map(h => {
       const p = h.posts;
       if (!p) return '';
-      const imgHtml = p.image_url ? `<img class="history-item-img" src="${p.image_url}" alt="">` : `<div class="history-item-img"></div>`;
+      const imgHtml = p.image_url ? `<img class="history-item-img" src="${p.image_url}" alt="${x(p.title || '')}" loading="lazy">` : `<div class="history-item-img"></div>`;
       const date = new Date(h.read_at).toLocaleDateString('en-US', {month:'short', day:'numeric'});
       return `<div class="history-item" onclick="openPost('${p.id}')">
         ${imgHtml}
@@ -3394,7 +3430,7 @@ async function loadReadingHistory() {
   } catch(e) { el.innerHTML = '<span class="history-empty">Could not load history.</span>'; }
 }
 
-// ── TAGS ─────────────────────────────────────────────────────
+
 function renderPostTags(tags) {
   if (!tags) { document.getElementById('post-tags-section').style.display = 'none'; return; }
   const tagArr = tags.split(',').map(t => t.trim()).filter(Boolean);
@@ -3410,24 +3446,46 @@ function searchByTag(tag) {
   doSearch(tag);
 }
 
-// ── RELATED ARTICLES ─────────────────────────────────────────
+
 async function renderRelated(post) {
   const sec = document.getElementById('related-section');
   const grid = document.getElementById('related-grid');
   try {
-    const related = cachedPosts.filter(p => p.id !== post.id && p.category === post.category).slice(0, 3);
-    if (!related.length) { sec.style.display = 'none'; return; }
+    if (cachedPosts.length === 0) {
+      const { data } = await sb.from('posts').select('*').order('date', { ascending: false });
+      if (data) cachedPosts = data;
+    }
+    const postTags = post.tags ? post.tags.split(',').map(t => t.trim().toLowerCase()).filter(Boolean) : [];
+    const scored = cachedPosts
+      .filter(p => p.id !== post.id)
+      .map(p => {
+        let score = 0;
+        if (p.category === post.category) score += 3;
+        if (postTags.length && p.tags) {
+          const pTags = p.tags.split(',').map(t => t.trim().toLowerCase());
+          postTags.forEach(t => { if (pTags.includes(t)) score += 2; });
+        }
+        return { p, score };
+      })
+      .filter(({ score }) => score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 4)
+      .map(({ p }) => p);
+    if (!scored.length) { sec.style.display = 'none'; return; }
     sec.style.display = 'block';
-    grid.innerHTML = related.map(p => `
-      <div class="related-card" onclick="openPost('${p.id}')">
+    grid.innerHTML = scored.map(p => {
+      const slug = 'https://www.animasapient.xyz/' + (p.category ? p.category.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'') + '/' : '') + (p.slug || p.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,''));
+      return `<div class="related-card" onclick="openPost('${p.id}')" role="link" tabindex="0" aria-label="${x(p.title)}">
         <div class="related-cat">${x(p.category)}</div>
         <div class="related-title">${x(p.title)}</div>
         <div class="related-date">${fmtDate(p.date)}</div>
-      </div>`).join('');
+        <a href="${slug}" style="display:none;" tabindex="-1" aria-hidden="true">${x(p.title)}</a>
+      </div>`;
+    }).join('');
   } catch(e) { sec.style.display = 'none'; }
 }
 
-// ── COMMENT LIKES ─────────────────────────────────────────────
+
 async function likeComment(commentId, btn) {
   if (!currentPublicUser) { openModal('user-modal'); return; }
   try {
@@ -3449,10 +3507,10 @@ async function likeComment(commentId, btn) {
   } catch(e) {}
 }
 
-// ══════════════════════════════════════════════════════════════
-// ══════════════════════════════════════════════════════════════
-// ── PHILOSOPHERDLE ────────────────────────────────────────────
-// ══════════════════════════════════════════════════════════════
+
+
+
+
 
 const PHIL_WORDS = [
   'Plato','Aristotle','Socrates','Kant','Nietzsche','Descartes','Locke','Hume',
@@ -3482,27 +3540,27 @@ const PHIL_WORDS = [
   'Malebranche','Bayle','Levinas','Merleau'
 ];
 
-// ── State ─────────────────────────────────────────────────────
+
 let PD = {
   mode: 'daily',
   answer: '',
   maxLen: 0,
   maxGuesses: 6,
-  guesses: [],         // array of strings (completed rows)
-  currentLetters: [],  // current in-progress row
+  guesses: [],         
+  currentLetters: [],  
   gameOver: false,
   stats: { played:0, wins:0, streak:0, best:0, lastWinDate:'' }
 };
 let philTimerInterval = null;
 
-// ── Helpers ───────────────────────────────────────────────────
+
 function pdTodayStr() {
   const d = new Date();
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
 
 function pdDailyAnswer() {
-  // Deterministic daily word based on days since epoch
+  
   const epoch = new Date('2025-01-01T00:00:00');
   const today = new Date(); today.setHours(0,0,0,0);
   const day = Math.floor((today - epoch) / 86400000);
@@ -3522,36 +3580,36 @@ function pdSaveStats() {
   localStorage.setItem('pd-stats-v2', JSON.stringify(PD.stats));
 }
 
-// ── Core coloring algorithm (handles duplicate letters correctly) ──
+
 function pdScore(guess, answer) {
-  // Returns array of 'correct' | 'present' | 'absent' for each position
+  
   const result = Array(guess.length).fill('absent');
   const answerArr = answer.split('');
   const guessArr = guess.split('');
   const answerRemaining = [...answerArr];
 
-  // Pass 1: mark correct (green)
+  
   guessArr.forEach((ch, i) => {
     if (ch === answerArr[i]) {
       result[i] = 'correct';
-      answerRemaining[i] = null; // used up
+      answerRemaining[i] = null; 
     }
   });
 
-  // Pass 2: mark present (yellow) — only if not already correct
+  
   guessArr.forEach((ch, i) => {
     if (result[i] === 'correct') return;
     const idx = answerRemaining.indexOf(ch);
     if (idx !== -1) {
       result[i] = 'present';
-      answerRemaining[idx] = null; // consume it
+      answerRemaining[idx] = null; 
     }
   });
 
   return result;
 }
 
-// ── Open the game ─────────────────────────────────────────────
+
 function openPhilosopherdle() {
   pdLoadStats();
   showPage('phil', true, '/philosopherdle');
@@ -3564,7 +3622,7 @@ function switchPhilMode(mode) {
   pdInit(mode);
 }
 
-// ── Init/restore ──────────────────────────────────────────────
+
 function pdInit(mode) {
   PD.mode = mode;
   if (philTimerInterval) { clearInterval(philTimerInterval); philTimerInterval = null; }
@@ -3578,11 +3636,11 @@ function pdInit(mode) {
     PD.maxLen = PD.answer.length;
     PD.maxGuesses = Math.min(8, PD.maxLen + 2);
 
-    // Show stats
+    
     document.getElementById('phil-stats-bar').style.display = 'flex';
     pdUpdateStats();
 
-    // Try to restore saved game for today
+    
     const saved = localStorage.getItem('pd-daily-' + pdTodayStr());
     if (saved) {
       const g = JSON.parse(saved);
@@ -3615,18 +3673,18 @@ function pdSetHint() {
     PD.answer.length + ' letters · ' + PD.maxGuesses + ' guesses';
 }
 
-// ── Board rendering ───────────────────────────────────────────
+
 function pdRenderBoard() {
   const board = document.getElementById('phil-board');
   board.innerHTML = '';
 
-  // Figure out cell size based on name length and device
+  
   const isTouch = document.documentElement.classList.contains('is-touch');
   const isSmall = document.documentElement.classList.contains('is-small');
   let cellSize = 52;
   if (isTouch && !document.documentElement.classList.contains('is-tablet')) cellSize = 42;
   if (isSmall) cellSize = 34;
-  // Shrink for very long names
+  
   const vw = window.innerWidth;
   const maxRowWidth = vw - 40;
   const maxCellFromVW = Math.floor((maxRowWidth - (PD.maxLen-1)*5) / PD.maxLen);
@@ -3653,7 +3711,7 @@ function pdRenderBoard() {
     }
   }
 
-  // Fill in completed guesses with animation stagger
+  
   PD.guesses.forEach((guess, r) => {
     const scores = pdScore(guess, PD.answer);
     scores.forEach((s, c) => {
@@ -3663,7 +3721,7 @@ function pdRenderBoard() {
     });
   });
 
-  // Fill current input row
+  
   const row = PD.guesses.length;
   if (row < PD.maxGuesses && !PD.gameOver) {
     PD.currentLetters.forEach((ch, c) => {
@@ -3680,7 +3738,7 @@ function pdUpdateCurrentRow() {
     const cell = document.getElementById('pd-' + row + '-' + c);
     if (!cell) continue;
     const ch = PD.currentLetters[c];
-    // Preserve inline size styles when updating class
+    
     const w = cell.style.width, h = cell.style.height, fs = cell.style.fontSize;
     cell.textContent = ch || '';
     cell.className = 'phil-cell' + (ch ? ' filled' : '');
@@ -3690,20 +3748,20 @@ function pdUpdateCurrentRow() {
   }
 }
 
-// ── Keyboard rendering ────────────────────────────────────────
+
 function pdRenderKeyboard() {
   const kbd = document.getElementById('phil-kbd');
   kbd.innerHTML = '';
 
   const rows = ['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
 
-  // Build letter status map from all guesses
+  
   const status = {};
   PD.guesses.forEach(guess => {
     const scores = pdScore(guess, PD.answer);
     guess.split('').forEach((ch, i) => {
       const s = scores[i];
-      // Only upgrade: absent < present < correct
+      
       if (!status[ch] || (s==='correct') || (s==='present' && status[ch]==='absent')) {
         status[ch] = s;
       }
@@ -3739,7 +3797,7 @@ function pdMakeKey(label, wide, action, statusClass) {
   return btn;
 }
 
-// ── Input handlers ────────────────────────────────────────────
+
 function pdType(ch) {
   if (PD.gameOver) return;
   if (PD.currentLetters.length >= PD.maxLen) return;
@@ -3771,7 +3829,7 @@ function pdShakeRow(rowIdx) {
   if (!row) return;
   row.querySelectorAll('.phil-cell').forEach(cell => {
     cell.classList.remove('shake');
-    void cell.offsetWidth; // reflow
+    void cell.offsetWidth; 
     cell.classList.add('shake');
   });
 }
@@ -3786,13 +3844,13 @@ function pdSubmit() {
     return;
   }
 
-  // Score the guess
+  
   const rowIdx = PD.guesses.length;
   const scores = pdScore(guess, PD.answer);
   PD.guesses.push(guess);
   PD.currentLetters = [];
 
-  // Reveal each cell — grab size styles BEFORE changing className
+  
   scores.forEach((s, c) => {
     const cell = document.getElementById('pd-' + rowIdx + '-' + c);
     if (!cell) return;
@@ -3800,18 +3858,18 @@ function pdSubmit() {
     setTimeout(() => {
       cell.textContent = guess[c];
       cell.className = 'phil-cell revealed ' + s;
-      // Restore inline size so cell doesn't collapse
+      
       cell.style.width = w;
       cell.style.height = h;
       cell.style.fontSize = fs;
     }, c * 120);
   });
 
-  // After all cells revealed, re-render board so the next empty row appears correctly
+  
   const totalDelay = PD.maxLen * 120 + 350;
 
   setTimeout(() => {
-    pdRenderKeyboard(); // update keyboard after reveal
+    pdRenderKeyboard(); 
 
     const won = guess === PD.answer;
     const lost = !won && PD.guesses.length >= PD.maxGuesses;
@@ -3879,7 +3937,7 @@ function pdStartTimer() {
   philTimerInterval = setInterval(tick, 1000);
 }
 
-// Physical keyboard
+
 document.addEventListener('keydown', e => {
   const pg = document.getElementById('phil-page');
   if (!pg || !pg.classList.contains('active')) return;
@@ -3891,7 +3949,7 @@ document.addEventListener('keydown', e => {
 
 
 
-// ── RICH TEXT EDITOR ─────────────────────────────────────────
+
 let editorSavedRange = null;
 
 function editorCmd(cmd) {
@@ -3917,11 +3975,11 @@ function updateToolbarState() {
   });
 }
 
-// Capture selection before focus leaves editor
+
 document.addEventListener('mouseup', (e) => {
   const body = document.getElementById('p-body');
-  // Only save the selection range when the mouseup happened INSIDE the editor.
-  // Clicking the Link button (outside the editor) must NOT overwrite the saved range.
+  
+  
   if (body && body.contains(e.target)) {
     const sel = window.getSelection();
     if (sel && sel.rangeCount) editorSavedRange = sel.getRangeAt(0).cloneRange();
@@ -3934,8 +3992,8 @@ document.addEventListener('keyup', (e) => {
 });
 
 function editorLink() {
-  // editorSavedRange was already saved by the mouseup handler inside the editor.
-  // Just populate the text field from it and open the popup.
+  
+  
   let selectedText = '';
   if (editorSavedRange) {
     selectedText = editorSavedRange.toString().trim();
@@ -3956,12 +4014,12 @@ function insertLink() {
   const text = document.getElementById('link-text-input').value.trim();
   let url = document.getElementById('link-url-input').value.trim();
   if (!url || url === 'https://') { closeLinkPopup(); return; }
-  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  if (!/^https?:\/\
 
   const editor = document.getElementById('p-body');
   editor.focus();
 
-  // Build the <a> element directly — no execCommand, no insertHTML
+  
   const a = document.createElement('a');
   a.href = url;
   a.target = '_blank';
@@ -3975,22 +4033,22 @@ function insertLink() {
     const selectedText = range.toString();
 
     if (selectedText) {
-      // Wrap selected text in the link
+      
       a.textContent = selectedText;
       range.deleteContents();
       range.insertNode(a);
     } else {
-      // No selection — insert link with provided text
+      
       a.textContent = text || url;
       range.insertNode(a);
     }
-    // Move cursor after the link
+    
     range.setStartAfter(a);
     range.collapse(true);
     sel.removeAllRanges();
     sel.addRange(range);
   } else {
-    // Fallback: append to end of editor
+    
     a.textContent = text || url;
     editor.appendChild(a);
   }
@@ -3998,20 +4056,20 @@ function insertLink() {
   closeLinkPopup();
 }
 
-// Get editor HTML content for saving
+
 function getEditorHTML() {
   const el = document.getElementById('p-body');
   return el ? el.innerHTML.trim() : '';
 }
 
-// Set editor content when editing existing post
+
 function setEditorHTML(html) {
   const el = document.getElementById('p-body');
   if (el) el.innerHTML = html || '';
 }
 
-// ── FILE ATTACHMENTS ──────────────────────────────────────────
-let pendingAttachments = []; // { name, type, file, url (if already uploaded) }
+
+let pendingAttachments = []; 
 
 function attachIcon(ext) {
   const icons = { pdf:'📄', doc:'📝', docx:'📝', ppt:'📊', pptx:'📊', svg:'🖼️' };
@@ -4023,7 +4081,7 @@ function addAttachments(input) {
   files.forEach(f => {
     const ext = f.name.split('.').pop().toLowerCase();
     if (!['pdf','doc','docx','ppt','pptx','svg'].includes(ext)) return;
-    // Check not already added
+    
     if (pendingAttachments.some(a => a.name === f.name)) return;
     pendingAttachments.push({ name: f.name, type: ext, file: f, url: null });
   });
@@ -4088,7 +4146,7 @@ function renderPostAttachments(attachmentsJson) {
   }).join('');
 }
 
-// ── DYSLEXIC FONT ─────────────────────────────────────────────
+
 function toggleDyslexicFont(on) {
   document.documentElement.classList.toggle('dyslexic-font', on);
   localStorage.setItem('anima-dyslexic', on ? '1' : '0');
@@ -4117,7 +4175,7 @@ function loadDyslexicSetting() {
 }
 
 
-// ── SMART SEARCH ─────────────────────────────────────────────
+
 let navSearchOpen = false;
 let inlineSearchVisible = true;
 
@@ -4149,7 +4207,7 @@ function initSmartSearch() {
     }
   }
 
-  // Only add the scroll listener ONCE ever
+  
   if (!smartSearchInitted) {
     window.addEventListener('scroll', checkScroll, { passive: true });
     smartSearchInitted = true;
@@ -4165,7 +4223,7 @@ function toggleNavSearch() {
   popup.classList.toggle('open', navSearchOpen);
   btn.classList.toggle('active', navSearchOpen);
   if (navSearchOpen) {
-    // Sync query from inline search
+    
     const inlineVal = document.getElementById('search-input').value;
     navInput.value = inlineVal;
     setTimeout(() => navInput.focus(), 50);
@@ -4181,13 +4239,13 @@ function closeNavSearch() {
 }
 
 function handleNavSearch(val) {
-  // Mirror to main search input so results are consistent
+  
   const mainInput = document.getElementById('search-input');
   if (mainInput) mainInput.value = val;
   handleSearch(val);
 }
 
-// Close nav search popup when clicking outside
+
 document.addEventListener('click', e => {
   const popup = document.getElementById('nav-search-popup');
   const btn = document.getElementById('nav-search-btn');
@@ -4196,12 +4254,12 @@ document.addEventListener('click', e => {
   }
 }, true);
 
-// When home page is shown, reinit smart search
+
 const _origShowPage = showPage;
 
 
-// ── SOURCES & CITATIONS ──────────────────────────────────────
-let pendingCitations = []; // { name, type, file, url }
+
+let pendingCitations = []; 
 
 function addCitationURL() {
   const nameEl = document.getElementById('cite-name-input');
@@ -4210,7 +4268,7 @@ function addCitationURL() {
   const url  = urlEl.value.trim();
   if (!url) return;
   const label = name || url;
-  if (pendingCitations.some(c => c.url === url)) return; // no dupes
+  if (pendingCitations.some(c => c.url === url)) return; 
   pendingCitations.push({ name: label, url: url });
   nameEl.value = '';
   urlEl.value  = '';
@@ -4236,7 +4294,7 @@ function removeCitation(i) {
 }
 
 async function uploadCitations() {
-  // No file upload — citations are just {name, url} pairs stored directly in DB
+  
   return pendingCitations.filter(c => c.url);
 }
 
@@ -4252,7 +4310,7 @@ function renderSourcesSection(citationsJson) {
   catch(e) { sec.style.display = 'none'; return; }
   if (!citations || !citations.length) { sec.style.display = 'none'; return; }
 
-  sec.style.display = 'none'; return; // replaced by citations link in top bar
+  sec.style.display = 'none'; return; 
   const icons = { pdf: '📄', doc: '📝', docx: '📝' };
 
   list.innerHTML = citations.map((c, idx) => {
@@ -4271,7 +4329,7 @@ function renderSourcesSection(citationsJson) {
     </div>`;
   }).join('');
 
-  // Configure PDF.js worker
+  
   if (window.pdfjsLib) {
     window.pdfjsLib.GlobalWorkerOptions.workerSrc =
       'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -4287,13 +4345,13 @@ function renderSourcesSection(citationsJson) {
         loading.innerHTML = `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cite-open-btn">↓ Open PDF in new tab</a>`;
         return;
       }
-      // PDF.js renders each page to a <canvas> — no iframes, no CORS headers matter
+      
       window.pdfjsLib.getDocument({ url: c.url, withCredentials: false }).promise
         .then(pdfDoc => {
           loading.style.display = 'none';
           canvasWrap.style.display = 'block';
           const totalPages = pdfDoc.numPages;
-          // Render all pages sequentially
+          
           const renderPage = (pageNum) => {
             pdfDoc.getPage(pageNum).then(page => {
               const viewport = page.getViewport({ scale: 1.4 });
@@ -4317,7 +4375,7 @@ function renderSourcesSection(citationsJson) {
             <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="cite-open-btn">↓ Open PDF in new tab</a>`;
         });
     } else {
-      // DOCX: Google Docs Viewer in iframe (best available option for Word docs)
+      
       const gdocsUrl = 'https://docs.google.com/viewer?url=' + encodeURIComponent(c.url) + '&embedded=true';
       const iframe = document.createElement('iframe');
       iframe.style.cssText = 'width:100%;height:680px;border:none;display:block;';
@@ -4332,10 +4390,10 @@ function renderSourcesSection(citationsJson) {
   });
 }
 
-// ── TOUCH DEVICE DETECTION (already ran in <head>, this is a safety net) ───
-// Classes are on <html> element, added before first paint
 
-// ── MOBILE NAV ────────────────────────────────────────────────
+
+
+
 function toggleMobileNav() {
   const nav = document.getElementById('mobile-nav');
   const overlay = document.getElementById('mobile-nav-overlay');
@@ -4351,7 +4409,7 @@ function closeMobileNav() {
   document.getElementById('hamburger-btn').classList.remove('open');
 }
 
-// ── SETTINGS & THEMES ────────────────────────────────────────
+
 const THEMES = {
   default:     null,
   darkgrey:    'theme-darkgrey',
@@ -4363,11 +4421,11 @@ const THEMES = {
 const RANDOM_THEMES = ['darkgrey','navygrey','purple','lightpurple','minimal'];
 
 function openSettings() {
-  // Restore dyslexic toggle state
+  
   const tog = document.getElementById('dyslexic-toggle');
   if (tog) tog.checked = localStorage.getItem('anima-dyslexic') === '1';
   showPage('settings', true, '/settings');
-  // Show account section if logged in
+  
   const sec = document.getElementById('account-section');
   if (currentPublicUser) {
     sec.style.display = 'block';
@@ -4375,7 +4433,7 @@ function openSettings() {
   } else {
     sec.style.display = 'none';
   }
-  // Mark active theme button
+  
   const saved = localStorage.getItem('anima-theme') || 'default';
   document.querySelectorAll('.theme-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.theme === saved);
@@ -4383,7 +4441,7 @@ function openSettings() {
 }
 
 function applyTheme(name, btn) {
-  // Remove all theme classes
+  
   Object.values(THEMES).forEach(cls => { if (cls) document.body.classList.remove(cls); });
   let applied = name;
   if (name === 'random') {
@@ -4391,7 +4449,7 @@ function applyTheme(name, btn) {
   }
   if (THEMES[applied]) document.body.classList.add(THEMES[applied]);
   localStorage.setItem('anima-theme', applied);
-  // Update active button
+  
   document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
 }
@@ -4406,7 +4464,7 @@ function loadSavedTheme() {
 function populateAccountSection() {
   if (!currentPublicUser) return;
   loadReadingHistory();
-  // Member since
+  
   const created = new Date(currentPublicUser.created_at);
   const now = new Date();
   const months = (now.getFullYear() - created.getFullYear()) * 12 + (now.getMonth() - created.getMonth());
@@ -4418,7 +4476,7 @@ function populateAccountSection() {
   const sinceEl = document.getElementById('member-since-text');
   if (sinceEl) sinceEl.textContent = created.toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}) + ' (' + duration + ')';
 
-  // Avatar
+  
   const avatarUrl = currentPublicUser.user_metadata?.avatar_url;
   const avatarImg = document.getElementById('settings-avatar');
   const avatarPh = document.getElementById('settings-avatar-ph');
@@ -4434,11 +4492,11 @@ async function uploadAvatar(input) {
   if (!input.files[0] || !currentPublicUser) return;
   const file = input.files[0];
   const ext = file.name.split('.').pop().toLowerCase();
-  const fname = 'avatars/' + currentPublicUser.id + '.' + ext; // fixed name so it overwrites old avatar
+  const fname = 'avatars/' + currentPublicUser.id + '.' + ext; 
   const btn = document.querySelector('[onclick*="avatar-file-input"]');
   if (btn) { btn.disabled = true; btn.textContent = 'Uploading...'; }
   try {
-    // 1. Upload image to post-images bucket
+    
     const { error: upErr } = await sb.storage.from('post-images').upload(fname, file, {
       upsert: true, contentType: file.type || 'image/jpeg'
     });
@@ -4446,17 +4504,17 @@ async function uploadAvatar(input) {
     const { data } = sb.storage.from('post-images').getPublicUrl(fname);
     const avatarUrl = data.publicUrl + '?v=' + Date.now();
 
-    // 2. Update Supabase Auth metadata
+    
     await sb.auth.updateUser({ data: { avatar_url: avatarUrl } });
 
-    // 3. Also upsert into profiles table (persistent across sessions)
+    
     await sb.from('profiles').upsert({
       id: currentPublicUser.id,
       avatar_url: avatarUrl,
       updated_at: new Date().toISOString()
-    }, { onConflict: 'id' }).catch(() => {}); // silent if table doesn't exist
+    }, { onConflict: 'id' }).catch(() => {}); 
 
-    // 4. Update local state and UI
+    
     currentPublicUser.user_metadata = currentPublicUser.user_metadata || {};
     currentPublicUser.user_metadata.avatar_url = avatarUrl;
     populateAccountSection();
@@ -4492,11 +4550,11 @@ async function sendPasswordReset() {
   msg.style.display = 'block';
 }
 
-// ── INIT ─────────────────────────────────────────────────────
+
 document.getElementById('p-date').value = todayStr();
 loadSavedTheme();
 loadDyslexicSetting();
-// If arrived from a static article page redirect, open that article after load
+
 if (window._directPostId) {
   window.addEventListener('anima-ready', () => openPost(window._directPostId), { once: true });
 }
