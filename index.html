@@ -2472,6 +2472,8 @@ async function openPost(id) {
   renderCommentForm();
   recordReadingHistory(post); // track that this user read this article
   showPage('post');
+  // Apply dyslexic font to article body if setting is on
+  if (localStorage.getItem('anima-dyslexic') === '1') applyDyslexicToBody(true);
 }
 
 function updateSEOMeta(post) {
@@ -3053,6 +3055,10 @@ function goHome() {
   if (searchInput) searchInput.value = '';
   if (navSearchInput) navSearchInput.value = '';
   if (lbl) { lbl.style.display = 'none'; lbl.textContent = ''; }
+  // Restore inline search bar visibility
+  const inlineBar = document.getElementById('inline-search-bar');
+  if (inlineBar) inlineBar.classList.remove('hidden');
+  inlineSearchVisible = true;
   showPage('home', true, '/');
   renderHome();
 }
@@ -4086,6 +4092,21 @@ function renderPostAttachments(attachmentsJson) {
 function toggleDyslexicFont(on) {
   document.documentElement.classList.toggle('dyslexic-font', on);
   localStorage.setItem('anima-dyslexic', on ? '1' : '0');
+  applyDyslexicToBody(on);
+}
+
+function applyDyslexicToBody(on) {
+  const body = document.getElementById('ph-body');
+  if (!body) return;
+  const els = [body, ...body.querySelectorAll('*')];
+  els.forEach(el => {
+    if (on) {
+      el.dataset.origFont = el.style.fontFamily || '';
+      el.style.fontFamily = "'OpenDyslexic', sans-serif";
+    } else {
+      el.style.fontFamily = el.dataset.origFont || '';
+    }
+  });
 }
 
 function loadDyslexicSetting() {
