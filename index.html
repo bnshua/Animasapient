@@ -7,7 +7,7 @@
 <meta name="description" content="Animasapient — explorations of philosophy, religion, geography and culture. A space for wisdom and reflection.">
 <meta name="author" content="Animasapient">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.animasapient.xyz">
+<link rel="canonical" id="canonical-tag" href="">
 
 
 <meta property="og:site_name" content="Animasapient">
@@ -1421,6 +1421,7 @@
       <a onclick="filterCat('Geography')">Geography</a>
       <a onclick="filterCat('Culture')">Culture</a>
       <a onclick="showPage('about', true, '/about')">About</a>
+      <a href="https://my-store-10f5f4c.creator-spring.com" target="_blank" rel="noopener noreferrer">Merch</a>
       <button class="nav-search-btn" id="nav-search-btn" onclick="toggleNavSearch()" title="Search" style="display:none;" aria-label="Search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
       </button>
@@ -1444,6 +1445,7 @@
   <a onclick="filterCat('Geography'); closeMobileNav()">Geography</a>
   <a onclick="filterCat('Culture'); closeMobileNav()">Culture</a>
   <a onclick="showPage('about', true, '/about'); closeMobileNav()">About</a>
+  <a href="https://my-store-10f5f4c.creator-spring.com" target="_blank" rel="noopener noreferrer" onclick="closeMobileNav()">Merch</a>
   <div class="mobile-nav-divider"></div>
   <button class="mobile-nav-btn" onclick="openSettings(); closeMobileNav()">⚙ Settings</button>
   <button class="mobile-nav-btn" id="mobile-user-btn" onclick="handleUserClick(); closeMobileNav()">Sign In</button>
@@ -2463,7 +2465,8 @@ function updateSEOMeta(post) {
   const desc = rawDesc.length > 160 ? rawDesc.slice(0, 157) + '...' : rawDesc;
   const catSlug = post.category ? post.category.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'') : '';
   const titleSlug = (post.slug || post.title).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
-  const url = 'https://www.animasapient.xyz/' + (catSlug ? catSlug + '/' : '') + titleSlug;
+  const prettyUrl = 'https://www.animasapient.xyz/' + (catSlug ? catSlug + '/' : '') + titleSlug;
+  const url = 'https://www.animasapient.xyz/?p=' + encodeURIComponent(catSlug + '/' + titleSlug);
   const img = post.image_url || 'https://www.animasapient.xyz/image.png';
   const author = post.byline || 'Animasapient';
   const datePublished = post.date || '';
@@ -2479,7 +2482,7 @@ function updateSEOMeta(post) {
 
   setMeta('meta[property="og:title"]', 'content', title);
   setMeta('meta[property="og:description"]', 'content', desc);
-  setMeta('meta[property="og:url"]', 'content', url);
+  setMeta('meta[property="og:url"]', 'content', prettyUrl);
   setMeta('meta[property="og:image"]', 'content', img);
   setMeta('meta[property="og:type"]', 'content', 'article');
 
@@ -3222,7 +3225,7 @@ async function routeFromURL(push = true) {
   const jsonld = document.getElementById('article-jsonld');
   if (jsonld) jsonld.textContent = '';
   const canonical = document.querySelector('link[rel="canonical"]');
-  if (canonical) canonical.href = 'https://www.animasapient.xyz';
+  if (canonical) canonical.href = 'https://www.animasapient.xyz/';
 
     if (parts.length === 0) {
       currentFilter = null;
