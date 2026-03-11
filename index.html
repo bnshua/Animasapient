@@ -1387,6 +1387,10 @@
   html.is-touch .post-hero-content { padding: 2rem 1.2rem; }
   html.is-touch .post-hero-title { font-size: 1.6rem; }
   html.is-touch .post-body-wrap { padding: 0 1.2rem; margin: 2rem auto; }
+  html.is-touch .post-body-wrap.has-ai-sidebar { max-width: 760px; }
+  html.is-touch .post-main-flex { display: block; }
+  html.is-touch .post-main-flex #ph-body { width: auto; }
+  html.is-touch .ai-sidebar { display: none; }
   html.is-touch .post-content { font-size: 1rem; }
   html.is-touch .back-btn { font-size: 0.75rem; margin-bottom: 1.5rem; }
   html.is-touch .about-title { font-size: 2rem; }
@@ -2147,7 +2151,6 @@
 
 
 <div class="link-popup-overlay" id="link-popup-overlay" onclick="closeLinkPopup()"></div>
-<div class="link-popup" id="link-popup">
 <div id="ai-mobile-modal" style="display:none;" class="ai-mobile-modal">
   <div class="ai-mobile-modal-backdrop" onclick="closeAIMobileModal()"></div>
   <div class="ai-mobile-modal-box">
@@ -2156,6 +2159,7 @@
     <button class="ai-mobile-modal-close" onclick="closeAIMobileModal()">✕ Close</button>
   </div>
 </div>
+<div class="link-popup" id="link-popup">
   <div class="link-popup-title">Insert Hyperlink</div>
   <label>Link Text</label>
   <input type="text" id="link-text-input" placeholder="e.g. Stanford Encyclopedia">
