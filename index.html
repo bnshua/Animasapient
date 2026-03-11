@@ -2205,7 +2205,8 @@ async function initAuth() {
     const now = new Date();
     const dd = String(now.getDate()).padStart(2,'0');
     const mm = String(now.getMonth()+1).padStart(2,'0');
-    philDateEl.textContent = dd + '/' + mm;
+    const yy = String(now.getFullYear()).slice(-2);
+    philDateEl.textContent = mm + '/' + dd + '/' + yy;
   }
 }
 
