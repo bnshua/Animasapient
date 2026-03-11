@@ -144,6 +144,19 @@
   .headline-meta { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--cool-grey); text-transform: uppercase; }
 
   .section-divider { max-width: 1280px; margin: 3.5rem auto 2.5rem; padding: 0 2.5rem; display: flex; align-items: center; gap: 1.5rem; }
+  .phil-banner-wrap { max-width: 1280px; margin: 2.5rem auto 0; padding: 0 2.5rem; }
+  .phil-banner { background: linear-gradient(120deg, #1557a0 0%, #1e7bd4 60%, #1246a8 100%); border-radius: 10px; padding: 1rem 1.4rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 3px 16px rgba(20,80,180,0.28); transition: opacity 0.2s; position: relative; overflow: hidden; }
+  .phil-banner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, rgba(255,255,255,0.05) 100%); pointer-events: none; }
+  .phil-banner:hover { opacity: 0.93; }
+  .phil-banner-left { display: flex; align-items: center; gap: 1rem; }
+  .phil-banner-icon { font-size: 1.5rem; line-height: 1; }
+  .phil-banner-text { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #fff; font-weight: 600; letter-spacing: 0.01em; }
+  .phil-banner-sub { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.65); margin-top: 1px; }
+  .phil-banner-play { font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.35); padding: 5px 14px; border-radius: 4px; transition: background 0.2s; white-space: nowrap; }
+  .phil-banner:hover .phil-banner-play { background: rgba(255,255,255,0.12); }
+  .phil-banner-close { background: none; border: none; color: rgba(255,255,255,0.55); font-size: 1rem; cursor: pointer; padding: 4px 6px; line-height: 1; transition: color 0.2s; flex-shrink: 0; margin-left: 1rem; }
+  .phil-banner-close:hover { color: #fff; }
+  html.is-touch .phil-banner-wrap { display: none; }
   .section-divider span { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cool-grey); white-space: nowrap; }
   .divider-line { flex: 1; height: 1px; background: var(--cool-grey-light); }
 
@@ -1512,6 +1525,19 @@
   </div>
   <div id="search-results-label" class="search-results-label" style="display:none;"></div>
   <div id="headline-wrap" style="position:relative;"></div>
+  <div class="phil-banner-wrap" id="phil-banner-wrap">
+    <div class="phil-banner" onclick="openPhilosopherdle()">
+      <div class="phil-banner-left">
+        <span class="phil-banner-icon">🏛</span>
+        <div>
+          <div class="phil-banner-text">Today's Philosopherdle — <span id="phil-banner-date"></span></div>
+          <div class="phil-banner-sub">Guess today's philosopher · Daily challenge</div>
+        </div>
+      </div>
+      <span class="phil-banner-play">Play Now →</span>
+      <button class="phil-banner-close" id="phil-banner-close" onclick="event.stopPropagation(); document.getElementById('phil-banner-wrap').style.display='none';" title="Dismiss">✕</button>
+    </div>
+  </div>
   <div class="section-divider" id="grid-divider" style="display:none;">
     <div class="divider-line"></div>
     <span id="section-label">Recent Articles</span>
@@ -2174,6 +2200,13 @@ async function initAuth() {
     if (session) handleSessionUser(session.user);
     sb.auth.onAuthStateChange((_, s) => handleSessionUser(s?.user || null));
   } catch(e) { console.warn('Auth failed, continuing as guest'); handleSessionUser(null); }
+  const philDateEl = document.getElementById('phil-banner-date');
+  if (philDateEl) {
+    const now = new Date();
+    const dd = String(now.getDate()).padStart(2,'0');
+    const mm = String(now.getMonth()+1).padStart(2,'0');
+    philDateEl.textContent = dd + '/' + mm;
+  }
 }
 
 function isAdminUser(user) {
