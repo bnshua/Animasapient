@@ -1002,9 +1002,10 @@
   .toggle-sublabel { font-family: 'Cormorant Garamond', serif; font-size: 0.76rem; color: var(--cool-grey); margin-top: 2px; }
 
   
-  .post-main-flex { display: flex; align-items: flex-start; gap: 1.5rem; }
-  .post-main-flex #ph-body { flex: 1; min-width: 0; }
-  .ai-sidebar { width: 230px; flex-shrink: 0; background: linear-gradient(135deg, #1a6bc4 0%, #2a8de8 50%, #1557a0 100%); border-radius: 10px; padding: 1.1rem 1.1rem 1rem; box-shadow: 0 4px 18px rgba(30,100,200,0.35), 0 1px 4px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18); position: relative; animation: aiSlideIn 0.3s ease; }
+  .post-main-flex { display: flex; align-items: flex-start; gap: 2rem; }
+  .post-main-flex #ph-body { flex-shrink: 0; width: 680px; }
+  .post-body-wrap.has-ai-sidebar { max-width: 1120px; }
+  .ai-sidebar { width: 300px; flex-shrink: 0; background: linear-gradient(135deg, #1a6bc4 0%, #2a8de8 50%, #1557a0 100%); border-radius: 10px; padding: 1.4rem 1.4rem 1.2rem; box-shadow: 0 4px 18px rgba(30,100,200,0.35), 0 1px 4px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18); position: relative; animation: aiSlideIn 0.3s ease; }
   @keyframes aiSlideIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
   .ai-sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
   .ai-sidebar-title { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.85); font-weight: 600; }
@@ -4215,8 +4216,10 @@ function closeAISidebar(permanent) {
   if (permanent) setNeverShowAI(true);
   const sidebar = document.getElementById('ai-sidebar');
   const postMain = document.getElementById('post-main');
+  const bodyWrap = document.querySelector('.post-body-wrap');
   if (sidebar) sidebar.remove();
   if (postMain) postMain.classList.remove('post-main-flex');
+  if (bodyWrap) bodyWrap.classList.remove('has-ai-sidebar');
 }
 
 function toggleAIInfoTooltip() {
@@ -4255,6 +4258,8 @@ function renderAISummaryUI(summary) {
   const existingSidebar = document.getElementById('ai-sidebar');
   if (existingSidebar) existingSidebar.remove();
   if (postMain) postMain.classList.remove('post-main-flex');
+  const bodyWrap = document.querySelector('.post-body-wrap');
+  if (bodyWrap) bodyWrap.classList.remove('has-ai-sidebar');
 
   if (!summary) {
     if (btnWrap) btnWrap.style.display = 'none';
@@ -4275,6 +4280,7 @@ function renderAISummaryUI(summary) {
 
   if (postMain) {
     postMain.classList.add('post-main-flex');
+    if (bodyWrap) bodyWrap.classList.add('has-ai-sidebar');
     const sidebar = document.createElement('div');
     sidebar.id = 'ai-sidebar';
     sidebar.className = 'ai-sidebar';
