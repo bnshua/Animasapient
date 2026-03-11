@@ -1002,6 +1002,34 @@
   .toggle-sublabel { font-family: 'Cormorant Garamond', serif; font-size: 0.76rem; color: var(--cool-grey); margin-top: 2px; }
 
   
+  .post-main-flex { display: flex; align-items: flex-start; gap: 1.5rem; }
+  .post-main-flex #ph-body { flex: 1; min-width: 0; }
+  .ai-sidebar { width: 230px; flex-shrink: 0; background: linear-gradient(135deg, #1a6bc4 0%, #2a8de8 50%, #1557a0 100%); border-radius: 10px; padding: 1.1rem 1.1rem 1rem; box-shadow: 0 4px 18px rgba(30,100,200,0.35), 0 1px 4px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18); position: relative; animation: aiSlideIn 0.3s ease; }
+  @keyframes aiSlideIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
+  .ai-sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
+  .ai-sidebar-title { font-family: 'Cormorant Garamond', serif; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.85); font-weight: 600; }
+  .ai-sidebar-actions { display: flex; align-items: center; gap: 6px; }
+  .ai-sidebar-info-wrap { position: relative; }
+  .ai-sidebar-info-btn { background: none; border: 1.5px solid rgba(255,255,255,0.5); color: rgba(255,255,255,0.8); border-radius: 50%; width: 18px; height: 18px; font-size: 0.62rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; padding: 0; line-height: 1; }
+  .ai-sidebar-info-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+  .ai-info-tooltip { position: absolute; right: 0; top: 24px; background: #0f2a4a; color: #e8f0fe; font-family: 'Cormorant Garamond', serif; font-size: 0.78rem; line-height: 1.4; padding: 0.6rem 0.85rem; border-radius: 6px; width: 200px; box-shadow: 0 4px 16px rgba(0,0,0,0.35); z-index: 200; display: none; }
+  .ai-info-tooltip.visible { display: block; }
+  .ai-info-tooltip-link { color: #80c4ff; text-decoration: underline; cursor: pointer; display: block; margin-top: 0.4rem; font-size: 0.74rem; }
+  .ai-info-tooltip-link:hover { color: #b3d9ff; }
+  .ai-sidebar-close { background: none; border: none; color: rgba(255,255,255,0.7); font-size: 1rem; cursor: pointer; line-height: 1; padding: 0; transition: color 0.2s; }
+  .ai-sidebar-close:hover { color: #fff; }
+  .ai-sidebar-text { font-family: 'Crimson Pro', serif; font-size: 0.93rem; line-height: 1.65; color: rgba(255,255,255,0.92); }
+  .ai-mobile-btn-wrap { margin-bottom: 0.8rem; }
+  .ai-mobile-btn { width: 100%; background: linear-gradient(135deg, #1a6bc4, #2a8de8); color: #fff; border: none; border-radius: 7px; padding: 10px 16px; font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; box-shadow: 0 2px 10px rgba(30,100,200,0.3); transition: opacity 0.2s; }
+  .ai-mobile-btn:hover { opacity: 0.88; }
+  .ai-mobile-modal { position: fixed; inset: 0; z-index: 9000; display: flex; flex-direction: column; animation: aiFadeIn 0.25s ease; }
+  .ai-mobile-modal-backdrop { position: absolute; inset: 0; background: rgba(5,15,35,0.7); backdrop-filter: blur(3px); }
+  .ai-mobile-modal-box { position: absolute; bottom: 0; left: 0; right: 0; top: 8%; background: linear-gradient(160deg, #1557a0 0%, #1e7bd4 40%, #1046a0 100%); border-radius: 18px 18px 0 0; padding: 2rem 1.5rem 1.5rem; display: flex; flex-direction: column; box-shadow: 0 -6px 40px rgba(10,60,180,0.4); overflow-y: auto; }
+  .ai-mobile-modal-label { font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 0.8rem; }
+  .ai-mobile-modal-text { font-family: 'Crimson Pro', serif; font-size: 1.08rem; line-height: 1.75; color: rgba(255,255,255,0.93); flex: 1; }
+  .ai-mobile-modal-close { margin-top: 1.8rem; background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); color: #fff; border-radius: 8px; padding: 12px; font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+  .ai-mobile-modal-close:hover { background: rgba(255,255,255,0.25); }
+  @keyframes aiFadeIn { from { opacity: 0; } to { opacity: 1; } }
   .post-content a { color: #2563a8; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
   .post-content a:hover { color: #1a4a8a; text-decoration-thickness: 2px; }
   .post-content strong, .post-content b { font-weight: 700; color: var(--text); }
@@ -1608,6 +1636,16 @@
           <div class="toggle-sublabel">Switches all reading text to OpenDyslexic</div>
         </div>
       </div>
+      <div class="dyslexic-toggle" style="margin-top:1.2rem;">
+        <label class="toggle-switch">
+          <input type="checkbox" id="ai-summary-never-toggle" onchange="setNeverShowAI(this.checked)">
+          <div class="toggle-slider"></div>
+        </label>
+        <div>
+          <div class="toggle-label">Hide AI Summaries</div>
+          <div class="toggle-sublabel">Removes the automatic AI summary panel on articles (a button to view it manually will still appear)</div>
+        </div>
+      </div>
     </div>
 
     
@@ -1700,6 +1738,9 @@
       <button onclick="changeFontSize(-1)" title="Decrease font size">A−</button>
       <span class="font-size-label">Text Spacing</span>
       <button onclick="changeFontSize(1)" title="Increase font size">A+</button>
+    </div>
+    <div class="ai-mobile-btn-wrap" id="ai-mobile-btn-wrap" style="display:none;">
+      <button class="ai-mobile-btn" onclick="openAIMobileModal()">✦ AI Summary &amp; Explanation</button>
     </div>
     <main id="post-main" itemprop="articleBody"><div class="post-content" id="ph-body"></div></main>
     <div class="post-tags" id="post-tags-section" style="display:none;">
@@ -1941,6 +1982,10 @@
         <input type="text" id="p-excerpt" placeholder="A brief one-line summary…">
       </div>
       <div class="form-group">
+        <label>AI Summary <span style="font-style:italic;text-transform:none;letter-spacing:0;font-size:0.7rem;">(shown to readers as an AI-style summary panel)</span></label>
+        <textarea id="p-ai-summary" rows="4" style="width:100%;font-family:'Crimson Pro',serif;font-size:0.95rem;padding:0.6rem 0.8rem;border:1px solid var(--cool-grey-light);border-radius:3px;background:var(--white);color:var(--text);resize:vertical;" placeholder="Paste or write the AI summary and explanation here…"></textarea>
+      </div>
+      <div class="form-group">
         <label>Tags <span style="font-style:italic;text-transform:none;letter-spacing:0;font-size:0.7rem;">(comma-separated, e.g. Stoicism, Ancient Greece)</span></label>
         <input type="text" id="p-tags" placeholder="e.g. Stoicism, Ancient Greece, Ethics">
       </div>
@@ -2046,6 +2091,14 @@
 
 <div class="link-popup-overlay" id="link-popup-overlay" onclick="closeLinkPopup()"></div>
 <div class="link-popup" id="link-popup">
+<div id="ai-mobile-modal" style="display:none;" class="ai-mobile-modal">
+  <div class="ai-mobile-modal-backdrop" onclick="closeAIMobileModal()"></div>
+  <div class="ai-mobile-modal-box">
+    <div class="ai-mobile-modal-label">✦ AI Summary &amp; Explanation</div>
+    <div class="ai-mobile-modal-text" id="ai-mobile-modal-text"></div>
+    <button class="ai-mobile-modal-close" onclick="closeAIMobileModal()">✕ Close</button>
+  </div>
+</div>
   <div class="link-popup-title">Insert Hyperlink</div>
   <label>Link Text</label>
   <input type="text" id="link-text-input" placeholder="e.g. Stanford Encyclopedia">
@@ -2719,7 +2772,7 @@ function resetImageSection() {
 }
 function openNewPost() {
   document.getElementById('post-modal-title').textContent = 'New Article';
-  ['p-title','p-excerpt','p-byline','p-slug','p-tags'].forEach(id => document.getElementById(id).value = '');
+  ['p-title','p-excerpt','p-byline','p-slug','p-tags','p-ai-summary'].forEach(id => document.getElementById(id).value = '');
   setEditorHTML('');
   pendingAttachments = [];
   renderAttachList();
@@ -2748,6 +2801,7 @@ async function openEdit(id) {
   document.getElementById('p-byline').value  = post.byline || '';
   document.getElementById('p-slug').value    = post.slug || '';
   document.getElementById('p-tags').value    = post.tags || '';
+  document.getElementById('p-ai-summary').value = post.ai_summary || '';
   document.getElementById('p-edit-id').value       = post.id;
   document.getElementById('p-existing-img').value  = post.image_url || '';
   document.getElementById('post-error').style.display   = 'none';
@@ -2920,6 +2974,7 @@ async function submitPost() {
   const tagsVal  = document.getElementById('p-tags').value.trim();
   const editId   = document.getElementById('p-edit-id').value;
   const existImg = document.getElementById('p-existing-img').value;
+  const aiSummary = document.getElementById('p-ai-summary').value.trim();
   const errEl = document.getElementById('post-error'), sucEl = document.getElementById('post-success');
   errEl.style.display = 'none'; sucEl.style.display = 'none';
   if (!title || !date || !body) { errEl.textContent = 'Title, date, and body are required.'; errEl.style.display = 'block'; return; }
@@ -2945,7 +3000,7 @@ async function submitPost() {
     const citations_json = uploadedCitations.length ? JSON.stringify(uploadedCitations) : null;
     const poster_email = currentUser ? currentUser.email : null;
     
-    const payload = { title, category, date, excerpt, body, image_url, byline, slug, poster_email, tags: tagsVal || null, attachments_json };
+    const payload = { title, category, date, excerpt, body, image_url, byline, slug, poster_email, tags: tagsVal || null, attachments_json, ai_summary: aiSummary || null };
     
     if (citations_json !== null) payload.citations_json = citations_json;
     if (editId) {
@@ -3200,6 +3255,7 @@ async function openPost(id, replaceState = false) {
   await renderComments(id);
   renderCommentForm();
   recordReadingHistory(post); 
+  renderAISummaryUI(post.ai_summary || '');
 
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('post-page').classList.add('active');
@@ -4144,6 +4200,115 @@ function renderPostAttachments(attachmentsJson) {
 
 
 function toggleDyslexicFont(on) {
+
+let _currentAISummary = '';
+
+function setNeverShowAI(on) {
+  localStorage.setItem('anima-ai-never', on ? '1' : '0');
+  const tog = document.getElementById('ai-summary-never-toggle');
+  if (tog) tog.checked = on;
+  if (on) closeAISidebar(false);
+  if (typeof _currentAISummary === 'string' && _currentAISummary) {
+    renderAISummaryUI(_currentAISummary);
+  }
+}
+
+function closeAISidebar(permanent) {
+  if (permanent) setNeverShowAI(true);
+  const sidebar = document.getElementById('ai-sidebar');
+  const postMain = document.getElementById('post-main');
+  if (sidebar) sidebar.remove();
+  if (postMain) postMain.classList.remove('post-main-flex');
+}
+
+function toggleAIInfoTooltip() {
+  const tip = document.getElementById('ai-info-tooltip');
+  if (!tip) return;
+  tip.classList.toggle('visible');
+}
+
+function hideAIInfoTooltip() {
+  const tip = document.getElementById('ai-info-tooltip');
+  if (tip) tip.classList.remove('visible');
+}
+
+function openAIMobileModal() {
+  const modal = document.getElementById('ai-mobile-modal');
+  const text = document.getElementById('ai-mobile-modal-text');
+  if (!modal || !text) return;
+  text.textContent = _currentAISummary;
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAIMobileModal() {
+  const modal = document.getElementById('ai-mobile-modal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function renderAISummaryUI(summary) {
+  _currentAISummary = summary || '';
+  const neverShow = localStorage.getItem('anima-ai-never') === '1';
+  const isTouch = document.documentElement.classList.contains('is-touch');
+  const btnWrap = document.getElementById('ai-mobile-btn-wrap');
+  const postMain = document.getElementById('post-main');
+
+  const existingSidebar = document.getElementById('ai-sidebar');
+  if (existingSidebar) existingSidebar.remove();
+  if (postMain) postMain.classList.remove('post-main-flex');
+
+  if (!summary) {
+    if (btnWrap) btnWrap.style.display = 'none';
+    return;
+  }
+
+  if (isTouch) {
+    if (btnWrap) btnWrap.style.display = 'block';
+    return;
+  }
+
+  if (neverShow) {
+    if (btnWrap) btnWrap.style.display = 'block';
+    return;
+  }
+
+  if (btnWrap) btnWrap.style.display = 'none';
+
+  if (postMain) {
+    postMain.classList.add('post-main-flex');
+    const sidebar = document.createElement('div');
+    sidebar.id = 'ai-sidebar';
+    sidebar.className = 'ai-sidebar';
+    sidebar.innerHTML = `
+      <div class="ai-sidebar-header">
+        <span class="ai-sidebar-title">✦ AI Summary</span>
+        <div class="ai-sidebar-actions">
+          <div class="ai-sidebar-info-wrap">
+            <button class="ai-sidebar-info-btn" onclick="toggleAIInfoTooltip()" title="Options">ℹ</button>
+            <div class="ai-info-tooltip" id="ai-info-tooltip">
+              Never see these again (Changeable in Settings)
+              <span class="ai-info-tooltip-link" onclick="setNeverShowAI(true); hideAIInfoTooltip();">Turn off AI summaries</span>
+            </div>
+          </div>
+          <button class="ai-sidebar-close" onclick="closeAISidebar(false)" title="Close">✕</button>
+        </div>
+      </div>
+      <div class="ai-sidebar-text">${summary.replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}</div>`;
+    postMain.appendChild(sidebar);
+
+    document.addEventListener('click', function outsideClick(e) {
+      const tip = document.getElementById('ai-info-tooltip');
+      const btn = document.querySelector('.ai-sidebar-info-btn');
+      if (tip && !tip.contains(e.target) && e.target !== btn) {
+        tip.classList.remove('visible');
+        document.removeEventListener('click', outsideClick);
+      }
+    }, true);
+  }
+}
+
+function toggleDyslexicFont(on) {
   document.documentElement.classList.toggle('dyslexic-font', on);
   localStorage.setItem('anima-dyslexic', on ? '1' : '0');
   applyDyslexicToBody(on);
@@ -4420,6 +4585,8 @@ function openSettings() {
   
   const tog = document.getElementById('dyslexic-toggle');
   if (tog) tog.checked = localStorage.getItem('anima-dyslexic') === '1';
+  const aiTog = document.getElementById('ai-summary-never-toggle');
+  if (aiTog) aiTog.checked = localStorage.getItem('anima-ai-never') === '1';
   showPage('settings', true, '/settings');
   
   const sec = document.getElementById('account-section');
