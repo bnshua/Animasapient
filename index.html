@@ -1016,7 +1016,7 @@
 
   
   .post-main-flex { display: flex; align-items: flex-start; gap: 2rem; }
-  .post-main-flex #ph-body { flex-shrink: 0; width: 680px; }
+  .post-main-flex #ph-body { flex: 0 0 680px; min-width: 0; max-width: 680px; overflow: visible; display: block; }
   .post-body-wrap.has-ai-sidebar { max-width: 1120px; }
   .ai-sidebar { width: 300px; flex-shrink: 0; background: linear-gradient(135deg, #1a6bc4 0%, #2a8de8 50%, #1557a0 100%); border-radius: 10px; padding: 1.4rem 1.4rem 1.2rem; box-shadow: 0 4px 18px rgba(30,100,200,0.35), 0 1px 4px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18); position: relative; animation: aiSlideIn 0.3s ease; }
   @keyframes aiSlideIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: translateX(0); } }
@@ -1799,7 +1799,7 @@
     
     <div id="post-disclaimer-block"></div>
 
-    <p style="font-family:'Cormorant Garamond',serif;font-size:0.88rem;font-style:italic;color:var(--cool-grey);line-height:1.7;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--cool-grey-light);">The topic deals with an informational topic; therefore, some sections are direct references. I acknowledge that the direct references belong to their original writers. This article has been published for education and informational purposes only.</p>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:0.88rem;font-style:italic;color:var(--cool-grey);line-height:1.7;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--cool-grey-light);">The topic deals with an informational topic; therefore, some sections are direct references. I acknowledge that the direct references belong to their original writers. This article has been published for education and informational purposes only. Some articles may not feature citations due to the fact they're student made and is a project done with free time.</p>
 
     
     <div class="sources-section" id="sources-section" style="display:none;">
