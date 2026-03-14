@@ -3293,6 +3293,17 @@ async function openPost(id, replaceState = false) {
 
   
   renderPostAttachments(post.attachments_json);
+
+  bodyEl.querySelectorAll('*').forEach(el => {
+    const s = el.style;
+    if (s.position === 'absolute' || s.position === 'fixed') s.position = '';
+    if (s.marginTop && parseFloat(s.marginTop) < 0) s.marginTop = '';
+    if (s.marginBottom && parseFloat(s.marginBottom) < 0) s.marginBottom = '';
+    if (s.lineHeight && parseFloat(s.lineHeight) === 0) s.lineHeight = '';
+    if (s.fontSize && parseFloat(s.fontSize) === 0) s.fontSize = '';
+    if (s.opacity === '0') s.opacity = '';
+    if (s.zIndex && parseInt(s.zIndex) < 0) s.zIndex = '';
+  });
   
   const citLink = document.getElementById('ph-citations-link');
   if (citLink) {
