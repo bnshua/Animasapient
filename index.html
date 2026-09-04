@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animasapient — Philosophy, Religion, Geography & Culture</title>
-<meta name="description" content="Animasapient — explorations of philosophy, religion, geography and culture. A space for wisdom and reflection.">
+<title>Animasapient — Philosophy, Religion, Geography & Psychology</title>
+<meta name="description" content="Animasapient — explorations of philosophy, religion, geography and psychology. A space for wisdom and reflection.">
 <meta name="author" content="Animasapient">
 <meta name="robots" content="index, follow">
 <link rel="canonical" id="canonical-tag" href="">
@@ -13,14 +13,14 @@
 <meta property="og:site_name" content="Animasapient">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Animasapient">
-<meta property="og:description" content="Explorations of philosophy, religion, geography and culture.">
+<meta property="og:description" content="Explorations of philosophy, religion, geography and psychology.">
 <meta property="og:url" content="https://www.animasapient.xyz">
 <meta property="og:image" content="https://www.animasapient.xyz/image.png">
 
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Animasapient">
-<meta name="twitter:description" content="Explorations of philosophy, religion, geography and culture.">
+<meta name="twitter:description" content="Explorations of philosophy, religion, geography and psychology.">
 <meta name="twitter:image" content="https://www.animasapient.xyz/image.png">
 
 
@@ -30,7 +30,7 @@
   "@type": "WebSite",
   "name": "Animasapient",
   "url": "https://www.animasapient.xyz",
-  "description": "Explorations of philosophy, religion, geography and culture.",
+  "description": "Explorations of philosophy, religion, geography and psychology.",
   "potentialAction": {
     "@type": "SearchAction",
     "target": "https://www.animasapient.xyz/?q={search_term_string}",
@@ -1474,9 +1474,8 @@
       <a onclick="filterCat('Philosophy')">Philosophy</a>
       <a onclick="filterCat('Religion &amp; Spirituality')">Religion</a>
       <a onclick="filterCat('Geography')">Geography</a>
-      <a onclick="filterCat('Culture')">Culture</a>
+      <a onclick="filterCat('Psychology')">Psychology</a>
       <a onclick="showPage('about', true, '/about')">About</a>
-      <a href="https://my-store-10f5f4c.creator-spring.com" target="_blank" rel="noopener noreferrer">Merch</a>
       <button class="nav-search-btn" id="nav-search-btn" onclick="toggleNavSearch()" title="Search" style="display:none;" aria-label="Search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
       </button>
@@ -1498,9 +1497,8 @@
   <a onclick="filterCat('Philosophy'); closeMobileNav()">Philosophy</a>
   <a onclick="filterCat('Religion & Spirituality'); closeMobileNav()">Religion &amp; Spirituality</a>
   <a onclick="filterCat('Geography'); closeMobileNav()">Geography</a>
-  <a onclick="filterCat('Culture'); closeMobileNav()">Culture</a>
+  <a onclick="filterCat('Psychology'); closeMobileNav()">Psychology</a>
   <a onclick="showPage('about', true, '/about'); closeMobileNav()">About</a>
-  <a href="https://my-store-10f5f4c.creator-spring.com" target="_blank" rel="noopener noreferrer" onclick="closeMobileNav()">Merch</a>
   <div class="mobile-nav-divider"></div>
   <button class="mobile-nav-btn" onclick="openSettings(); closeMobileNav()">⚙ Settings</button>
   <button class="mobile-nav-btn" id="mobile-user-btn" onclick="handleUserClick(); closeMobileNav()">Sign In</button>
@@ -1569,11 +1567,9 @@
   </div>
   <div class="about-body">
     <p>Welcome to <strong>Animasapient</strong>, a synthesis of: <em>anima</em> (soul) and <em>sapient</em> (wisdom), as this is a website to keep a wise soul.</p>
-    <p>Here you will find explorations of <strong>philosophy</strong>, ancient and contemporary, explorations of <strong>religion and spirituality</strong> across traditions, studies of the world's <strong>geography</strong>, and the ways landscape shapes civilization, and reflections on <strong>culture</strong> in all its extraordinary diversity.</p>
+    <p>Here you will find explorations of <strong>philosophy</strong>, ancient and contemporary, explorations of <strong>religion and spirituality</strong> across traditions, studies of the world's <strong>geography</strong>, and the ways landscape shapes civilization, and explorations of <strong>psychology</strong> and the human mind.</p>
     <p>This is a personal project, and thus may seem small scale.</p>
     <p>Enjoy Animasapient and a path to wisdom in what makes the World tick.</p>
-    <p>The current authors are:</p>
-    <p>Joshua, Aabiefra</p>
   </div>
 </div>
 
@@ -1906,7 +1902,7 @@
       <span onclick="filterCat('Philosophy')">Philosophy</span>
       <span onclick="filterCat('Religion &amp; Spirituality')">Religion &amp; Spirituality</span>
       <span onclick="filterCat('Geography')">Geography</span>
-      <span onclick="filterCat('Culture')">Culture</span>
+      <span onclick="filterCat('Psychology')">Psychology</span>
     </div>
   </div>
 </footer>
@@ -2013,7 +2009,7 @@
             <option>Philosophy</option>
             <option>Religion &amp; Spirituality</option>
             <option>Geography</option>
-            <option>Culture</option>
+            <option>Psychology</option>
           </select>
         </div>
         <div class="form-group">
@@ -2141,6 +2137,7 @@
           <div class="crop-result-badge">16:9 ✓</div>
           <br>
           <button class="btn-recrop" onclick="showCropper()">Re-crop</button>
+          <button class="btn-recrop" style="margin-left:0.5rem;background:#7a2030;" onclick="replaceImage()">Replace Image</button>
         </div>
       </div>
 
@@ -2218,7 +2215,7 @@ async function initAuth() {
 
 function isAdminUser(user) {
   if (!user) return false;
-  const adminEmails = ['joshuarisbon0819@gmail.com', 'strawbiefra@gmail.com', 'animaadmin@gmail.com', 'ANIMAADMIN@gmail.com'];
+  const adminEmails = ['joshuarisbon0819@gmail.com', 'animaadmin@gmail.com', 'ANIMAADMIN@gmail.com'];
   return adminEmails.includes(user.email);
 }
 
@@ -2841,6 +2838,15 @@ function resetImageSection() {
   document.getElementById('crop-result-wrap').classList.remove('visible');
   document.getElementById('upload-area').style.display = '';
 }
+function replaceImage() {
+  croppedBlob = null;
+  document.getElementById('p-img').value = '';
+  document.getElementById('p-existing-img').value = '';
+  document.getElementById('crop-result-wrap').classList.remove('visible');
+  document.getElementById('crop-container').classList.remove('visible');
+  document.getElementById('upload-area').style.display = '';
+  document.getElementById('p-img').click();
+}
 function openNewPost() {
   document.getElementById('post-modal-title').textContent = 'New Article';
   ['p-title','p-excerpt','p-byline','p-slug','p-tags','p-ai-summary'].forEach(id => document.getElementById(id).value = '');
@@ -3175,7 +3181,7 @@ const CATEGORY_SLUGS = {
   'philosophy':            'Philosophy',
   'religion-spirituality': 'Religion & Spirituality',
   'geography':             'Geography',
-  'culture':               'Culture',
+  'psychology':            'Psychology',
 };
 const CATEGORY_TO_SLUG = Object.fromEntries(
   Object.entries(CATEGORY_SLUGS).map(([slug, name]) => [name, slug])
@@ -3365,7 +3371,7 @@ async function routeFromURL(push = true) {
   try {
     const path = window.location.pathname.replace(/\/$/, '') || '/';
     const parts = path.split('/').filter(Boolean);
-    document.title = 'Animasapient — Philosophy, Religion, Geography & Culture';
+    document.title = 'Animasapient — Philosophy, Religion, Geography & Psychology';
   const jsonld = document.getElementById('article-jsonld');
   if (jsonld) jsonld.textContent = '';
   const canonical = document.querySelector('link[rel="canonical"]');
