@@ -5002,16 +5002,19 @@ async function fetchAndShowViews(postId) {
     defineResult.style.display = 'block';
     defineResult.innerHTML = '<span style="color:var(--cool-grey);font-style:italic;">Looking up "' + word + '"…</span>';
     try {
-      const res = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word.toLowerCase()));
+      const dictUrl = 'https://en.wiktionary.org/api/rest_v1/page/definition/' + encodeURIComponent(word.toLowerCase());
+      let res = null;
+      try { res = await fetch(dictUrl); } catch(e) { res = null; }
+      if (!res || !res.ok) throw new Error('not found');
       const data = await res.json();
-      if (!res.ok || !Array.isArray(data) || !data.length) throw new Error('not found');
-      const entry = data[0];
-      const meanings = entry.meanings.slice(0, 2);
-      let html = '<div class="def-word">' + entry.word + '</div>';
-      meanings.forEach(m => {
-        html += '<div class="def-pos">' + m.partOfSpeech + '</div>';
-        m.definitions.slice(0, 2).forEach(d => {
-          html += '<div class="def-meaning">• ' + d.definition + '</div>';
+      const entries = data['en'] || data[Object.keys(data)[0]];
+      if (!entries || !entries.length) throw new Error('not found');
+      let html = '<div class="def-word">' + word + '</div>';
+      entries.slice(0, 2).forEach(e => {
+        html += '<div class="def-pos">' + (e.partOfSpeech || '') + '</div>';
+        (e.definitions || []).slice(0, 2).forEach(d => {
+          const clean = (d.definition || '').replace(/<[^>]+>/g, '');
+          if (clean) html += '<div class="def-meaning">• ' + clean + '</div>';
         });
       });
       defineResult.innerHTML = html;
