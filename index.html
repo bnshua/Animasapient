@@ -1056,6 +1056,21 @@
   .disclaimer-toggle-row-title { font-weight: 600; display: block; margin-bottom: 0.2rem; font-size: 0.88rem; }
   .post-content a:hover { color: #1a4a8a; text-decoration-thickness: 2px; }
   .post-content strong, .post-content b { font-weight: 700; color: var(--text); }
+
+  #reading-progress { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: linear-gradient(90deg, #4a6fa5, #80a8d8); z-index: 9999; transition: width 0.08s linear; pointer-events: none; border-radius: 0 2px 2px 0; }
+
+  #selection-popup { position: fixed; z-index: 8000; background: var(--navy-dark); border-radius: 7px; box-shadow: 0 6px 24px rgba(0,0,0,0.45); display: none; flex-direction: column; min-width: 168px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); animation: selPopIn 0.15s ease; }
+  @keyframes selPopIn { from { opacity:0; transform:translateY(5px) scale(0.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+  .sel-btn { background: none; border: none; color: var(--cool-grey-light); font-family: 'Cormorant Garamond', serif; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 10px 16px; cursor: pointer; text-align: left; transition: background 0.15s, color 0.15s; width: 100%; display: flex; align-items: center; gap: 9px; }
+  .sel-btn:hover { background: rgba(255,255,255,0.07); color: #fff; }
+  .sel-btn-icon { font-size: 0.9rem; flex-shrink: 0; }
+  .sel-btn + .sel-btn { border-top: 1px solid rgba(255,255,255,0.06); }
+  #sel-define-result { background: rgba(255,255,255,0.04); padding: 10px 14px; font-family: 'Crimson Pro', serif; font-size: 0.9rem; color: var(--cool-grey-light); line-height: 1.55; max-width: 280px; border-top: 1px solid rgba(255,255,255,0.06); display: none; max-height: 200px; overflow-y: auto; }
+  #sel-define-result .def-word { font-family: 'Playfair Display', serif; font-size: 1rem; color: #fff; font-weight: 600; margin-bottom: 3px; }
+  #sel-define-result .def-pos { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: #80a8d8; margin-bottom: 6px; }
+  #sel-define-result .def-meaning { margin-bottom: 5px; }
+  #sel-define-result .def-error { color: #f08080; font-style: italic; }
+  .view-count-pill { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cool-grey); }
   .post-content em, .post-content i { font-style: italic; }
   .post-content u { text-decoration: underline; text-underline-offset: 2px; }
   .post-content blockquote { border-left: 3px solid var(--cool-grey-light); padding-left: 1.5em; margin: 1.5em 0; color: var(--text-light); font-style: italic; font-size: 1.05rem; }
@@ -1459,6 +1474,13 @@
 </style>
 </head>
 <body>
+<div id="reading-progress"></div>
+<div id="selection-popup">
+  <button class="sel-btn" id="sel-copy-btn"><span class="sel-btn-icon">⎘</span> Copy</button>
+  <button class="sel-btn" id="sel-selectall-btn"><span class="sel-btn-icon">⊡</span> Select Article</button>
+  <button class="sel-btn" id="sel-define-btn"><span class="sel-btn-icon">📖</span> Define</button>
+  <div id="sel-define-result"></div>
+</div>
 
 <header>
   <div class="header-inner">
@@ -1763,6 +1785,7 @@
       <h1 class="post-hero-title" id="ph-title" itemprop="headline"></h1>
       <div class="post-hero-meta" id="ph-meta" itemprop="datePublished"></div>
       <div class="post-byline" id="ph-byline" itemprop="author" itemscope itemtype="https://schema.org/Person"></div>
+      <div class="view-count-pill" id="ph-views" style="margin-top:0.4rem;display:none;">👁 <span id="ph-views-count">0</span> views</div>
       <div class="post-hero-tags" id="ph-hero-tags"></div>
     </div>
   </div>
@@ -3350,6 +3373,8 @@ async function openPost(id, replaceState = false) {
   recordReadingHistory(post); 
   renderAISummaryUI(post.ai_summary || '');
   renderDisclaimer(post.disclaimer || null);
+  incrementViewCount(id);
+  fetchAndShowViews(id);
 
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('post-page').classList.add('active');
@@ -3532,10 +3557,11 @@ async function doSearch(q) {
 
 async function incrementViewCount(postId) {
   try {
-    const viewed = JSON.parse(sessionStorage.getItem('anima-viewed') || '[]');
-    if (viewed.includes(postId)) return;
-    viewed.push(postId);
-    sessionStorage.setItem('anima-viewed', JSON.stringify(viewed));
+    const key = 'anima-view-' + postId;
+    const last = parseInt(localStorage.getItem(key) || '0');
+    const now = Date.now();
+    if (now - last < 30 * 60 * 1000) return;
+    localStorage.setItem(key, now);
     await sb.rpc('increment_views', { post_id: postId });
   } catch(e) {}
 }
@@ -4833,6 +4859,185 @@ if (window._directPostId) {
 (async () => {
   await initAuth();
   await routeFromURL();
+})();
+
+/* ── Reading progress bar ── */
+window.addEventListener('scroll', () => {
+  const postPage = document.getElementById('post-page');
+  if (!postPage || !postPage.classList.contains('active')) {
+    document.getElementById('reading-progress').style.width = '0%';
+    return;
+  }
+  const body = document.body, html = document.documentElement;
+  const total = Math.max(body.scrollHeight, html.scrollHeight) - window.innerHeight;
+  const pct = total > 0 ? Math.min(100, (window.scrollY / total) * 100) : 0;
+  document.getElementById('reading-progress').style.width = pct + '%';
+}, { passive: true });
+
+/* ── View count ── */
+async function fetchAndShowViews(postId) {
+  try {
+    const { data } = await sb.from('posts').select('views').eq('id', postId).single();
+    const views = (data && data.views) ? data.views : 0;
+    const el = document.getElementById('ph-views');
+    const cnt = document.getElementById('ph-views-count');
+    if (el && cnt) { cnt.textContent = views.toLocaleString(); el.style.display = 'block'; }
+  } catch(e) {}
+}
+
+/* ── Text selection popup ── */
+(function() {
+  const popup = document.getElementById('selection-popup');
+  const defineResult = document.getElementById('sel-define-result');
+  let lastSelection = '';
+  let hideTimer = null;
+
+  function isInArticle(node) {
+    const body = document.getElementById('ph-body');
+    return body && body.contains(node);
+  }
+
+  function showPopup(x, y) {
+    popup.style.display = 'flex';
+    defineResult.style.display = 'none';
+    defineResult.innerHTML = '';
+    const pw = popup.offsetWidth || 170;
+    const ph = popup.offsetHeight || 120;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    let left = x - pw / 2;
+    let top = y - ph - 12;
+    if (left < 8) left = 8;
+    if (left + pw > vw - 8) left = vw - pw - 8;
+    if (top < 8) top = y + 20;
+    popup.style.left = left + 'px';
+    popup.style.top = top + 'px';
+  }
+
+  function hidePopup() {
+    if (isDefining) return;
+    popup.style.display = 'none';
+    defineResult.style.display = 'none';
+    lastSelection = '';
+  }
+
+  function getSelectionText() {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return '';
+    const range = sel.getRangeAt(0);
+    if (!isInArticle(range.commonAncestorContainer)) return '';
+    return sel.toString().trim();
+  }
+
+  function onSelectionChange(x, y) {
+    const text = getSelectionText();
+    if (text.length < 1) { hidePopup(); return; }
+    lastSelection = text;
+    showPopup(x, y);
+  }
+
+  document.addEventListener('mouseup', e => {
+    if (e.button !== 0) return;
+    if (popup.contains(e.target)) return;
+    if (isDefining) return;
+    setTimeout(() => onSelectionChange(e.clientX, e.clientY), 10);
+  });
+
+  document.addEventListener('touchend', e => {
+    if (popup.contains(e.target)) return;
+    if (isDefining) return;
+    setTimeout(() => {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed) { hidePopup(); return; }
+      const range = sel.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      onSelectionChange(rect.left + rect.width / 2, rect.top + window.scrollY - window.scrollY);
+    }, 80);
+  });
+
+  document.addEventListener('mousedown', e => {
+    if (e.button !== 0) return;
+    if (popup.contains(e.target)) return;
+    hideTimer = setTimeout(hidePopup, 120);
+  });
+
+  document.addEventListener('touchstart', e => {
+    if (popup.contains(e.target)) return;
+    hideTimer = setTimeout(hidePopup, 120);
+  }, { passive: true });
+
+  document.getElementById('sel-copy-btn').addEventListener('click', () => {
+    if (!lastSelection) return;
+    navigator.clipboard.writeText(lastSelection).then(() => {
+      const btn = document.getElementById('sel-copy-btn');
+      btn.innerHTML = '<span class="sel-btn-icon">✓</span> Copied!';
+      setTimeout(() => { btn.innerHTML = '<span class="sel-btn-icon">⎘</span> Copy'; }, 1500);
+    });
+  });
+
+  document.getElementById('sel-selectall-btn').addEventListener('click', () => {
+    const body = document.getElementById('ph-body');
+    if (!body) return;
+    const range = document.createRange();
+    range.selectNodeContents(body);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    lastSelection = body.innerText.trim();
+    const btn = document.getElementById('sel-selectall-btn');
+    btn.innerHTML = '<span class="sel-btn-icon">✓</span> Selected!';
+    setTimeout(() => { btn.innerHTML = '<span class="sel-btn-icon">⊡</span> Select Article'; }, 1500);
+  });
+
+  let isDefining = false;
+
+  document.getElementById('sel-define-btn').addEventListener('mousedown', e => {
+    e.preventDefault();
+  });
+
+  document.getElementById('sel-define-btn').addEventListener('click', async () => {
+    const raw = lastSelection.trim();
+    const word = raw.split(/\s+/)[0].replace(/[^a-zA-Z'-]/g, '');
+    if (!word) return;
+    isDefining = true;
+    defineResult.style.display = 'block';
+    defineResult.innerHTML = '<span style="color:var(--cool-grey);font-style:italic;">Looking up "' + word + '"…</span>';
+    try {
+      const res = await fetch('https://api.dictionaryapi.dev/api/v2/entries/en/' + encodeURIComponent(word.toLowerCase()));
+      const data = await res.json();
+      if (!res.ok || !Array.isArray(data) || !data.length) throw new Error('not found');
+      const entry = data[0];
+      const meanings = entry.meanings.slice(0, 2);
+      let html = '<div class="def-word">' + entry.word + '</div>';
+      meanings.forEach(m => {
+        html += '<div class="def-pos">' + m.partOfSpeech + '</div>';
+        m.definitions.slice(0, 2).forEach(d => {
+          html += '<div class="def-meaning">• ' + d.definition + '</div>';
+        });
+      });
+      defineResult.innerHTML = html;
+    } catch(err) {
+      defineResult.innerHTML = '<div class="def-error" style="margin-bottom:6px;">No definition found for "' + word + '".</div>'
+        + '<a href="https://www.merriam-webster.com/dictionary/' + encodeURIComponent(word) + '" target="_blank" rel="noopener" style="color:#80c4ff;font-size:0.78rem;text-decoration:underline;">Search Merriam-Webster →</a>';
+    }
+    isDefining = false;
+    setTimeout(() => {
+      const ph = popup.offsetHeight || 200;
+      const vh = window.innerHeight;
+      let top = parseInt(popup.style.top);
+      if (top + ph > vh - 8) popup.style.top = Math.max(8, vh - ph - 8) + 'px';
+    }, 10);
+  });
+
+  /* Disable right-click on article body only, show our popup instead */
+  document.addEventListener('contextmenu', e => {
+    const body = document.getElementById('ph-body');
+    if (!body || !body.contains(e.target)) return;
+    e.preventDefault();
+    const sel = window.getSelection();
+    const text = sel && !sel.isCollapsed ? sel.toString().trim() : '';
+    if (text) lastSelection = text;
+    showPopup(e.clientX, e.clientY);
+  });
 })();
 </script>
 </body>
